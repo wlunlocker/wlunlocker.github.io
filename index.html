@@ -97,12 +97,24 @@
             border-left: 4px solid var(--accent);
             padding-left: 12px;
             font-size: 0.95em;
-            margin: 0 0 20px 0;
+            margin: 0 0 12px 0;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             display: flex;
             align-items: center;
             color: var(--text-sub);
+        }
+
+        /* Стиль для общих подсказок под названиями блоков */
+        .section-hint {
+            font-size: 0.85em;
+            color: #8fa0dd;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            background: rgba(0, 122, 255, 0.05);
+            padding: 12px 16px;
+            border-radius: 10px;
+            border-left: 2px solid rgba(0, 122, 255, 0.3);
         }
 
         .item-card {
@@ -208,6 +220,9 @@
                 <span class="material-icons-outlined" style="margin-right:8px;color:var(--accent);">auto_awesome</span>
                 ПОДКЛЮЧИТЬ (V2RAY/HIDDIFY/HAPP)
             </h2>
+            <div class="section-hint">
+                Чтобы использовать нашу подписку в другом приложении, скопируйте ссылку и вставьте ее в свой VPN-клиент.
+            </div>
             <div id="sub-list"></div>
         </div>
 
@@ -216,6 +231,9 @@
                 <span class="material-icons-outlined" style="margin-right:8px;color:var(--accent);">bolt</span>
                 MTProto Прокси (Telegram)
             </h2>
+            <div class="section-hint">
+                Чтобы подключить прокси, нужно подключиться к VPN - перейти по ссылке, отключить VPN и подключить прокси в Telegram.
+            </div>
             <div id="proxy-list"></div>
         </div>
     </div>
@@ -252,14 +270,11 @@
                     if (line.includes('|')) {
                         const p = line.split('|').map(s => s.trim());
                         const title = p[0], link = p[p.length - 1], fileInfo = p.slice(1, -1).join('\n');
-                        
-                        // Добавляем твою инструкцию к тексту из файла
-                        const finalInfo = fileInfo + "\n\nЧтобы использовать нашу подписку в другом приложении, скопируйте ссылку и вставьте ее в свой VPN-клиент";
 
                         subList.innerHTML += `
                             <div class="item-card sub-item">
                                 <span class="item-title">${title}</span>
-                                <div class="item-info">${finalInfo}</div>
+                                <div class="item-info">${fileInfo}</div>
                                 <div class="btn-group">
                                     <a href="happ://add/${link}" class="btn btn-accent"><span class="material-icons-outlined">install_mobile</span>Автоимпорт в Happ</a>
                                     <button class="btn btn-secondary" onclick="copyToClipboard('${link}', this)"><span class="material-icons-outlined">content_copy</span>Копировать ссылку</button>
@@ -277,9 +292,7 @@
                 proxyData.split('\n').forEach(line => {
                     if (line.includes('|')) {
                         const [name, link] = line.split('|').map(s => s.trim());
-                        
-                        // Твоя инструкция для прокси
-                        const autoProxyInfo = "Протокол: MTProto\n\nЧтобы подключить прокси, нужно подключиться к VPN - перейти по ссылке, отключить VPN и подключить прокси в Telegram"; 
+                        const autoProxyInfo = "Протокол: MTProto"; 
                         
                         proxyList.innerHTML += `
                             <div class="item-card proxy-item">
