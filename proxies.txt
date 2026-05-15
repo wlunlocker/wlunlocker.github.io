@@ -7,4 +7,4 @@ TGGarden | https://t.me/proxy?server=tg.garden-gnomes.lol&port=443&secret=ee46b0
 Olimpos | https://t.me/proxy?server=papin.olympos.lol&port=443&secret=dd470cb2b8b29aeadfbdf8a2f7bee5ca3b
 MTProxy | https://t.me/proxy?server=main.mtproxy.pw&port=443&secret=ee3f8a91c2d7e04b6a9f12c5e8370bd4aa27786170692e6f7a6f6e2e727527
 VoltLab | https://t.me/proxy?server=huntereyes.voltlab.su&port=443&secret=7maPQrr0tsiX8fCJLJjufgthZHMueDUucnU
-Myrka | tg://proxy?server=b2.myrka.digital&port=775&secret=ee1111222e7f5904f3322ded8772202ea268322e6d79726b612e6469676974616c
+Myrka | https://t.me/proxy?server=b2.myrka.digital&port=775&secret=ee1111222e7f5904f3322ded8772202ea268322e6d79726b612e6469676974616c
