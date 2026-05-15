@@ -46,28 +46,42 @@
 
         h1 {
             font-size: 2.5em;
-            margin: 0 0 10px 0;
+            margin: 0 0 15px 0;
             font-weight: 800;
             letter-spacing: -1px;
         }
 
-        .telegram-pill {
+        /* Блок кнопок Telegram */
+        .tg-channels-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+        .tg-btn {
+            flex: 1;
             display: inline-flex;
             align-items: center;
-            padding: 10px 20px;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 16px;
             background-color: var(--green-pill);
-            border-radius: 25px;
+            border-radius: 14px;
             color: var(--green-text);
-            font-size: 0.95em;
+            font-size: 0.9em;
             font-weight: 600;
             text-decoration: none;
             transition: all 0.3s;
             border: 1px solid rgba(0, 255, 65, 0.2);
+            box-sizing: border-box;
         }
 
-        .telegram-pill:hover {
+        .tg-btn:hover {
             background-color: rgba(0, 255, 65, 0.2);
-            transform: scale(1.02);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 65, 0.1);
         }
 
         .last-upd-box {
@@ -105,7 +119,6 @@
             color: var(--text-sub);
         }
 
-        /* Стиль для общих подсказок под названиями блоков */
         .section-hint {
             font-size: 0.85em;
             color: #8fa0dd;
@@ -201,6 +214,10 @@
         @media (max-width: 480px) {
             h1 { font-size: 2em; }
             .section { padding: 18px; }
+            .tg-channels-group {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
     </style>
 </head>
@@ -208,9 +225,18 @@
 
     <div class="header">
         <h1>WLUnlocker</h1>
-        <a href="https://t.me/wlunlocker" class="telegram-pill">
-            Больше в Telegram-канале @wlunlocker
-        </a>
+        
+        <div class="tg-channels-group">
+            <a href="https://t.me/wlunlocker" class="tg-btn" target="_blank">
+                <span class="material-icons-outlined" style="font-size: 18px;">vpn_lock</span>
+                WLUnlocker | VPN
+            </a>
+            <a href="https://t.me/wlproxy" class="tg-btn" target="_blank">
+                <span class="material-icons-outlined" style="font-size: 18px;">bolt</span>
+                WLUnlocker | Прокси
+            </a>
+        </div>
+
         <div id="update-info" class="last-upd-box">Синхронизация...</div>
     </div>
 
