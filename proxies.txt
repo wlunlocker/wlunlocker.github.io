@@ -1,0 +1,17 @@
+# Last update: 16.05.2026 02:15 MSK
+proxies:
+TGGarden | https://t.me/proxy?server=tg.garden-gnomes.lol&port=443&secret=ee46b0971d5de93f825bc66f23a304c9367a61796d65722e7275
+
+Olimpos | https://t.me/proxy?server=papin.olympos.lol&port=443&secret=ee470cb2b8b29aeadfbdf8a2f7bee5ca3b62726f777365722e79616e6465782e636f6d
+
+CatPaws | https://t.me/proxy?server=nsk.catpaws.ru&port=443&secret=ee6288b4d5d9526c8d60cf8052e7eb0d3473742e6f6b63646e2e7275
+
+TGGarden | https://t.me/proxy?server=tg.garden-gnomes.lol&port=443&secret=ee46b0971d5de93f825bc66f23a304c93665786973742e7275
+
+Olimpos | https://t.me/proxy?server=papin.olympos.lol&port=443&secret=dd470cb2b8b29aeadfbdf8a2f7bee5ca3b
+
+MTProxy | https://t.me/proxy?server=main.mtproxy.pw&port=443&secret=ee3f8a91c2d7e04b6a9f12c5e8370bd4aa27786170692e6f7a6f6e2e727527
+
+VoltLab | https://t.me/proxy?server=huntereyes.voltlab.su&port=443&secret=7maPQrr0tsiX8fCJLJjufgthZHMueDUucnU
+
+Myrka | tg://proxy?server=b2.myrka.digital&port=775&secret=ee1111222e7f5904f3322ded8772202ea268322e6d79726b612e6469676974616c
