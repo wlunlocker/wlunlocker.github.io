@@ -236,7 +236,7 @@
         async function fetchData() {
             const cacheBuster = '?v=' + Math.random();
             try {
-                // 1. Дата
+                // 1. Считываем дату обновления
                 const vpnResp = await fetch('https://raw.githubusercontent.com/wlunlocker/anti-rkn/main/vpnfull.txt' + cacheBuster);
                 const vpnText = await vpnResp.text();
                 const dateLine = vpnText.split('\n').find(l => l.includes('Last update:'));
@@ -251,11 +251,15 @@
                 subData.split('\n').forEach(line => {
                     if (line.includes('|')) {
                         const p = line.split('|').map(s => s.trim());
-                        const title = p[0], link = p[p.length - 1], info = p.slice(1, -1).join('\n');
+                        const title = p[0], link = p[p.length - 1], fileInfo = p.slice(1, -1).join('\n');
+                        
+                        // Добавляем твою инструкцию к тексту из файла
+                        const finalInfo = fileInfo + "\n\nЧтобы использовать нашу подписку в другом приложении, скопируйте ссылку и вставьте ее в свой VPN-клиент";
+
                         subList.innerHTML += `
                             <div class="item-card sub-item">
                                 <span class="item-title">${title}</span>
-                                <div class="item-info">${info}</div>
+                                <div class="item-info">${finalInfo}</div>
                                 <div class="btn-group">
                                     <a href="happ://add/${link}" class="btn btn-accent"><span class="material-icons-outlined">install_mobile</span>Автоимпорт в Happ</a>
                                     <button class="btn btn-secondary" onclick="copyToClipboard('${link}', this)"><span class="material-icons-outlined">content_copy</span>Копировать ссылку</button>
@@ -264,7 +268,7 @@
                     }
                 });
 
-                // 3. Прокси (авто-подстановка описания)
+                // 3. Прокси
                 const proxyResp = await fetch('proxies.txt' + cacheBuster);
                 const proxyData = await proxyResp.text();
                 const proxyList = document.getElementById('proxy-list');
@@ -273,13 +277,14 @@
                 proxyData.split('\n').forEach(line => {
                     if (line.includes('|')) {
                         const [name, link] = line.split('|').map(s => s.trim());
-                        // Скрипт сам пишет описание, бережём твои пальцы
-                        const autoInfo = "Протокол: MTProto"; 
+                        
+                        // Твоя инструкция для прокси
+                        const autoProxyInfo = "Протокол: MTProto\n\nЧтобы подключить прокси, нужно подключиться к VPN - перейти по ссылке, отключить VPN и подключить прокси в Telegram"; 
                         
                         proxyList.innerHTML += `
                             <div class="item-card proxy-item">
                                 <span class="item-title">${name}</span>
-                                <div class="item-info">${autoInfo}</div>
+                                <div class="item-info">${autoProxyInfo}</div>
                                 <div class="btn-group">
                                     <a href="${link}" class="btn btn-accent"><span class="material-icons-outlined">wifi_tethering</span>Подключить прокси</a>
                                     <button class="btn btn-secondary" onclick="copyToClipboard('${link}', this)"><span class="material-icons-outlined">content_copy</span>Копировать ссылку</button>
