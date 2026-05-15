@@ -27,9 +27,9 @@
             align-items: center;
             min-height: 100vh;
             /* Живой градиентный фон */
-            background: linear-gradient(45deg, var(--bg-start), var(--bg-end), #04060b);
+            background: linear-gradient(-45deg, #050811, #0a1322, #0f172a, #050811);
             background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            animation: gradientBG 10s ease infinite;
         }
 
         @keyframes gradientBG {
@@ -46,26 +46,36 @@
         }
 
         h1 {
-            font-size: 2.2em;
-            margin: 0 0 15px 0;
+            font-size: 2.5em;
+            margin: 0 0 10px 0;
             font-weight: 800;
+            letter-spacing: -1px;
         }
 
         .telegram-pill {
             display: inline-flex;
             align-items: center;
-            padding: 8px 16px;
+            padding: 10px 20px;
             background-color: var(--green-pill);
-            border-radius: 20px;
+            border-radius: 25px;
             color: var(--green-text);
-            font-size: 0.9em;
-            font-weight: 500;
+            font-size: 0.95em;
+            font-weight: 600;
             text-decoration: none;
-            transition: background-color 0.2s;
+            transition: all 0.3s;
+            border: 1px solid rgba(0, 255, 65, 0.2);
         }
 
         .telegram-pill:hover {
             background-color: rgba(0, 255, 65, 0.2);
+            transform: scale(1.02);
+        }
+
+        .last-upd-box {
+            font-family: monospace;
+            font-size: 0.85em;
+            color: #888;
+            margin-top: 15px;
         }
 
         .container {
@@ -78,72 +88,75 @@
 
         .section {
             background-color: var(--card);
-            border-radius: 16px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 24px;
             border: 1px solid #2a2f3a;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
 
         h2 {
             border-left: 4px solid var(--accent);
             padding-left: 12px;
-            font-size: 1em;
+            font-size: 0.95em;
             margin: 0 0 20px 0;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             display: flex;
             align-items: center;
+            color: var(--text-sub);
         }
 
         .item-card {
             background-color: #1c212b;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 15px;
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 18px;
             border: 1px solid #2a2f3a;
         }
 
         .item-card:last-child { margin-bottom: 0; }
 
-        .item-title {
-            font-weight: 700;
+        /* Названия подписок - синие */
+        .sub-item .item-title {
+            color: var(--accent);
+            font-weight: 800;
             font-size: 1.1em;
             margin-bottom: 8px;
             display: block;
         }
-        
-        /* Цвета для флагов в подписках */
-        .sub-item .item-title { color: var(--accent); }
 
-        /* Названия прокси теперь БЕЛЫЕ */
+        /* Названия прокси - БЕЛЫЕ */
         .proxy-item .item-title {
-            color: var(--text-main);
-            margin-bottom: 15px; /* Увеличенный разрыв до кнопки */
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-bottom: 25px; /* Увеличенный разрыв до кнопки */
+            display: block;
         }
 
         .item-info {
             font-size: 0.85em;
             color: var(--text-sub);
             line-height: 1.6;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             white-space: pre-line;
         }
 
         .btn-group {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
 
         .btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
             width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: 600;
+            padding: 14px;
+            border-radius: 10px;
+            font-weight: 700;
             font-size: 0.95em;
             text-decoration: none;
             transition: all 0.2s ease;
@@ -159,7 +172,8 @@
 
         .btn-accent:hover {
             background-color: #0063d1;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 122, 255, 0.3);
         }
         
         .btn-secondary {
@@ -176,8 +190,8 @@
         }
 
         @media (max-width: 480px) {
-            h1 { font-size: 1.8em; }
-            .section { padding: 15px; }
+            h1 { font-size: 2em; }
+            .section { padding: 18px; }
         }
     </style>
 </head>
@@ -188,65 +202,73 @@
         <a href="https://t.me/wlunlocker" class="telegram-pill">
             Больше в Telegram-канале @wlunlocker
         </a>
+        <div id="update-info" class="last-upd-box">Синхронизация времени...</div>
     </div>
 
     <div class="container">
         <div class="section sub-section">
             <h2>
-                <span class="material-icons-outlined" style="margin-right:8px;color:var(--accent);">ballot</span>
-                Подписки (V2Ray/Hiddify)
+                <span class="material-icons-outlined" style="margin-right:8px;color:var(--accent);">auto_awesome</span>
+                ПОДКЛЮЧИТЬ (V2RAY/HIDDIFY/HAPP)
             </h2>
             <div id="sub-list">
-                <div style="text-align:center;color:var(--text-sub);">Загрузка...</div>
+                <div style="text-align:center;color:var(--text-sub);">Загрузка конфигов...</div>
             </div>
         </div>
 
         <div class="section proxy-section">
             <h2>
-                <span class="material-icons-outlined" style="margin-right:8px;color:var(--accent);">electric_bolt</span>
+                <span class="material-icons-outlined" style="margin-right:8px;color:var(--accent);">bolt</span>
                 MTProto Прокси (Telegram)
             </h2>
             <div id="proxy-list">
-                <div style="text-align:center;color:var(--text-sub);">Загрузка...</div>
+                <div style="text-align:center;color:var(--text-sub);">Загрузка прокси...</div>
             </div>
         </div>
     </div>
 
     <script>
-        // Функция для копирования в буфер обмена
+        // Функция копирования
         function copyToClipboard(text, btnElement) {
             navigator.clipboard.writeText(text).then(() => {
-                const originalText = btnElement.innerHTML;
-                btnElement.innerHTML = '<span class="material-icons-outlined">done</span> Скопировано!';
-                btnElement.style.backgroundColor = '#28a745'; // Зеленый цвет при успехе
+                const originalContent = btnElement.innerHTML;
+                btnElement.innerHTML = '<span class="material-icons-outlined">check_circle</span> Скопировано!';
+                btnElement.style.backgroundColor = '#28a745';
                 setTimeout(() => {
-                    btnElement.innerHTML = originalText;
-                    btnElement.style.backgroundColor = ''; // Сброс цвета
+                    btnElement.innerHTML = originalContent;
+                    btnElement.style.backgroundColor = '';
                 }, 2000);
-            }).catch(err => {
-                console.error('Ошибка копирования: ', err);
             });
         }
 
         async function fetchData() {
             const subContainer = document.getElementById('sub-list');
             const proxyContainer = document.getElementById('proxy-list');
+            const updateBox = document.getElementById('update-info');
 
             try {
-                // 1. Загружаем подписки из subscribes.txt
+                // 1. Берем дату из vpnfull.txt
+                const vpnResp = await fetch('https://raw.githubusercontent.com/wlunlocker/anti-rkn_project/main/vpnfull.txt');
+                const vpnText = await vpnResp.text();
+                const dateLine = vpnText.split('\n').find(l => l.includes('Last update:'));
+                if (dateLine) {
+                    updateBox.innerText = dateLine.replace('#', '').trim();
+                }
+
+                // 2. Загружаем подписки
                 const subResp = await fetch('subscribes.txt');
-                const subText = await subResp.text();
+                const subData = await subResp.text();
                 subContainer.innerHTML = '';
                 
-                subText.split('\n').forEach(line => {
+                subData.split('\n').forEach(line => {
                     if (line.includes('|')) {
-                        const parts = line.split('|').map(s => s.trim());
-                        const title = parts[0];
-                        const link = parts[parts.length - 1];
-                        const info = parts.slice(1, -1).join('\n');
+                        const p = line.split('|').map(s => s.trim());
+                        const title = p[0];
+                        const link = p[p.length - 1];
+                        const info = p.slice(1, -1).join('\n');
 
-                        // Создаем схему для автоимпорта в Happ (v2rayng://install?url=URL)
-                        const happLink = `v2rayng://install?url=${encodeURIComponent(link)}`;
+                        // Автоимпорт Happ через специальный протокол happ://add/
+                        const happLink = `happ://add/${link}`;
 
                         subContainer.innerHTML += `
                             <div class="item-card sub-item">
@@ -254,7 +276,7 @@
                                 <div class="item-info">${info}</div>
                                 <div class="btn-group">
                                     <a href="${happLink}" class="btn btn-accent">
-                                        <span class="material-icons-outlined">download</span>
+                                        <span class="material-icons-outlined">install_mobile</span>
                                         Автоимпорт в Happ
                                     </a>
                                     <button class="btn btn-secondary" onclick="copyToClipboard('${link}', this)">
@@ -266,19 +288,19 @@
                     }
                 });
 
-                // 2. Загружаем прокси из proxies.txt
+                // 3. Загружаем прокси
                 const proxyResp = await fetch('proxies.txt');
-                const proxyText = await proxyResp.text();
+                const proxyData = await proxyResp.text();
                 proxyContainer.innerHTML = '';
 
-                proxyText.split('\n').forEach(line => {
+                proxyData.split('\n').forEach(line => {
                     if (line.includes('|')) {
                         const [name, link] = line.split('|').map(s => s.trim());
                         proxyContainer.innerHTML += `
                             <div class="item-card proxy-item">
                                 <span class="item-title">${name}</span>
                                 <a href="${link}" class="btn btn-accent">
-                                    <span class="material-icons-outlined">wifi</span>
+                                    <span class="material-icons-outlined">wifi_tethering</span>
                                     Подключить прокси
                                 </a>
                             </div>`;
@@ -287,8 +309,7 @@
 
             } catch (e) {
                 console.error(e);
-                subContainer.innerHTML = '<div style="text-align:center;color:#dc3545;">Ошибка загрузки</div>';
-                proxyContainer.innerHTML = '<div style="text-align:center;color:#dc3545;">Ошибка загрузки</div>';
+                updateBox.innerText = 'Ошибка обновления';
             }
         }
 
