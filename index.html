@@ -2,66 +2,240 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WLUnlocker | Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>WLUnlocker</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <style>
-        :root { --bg: #0b0b0b; --card: #161616; --accent: #007aff; --text: #f0f0f0; --success: #00ff41; }
-        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .header { text-align: center; margin-bottom: 40px; }
-        .last-upd { font-size: 0.9em; color: var(--success); font-family: 'Courier New', monospace; margin-top: 10px; background: rgba(0,255,65,0.1); padding: 5px 15px; border-radius: 20px; display: inline-block; }
+        :root {
+            --bg-start: #060912;
+            --bg-end: #0f172a;
+            --card: #161a22;
+            --accent: #007aff;
+            --text-main: #f0f0f0;
+            --text-sub: #b0b0b0;
+            --green-pill: rgba(0, 255, 65, 0.1);
+            --green-text: #00ff41;
+        }
+
+        body {
+            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            /* Живой градиентный фон */
+            background: linear-gradient(45deg, var(--bg-start), var(--bg-end), #04060b);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 2.2em;
+            margin: 0 0 15px 0;
+            font-weight: 800;
+        }
+
+        .telegram-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background-color: var(--green-pill);
+            border-radius: 20px;
+            color: var(--green-text);
+            font-size: 0.9em;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .telegram-pill:hover {
+            background-color: rgba(0, 255, 65, 0.2);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .section {
+            background-color: var(--card);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #2a2f3a;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        h2 {
+            border-left: 4px solid var(--accent);
+            padding-left: 12px;
+            font-size: 1em;
+            margin: 0 0 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+        }
+
+        .item-card {
+            background-color: #1c212b;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 15px;
+            border: 1px solid #2a2f3a;
+        }
+
+        .item-card:last-child { margin-bottom: 0; }
+
+        .item-title {
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            display: block;
+        }
         
-        .container { display: flex; gap: 25px; width: 100%; max-width: 1100px; flex-wrap: wrap; justify-content: center; }
-        .section { background: var(--card); border-radius: 16px; padding: 24px; flex: 1; min-width: 320px; border: 1px solid #222; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        /* Цвета для флагов в подписках */
+        .sub-item .item-title { color: var(--accent); }
+
+        /* Названия прокси теперь БЕЛЫЕ */
+        .proxy-item .item-title {
+            color: var(--text-main);
+            margin-bottom: 15px; /* Увеличенный разрыв до кнопки */
+        }
+
+        .item-info {
+            font-size: 0.85em;
+            color: var(--text-sub);
+            line-height: 1.6;
+            margin-bottom: 15px;
+            white-space: pre-line;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95em;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .btn-accent:hover {
+            background-color: #0063d1;
+            transform: translateY(-1px);
+        }
         
-        h2 { border-left: 4px solid var(--accent); padding-left: 15px; font-size: 1.1em; margin-top: 0; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-secondary {
+            background-color: #2a2f3a;
+            color: var(--text-main);
+        }
         
-        .list-item { background: #202020; margin: 12px 0; padding: 15px; border-radius: 10px; border: 1px solid #282828; transition: 0.2s; }
-        .list-item:hover { border-color: #444; }
-        .item-info { font-size: 0.8em; color: #aaa; margin-bottom: 10px; line-height: 1.5; white-space: pre-line; }
-        .item-title { font-weight: bold; font-size: 1em; display: block; margin-bottom: 8px; color: var(--accent); }
-        
-        .btn-connect { display: block; text-align: center; background: var(--accent); color: white; text-decoration: none; padding: 10px; border-radius: 8px; font-weight: bold; font-size: 0.9em; transition: 0.2s; }
-        .btn-connect:hover { background: #0063d1; transform: translateY(-2px); }
-        
-        @media (max-width: 600px) { .container { flex-direction: column; } .section { min-width: 100%; } }
+        .btn-secondary:hover {
+            background-color: #3a4150;
+        }
+
+        .material-icons-outlined {
+            font-size: 20px;
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.8em; }
+            .section { padding: 15px; }
+        }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1>WLUnlocker Project</h1>
-        <div id="update-info" class="last-upd">Синхронизация данных...</div>
+        <h1>WLUnlocker</h1>
+        <a href="https://t.me/wlunlocker" class="telegram-pill">
+            Больше в Telegram-канале @wlunlocker
+        </a>
     </div>
 
     <div class="container">
-        <div class="section">
-            <h2>Подписки (V2Ray/Hiddify)</h2>
-            <div id="sub-list">Загрузка подписок...</div>
+        <div class="section sub-section">
+            <h2>
+                <span class="material-icons-outlined" style="margin-right:8px;color:var(--accent);">ballot</span>
+                Подписки (V2Ray/Hiddify)
+            </h2>
+            <div id="sub-list">
+                <div style="text-align:center;color:var(--text-sub);">Загрузка...</div>
+            </div>
         </div>
 
-        <div class="section">
-            <h2>MTProto Прокси (Telegram)</h2>
-            <div id="proxy-list">Загрузка прокси...</div>
+        <div class="section proxy-section">
+            <h2>
+                <span class="material-icons-outlined" style="margin-right:8px;color:var(--accent);">electric_bolt</span>
+                MTProto Прокси (Telegram)
+            </h2>
+            <div id="proxy-list">
+                <div style="text-align:center;color:var(--text-sub);">Загрузка...</div>
+            </div>
         </div>
     </div>
 
     <script>
-        async function fetchData() {
-            try {
-                // 1. Парсим дату из внешнего vpnfull.txt
-                const vpnFullResp = await fetch('https://raw.githubusercontent.com/wlunlocker/anti-rkn_project/main/vpnfull.txt');
-                const vpnFullText = await vpnFullResp.text();
-                const lines = vpnFullText.split('\n');
-                // Ищем строку, которая начинается с "# Last update:"
-                const dateLine = lines.find(l => l.includes('Last update:'));
-                if (dateLine) {
-                    document.getElementById('update-info').innerText = dateLine.replace('#', '').trim();
-                }
+        // Функция для копирования в буфер обмена
+        function copyToClipboard(text, btnElement) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = btnElement.innerHTML;
+                btnElement.innerHTML = '<span class="material-icons-outlined">done</span> Скопировано!';
+                btnElement.style.backgroundColor = '#28a745'; // Зеленый цвет при успехе
+                setTimeout(() => {
+                    btnElement.innerHTML = originalText;
+                    btnElement.style.backgroundColor = ''; // Сброс цвета
+                }, 2000);
+            }).catch(err => {
+                console.error('Ошибка копирования: ', err);
+            });
+        }
 
-                // 2. Загружаем подписки из локального subscribes.txt
+        async function fetchData() {
+            const subContainer = document.getElementById('sub-list');
+            const proxyContainer = document.getElementById('proxy-list');
+
+            try {
+                // 1. Загружаем подписки из subscribes.txt
                 const subResp = await fetch('subscribes.txt');
                 const subText = await subResp.text();
-                const subContainer = document.getElementById('sub-list');
                 subContainer.innerHTML = '';
                 
                 subText.split('\n').forEach(line => {
@@ -69,37 +243,52 @@
                         const parts = line.split('|').map(s => s.trim());
                         const title = parts[0];
                         const link = parts[parts.length - 1];
-                        const info = parts.slice(1, -1).join('\n'); // Всё что между заголовком и ссылкой
+                        const info = parts.slice(1, -1).join('\n');
+
+                        // Создаем схему для автоимпорта в Happ (v2rayng://install?url=URL)
+                        const happLink = `v2rayng://install?url=${encodeURIComponent(link)}`;
 
                         subContainer.innerHTML += `
-                            <div class="list-item">
+                            <div class="item-card sub-item">
                                 <span class="item-title">${title}</span>
                                 <div class="item-info">${info}</div>
-                                <a href="${link}" class="btn-connect">Копировать ссылку</a>
+                                <div class="btn-group">
+                                    <a href="${happLink}" class="btn btn-accent">
+                                        <span class="material-icons-outlined">download</span>
+                                        Автоимпорт в Happ
+                                    </a>
+                                    <button class="btn btn-secondary" onclick="copyToClipboard('${link}', this)">
+                                        <span class="material-icons-outlined">content_copy</span>
+                                        Копировать ссылку
+                                    </button>
+                                </div>
                             </div>`;
                     }
                 });
 
-                // 3. Загружаем прокси из локального proxies.txt
+                // 2. Загружаем прокси из proxies.txt
                 const proxyResp = await fetch('proxies.txt');
                 const proxyText = await proxyResp.text();
-                const proxyContainer = document.getElementById('proxy-list');
                 proxyContainer.innerHTML = '';
 
                 proxyText.split('\n').forEach(line => {
                     if (line.includes('|')) {
                         const [name, link] = line.split('|').map(s => s.trim());
                         proxyContainer.innerHTML += `
-                            <div class="list-item">
+                            <div class="item-card proxy-item">
                                 <span class="item-title">${name}</span>
-                                <a href="${link}" class="btn-connect">Подключить прокси</a>
+                                <a href="${link}" class="btn btn-accent">
+                                    <span class="material-icons-outlined">wifi</span>
+                                    Подключить прокси
+                                </a>
                             </div>`;
                     }
                 });
 
             } catch (e) {
                 console.error(e);
-                document.getElementById('update-info').innerText = 'Ошибка загрузки данных';
+                subContainer.innerHTML = '<div style="text-align:center;color:#dc3545;">Ошибка загрузки</div>';
+                proxyContainer.innerHTML = '<div style="text-align:center;color:#dc3545;">Ошибка загрузки</div>';
             }
         }
 
