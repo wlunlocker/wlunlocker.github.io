@@ -1,11 +1,109 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>WLUnlocker Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WLUnlocker | Dashboard</title>
+    <style>
+        :root { --bg: #0b0b0b; --card: #161616; --accent: #007aff; --text: #f0f0f0; --success: #00ff41; }
+        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .header { text-align: center; margin-bottom: 40px; }
+        .last-upd { font-size: 0.9em; color: var(--success); font-family: 'Courier New', monospace; margin-top: 10px; background: rgba(0,255,65,0.1); padding: 5px 15px; border-radius: 20px; display: inline-block; }
+        
+        .container { display: flex; gap: 25px; width: 100%; max-width: 1100px; flex-wrap: wrap; justify-content: center; }
+        .section { background: var(--card); border-radius: 16px; padding: 24px; flex: 1; min-width: 320px; border: 1px solid #222; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        h2 { border-left: 4px solid var(--accent); padding-left: 15px; font-size: 1.1em; margin-top: 0; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .list-item { background: #202020; margin: 12px 0; padding: 15px; border-radius: 10px; border: 1px solid #282828; transition: 0.2s; }
+        .list-item:hover { border-color: #444; }
+        .item-info { font-size: 0.8em; color: #aaa; margin-bottom: 10px; line-height: 1.5; white-space: pre-line; }
+        .item-title { font-weight: bold; font-size: 1em; display: block; margin-bottom: 8px; color: var(--accent); }
+        
+        .btn-connect { display: block; text-align: center; background: var(--accent); color: white; text-decoration: none; padding: 10px; border-radius: 8px; font-weight: bold; font-size: 0.9em; transition: 0.2s; }
+        .btn-connect:hover { background: #0063d1; transform: translateY(-2px); }
+        
+        @media (max-width: 600px) { .container { flex-direction: column; } .section { min-width: 100%; } }
+    </style>
 </head>
 <body>
-    <h1>Добро пожаловать на основной сайт WLUnlocker</h1>
-    <p>Сайт работает!</p>
+
+    <div class="header">
+        <h1>WLUnlocker Project</h1>
+        <div id="update-info" class="last-upd">Синхронизация данных...</div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <h2>Подписки (V2Ray/Hiddify)</h2>
+            <div id="sub-list">Загрузка подписок...</div>
+        </div>
+
+        <div class="section">
+            <h2>MTProto Прокси (Telegram)</h2>
+            <div id="proxy-list">Загрузка прокси...</div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchData() {
+            try {
+                // 1. Парсим дату из внешнего vpnfull.txt
+                const vpnFullResp = await fetch('https://raw.githubusercontent.com/wlunlocker/anti-rkn_project/main/vpnfull.txt');
+                const vpnFullText = await vpnFullResp.text();
+                const lines = vpnFullText.split('\n');
+                // Ищем строку, которая начинается с "# Last update:"
+                const dateLine = lines.find(l => l.includes('Last update:'));
+                if (dateLine) {
+                    document.getElementById('update-info').innerText = dateLine.replace('#', '').trim();
+                }
+
+                // 2. Загружаем подписки из локального subscribes.txt
+                const subResp = await fetch('subscribes.txt');
+                const subText = await subResp.text();
+                const subContainer = document.getElementById('sub-list');
+                subContainer.innerHTML = '';
+                
+                subText.split('\n').forEach(line => {
+                    if (line.includes('|')) {
+                        const parts = line.split('|').map(s => s.trim());
+                        const title = parts[0];
+                        const link = parts[parts.length - 1];
+                        const info = parts.slice(1, -1).join('\n'); // Всё что между заголовком и ссылкой
+
+                        subContainer.innerHTML += `
+                            <div class="list-item">
+                                <span class="item-title">${title}</span>
+                                <div class="item-info">${info}</div>
+                                <a href="${link}" class="btn-connect">Копировать ссылку</a>
+                            </div>`;
+                    }
+                });
+
+                // 3. Загружаем прокси из локального proxies.txt
+                const proxyResp = await fetch('proxies.txt');
+                const proxyText = await proxyResp.text();
+                const proxyContainer = document.getElementById('proxy-list');
+                proxyContainer.innerHTML = '';
+
+                proxyText.split('\n').forEach(line => {
+                    if (line.includes('|')) {
+                        const [name, link] = line.split('|').map(s => s.trim());
+                        proxyContainer.innerHTML += `
+                            <div class="list-item">
+                                <span class="item-title">${name}</span>
+                                <a href="${link}" class="btn-connect">Подключить прокси</a>
+                            </div>`;
+                    }
+                });
+
+            } catch (e) {
+                console.error(e);
+                document.getElementById('update-info').innerText = 'Ошибка загрузки данных';
+            }
+        }
+
+        fetchData();
+    </script>
 </body>
 </html>
