@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -247,8 +248,8 @@
             const updateBox = document.getElementById('update-info');
 
             try {
-                // 1. Берем дату из vpnfull.txt
-                const vpnResp = await fetch('https://raw.githubusercontent.com/wlunlocker/anti-rkn_project/main/vpnfull.txt');
+                // Измененный URL репозитория: anti_rkn вместо anti-rkn_project
+                const vpnResp = await fetch('https://raw.githubusercontent.com/wlunlocker/anti_rkn/main/vpnfull.txt');
                 const vpnText = await vpnResp.text();
                 const dateLine = vpnText.split('\n').find(l => l.includes('Last update:'));
                 if (dateLine) {
