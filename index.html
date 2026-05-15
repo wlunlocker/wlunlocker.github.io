@@ -127,7 +127,7 @@
             color: #ffffff;
             font-weight: 700;
             font-size: 1.1em;
-            margin-bottom: 25px;
+            margin-bottom: 8px;
             display: block;
         }
 
@@ -199,113 +199,99 @@
         <a href="https://t.me/wlunlocker" class="telegram-pill">
             Больше в Telegram-канале @wlunlocker
         </a>
-        <div id="update-info" class="last-upd-box">Синхронизация времени...</div>
+        <div id="update-info" class="last-upd-box">Синхронизация...</div>
     </div>
 
     <div class="container">
-        <div class="section sub-section">
+        <div class="section">
             <h2>
                 <span class="material-icons-outlined" style="margin-right:8px;color:var(--accent);">auto_awesome</span>
                 ПОДКЛЮЧИТЬ (V2RAY/HIDDIFY/HAPP)
             </h2>
-            <div id="sub-list">
-                <div style="text-align:center;color:var(--text-sub);">Загрузка конфигов...</div>
-            </div>
+            <div id="sub-list"></div>
         </div>
 
-        <div class="section proxy-section">
+        <div class="section">
             <h2>
                 <span class="material-icons-outlined" style="margin-right:8px;color:var(--accent);">bolt</span>
                 MTProto Прокси (Telegram)
             </h2>
-            <div id="proxy-list">
-                <div style="text-align:center;color:var(--text-sub);">Загрузка прокси...</div>
-            </div>
+            <div id="proxy-list"></div>
         </div>
     </div>
 
     <script>
         function copyToClipboard(text, btnElement) {
             navigator.clipboard.writeText(text).then(() => {
-                const originalContent = btnElement.innerHTML;
+                const original = btnElement.innerHTML;
                 btnElement.innerHTML = '<span class="material-icons-outlined">check_circle</span> Скопировано!';
                 btnElement.style.backgroundColor = '#28a745';
                 setTimeout(() => {
-                    btnElement.innerHTML = originalContent;
+                    btnElement.innerHTML = original;
                     btnElement.style.backgroundColor = '';
                 }, 2000);
             });
         }
 
         async function fetchData() {
-            const subContainer = document.getElementById('sub-list');
-            const proxyContainer = document.getElementById('proxy-list');
-            const updateBox = document.getElementById('update-info');
-
+            const cacheBuster = '?v=' + Math.random();
             try {
-                // Изменено на новый репозиторий anti-rkn
-                const vpnResp = await fetch('https://raw.githubusercontent.com/wlunlocker/anti-rkn/main/vpnfull.txt');
+                // 1. Дата
+                const vpnResp = await fetch('https://raw.githubusercontent.com/wlunlocker/anti-rkn/main/vpnfull.txt' + cacheBuster);
                 const vpnText = await vpnResp.text();
                 const dateLine = vpnText.split('\n').find(l => l.includes('Last update:'));
-                if (dateLine) {
-                    updateBox.innerText = dateLine.replace('#', '').trim();
-                }
+                if (dateLine) document.getElementById('update-info').innerText = dateLine.replace('#', '').trim();
 
-                const subResp = await fetch('subscribes.txt');
+                // 2. Подписки
+                const subResp = await fetch('subscribes.txt' + cacheBuster);
                 const subData = await subResp.text();
-                subContainer.innerHTML = '';
+                const subList = document.getElementById('sub-list');
+                subList.innerHTML = '';
                 
                 subData.split('\n').forEach(line => {
                     if (line.includes('|')) {
                         const p = line.split('|').map(s => s.trim());
-                        const title = p[0];
-                        const link = p[p.length - 1];
-                        const info = p.slice(1, -1).join('\n');
-
-                        const happLink = `happ://add/${link}`;
-
-                        subContainer.innerHTML += `
+                        const title = p[0], link = p[p.length - 1], info = p.slice(1, -1).join('\n');
+                        subList.innerHTML += `
                             <div class="item-card sub-item">
                                 <span class="item-title">${title}</span>
                                 <div class="item-info">${info}</div>
                                 <div class="btn-group">
-                                    <a href="${happLink}" class="btn btn-accent">
-                                        <span class="material-icons-outlined">install_mobile</span>
-                                        Автоимпорт в Happ
-                                    </a>
-                                    <button class="btn btn-secondary" onclick="copyToClipboard('${link}', this)">
-                                        <span class="material-icons-outlined">content_copy</span>
-                                        Копировать ссылку
-                                    </button>
+                                    <a href="happ://add/${link}" class="btn btn-accent"><span class="material-icons-outlined">install_mobile</span>Автоимпорт в Happ</a>
+                                    <button class="btn btn-secondary" onclick="copyToClipboard('${link}', this)"><span class="material-icons-outlined">content_copy</span>Копировать ссылку</button>
                                 </div>
                             </div>`;
                     }
                 });
 
-                const proxyResp = await fetch('proxies.txt');
+                // 3. Прокси (авто-подстановка описания)
+                const proxyResp = await fetch('proxies.txt' + cacheBuster);
                 const proxyData = await proxyResp.text();
-                proxyContainer.innerHTML = '';
+                const proxyList = document.getElementById('proxy-list');
+                proxyList.innerHTML = '';
 
                 proxyData.split('\n').forEach(line => {
                     if (line.includes('|')) {
                         const [name, link] = line.split('|').map(s => s.trim());
-                        proxyContainer.innerHTML += `
+                        // Скрипт сам пишет описание, бережём твои пальцы
+                        const autoInfo = "Протокол: MTProto"; 
+                        
+                        proxyList.innerHTML += `
                             <div class="item-card proxy-item">
                                 <span class="item-title">${name}</span>
-                                <a href="${link}" class="btn btn-accent">
-                                    <span class="material-icons-outlined">wifi_tethering</span>
-                                    Подключить прокси
-                                </a>
+                                <div class="item-info">${autoInfo}</div>
+                                <div class="btn-group">
+                                    <a href="${link}" class="btn btn-accent"><span class="material-icons-outlined">wifi_tethering</span>Подключить прокси</a>
+                                    <button class="btn btn-secondary" onclick="copyToClipboard('${link}', this)"><span class="material-icons-outlined">content_copy</span>Копировать ссылку</button>
+                                </div>
                             </div>`;
                     }
                 });
 
             } catch (e) {
-                console.error(e);
-                updateBox.innerText = 'Ошибка обновления';
+                console.log(e);
             }
         }
-
         fetchData();
     </script>
 </body>
