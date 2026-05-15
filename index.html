@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -27,7 +26,6 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            /* Живой градиентный фон */
             background: linear-gradient(-45deg, #050811, #0a1322, #0f172a, #050811);
             background-size: 400% 400%;
             animation: gradientBG 10s ease infinite;
@@ -117,7 +115,6 @@
 
         .item-card:last-child { margin-bottom: 0; }
 
-        /* Названия подписок - синие */
         .sub-item .item-title {
             color: var(--accent);
             font-weight: 800;
@@ -126,12 +123,11 @@
             display: block;
         }
 
-        /* Названия прокси - БЕЛЫЕ */
         .proxy-item .item-title {
             color: #ffffff;
             font-weight: 700;
             font-size: 1.1em;
-            margin-bottom: 25px; /* Увеличенный разрыв до кнопки */
+            margin-bottom: 25px;
             display: block;
         }
 
@@ -229,7 +225,6 @@
     </div>
 
     <script>
-        // Функция копирования
         function copyToClipboard(text, btnElement) {
             navigator.clipboard.writeText(text).then(() => {
                 const originalContent = btnElement.innerHTML;
@@ -248,15 +243,14 @@
             const updateBox = document.getElementById('update-info');
 
             try {
-                // Измененный URL репозитория: anti_rkn вместо anti-rkn_project
-                const vpnResp = await fetch('https://raw.githubusercontent.com/wlunlocker/anti_rkn/main/vpnfull.txt');
+                // Изменено на новый репозиторий anti-rkn
+                const vpnResp = await fetch('https://raw.githubusercontent.com/wlunlocker/anti-rkn/main/vpnfull.txt');
                 const vpnText = await vpnResp.text();
                 const dateLine = vpnText.split('\n').find(l => l.includes('Last update:'));
                 if (dateLine) {
                     updateBox.innerText = dateLine.replace('#', '').trim();
                 }
 
-                // 2. Загружаем подписки
                 const subResp = await fetch('subscribes.txt');
                 const subData = await subResp.text();
                 subContainer.innerHTML = '';
@@ -268,7 +262,6 @@
                         const link = p[p.length - 1];
                         const info = p.slice(1, -1).join('\n');
 
-                        // Автоимпорт Happ через специальный протокол happ://add/
                         const happLink = `happ://add/${link}`;
 
                         subContainer.innerHTML += `
@@ -289,7 +282,6 @@
                     }
                 });
 
-                // 3. Загружаем прокси
                 const proxyResp = await fetch('proxies.txt');
                 const proxyData = await proxyResp.text();
                 proxyContainer.innerHTML = '';
