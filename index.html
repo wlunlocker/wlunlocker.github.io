@@ -3,481 +3,458 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#061208">
+    <meta name="theme-color" content="#0f1511">
     <title>WLUnlocker</title>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,600,0,0" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
     <style>
         :root {
-            --md-sys-color-primary: #55d679;
-            --md-sys-color-on-primary: #003914;
-            --md-sys-color-primary-container: #005221;
-            --md-sys-color-on-primary-container: #75f498;
-            --md-sys-color-secondary: #a0d0a7;
-            --md-sys-color-surface: #0f1611;
-            --md-sys-color-surface-variant: #1a271d;
-            --md-sys-color-on-surface: #e0e4e0;
-            --md-sys-color-on-surface-variant: #bfc9c0;
-            --md-sys-color-outline: #2c4232;
-            --md-sys-color-outline-variant: #1c2b20;
-            
-            --elevation-1: 0px 4px 8px rgba(0, 0, 0, 0.4);
-            --elevation-2: 0px 8px 16px rgba(0, 0, 0, 0.5);
-            
-            --radius-small: 12px;
-            --radius-medium: 24px;
-            --radius-large: 32px;
-            --radius-full: 9999px;
+            --md-sys-color-background: #0f1511;
+            --md-sys-color-on-background: #e0e3e0;
+            --md-sys-color-surface: #171d18;
+            --md-sys-color-surface-dim: #0f1511;
+            --md-sys-color-surface-container-low: #1b211c;
+            --md-sys-color-surface-container: #1f2520;
+            --md-sys-color-surface-container-high: #29302a;
+            --md-sys-color-primary: #52d777;
+            --md-sys-color-on-primary: #003913;
+            --md-sys-color-primary-container: #005220;
+            --md-sys-color-on-primary-container: #72f492;
+            --md-sys-color-secondary-container: #324b37;
+            --md-sys-color-on-secondary-container: #cfebd2;
+            --md-sys-color-on-surface: #e0e3e0;
+            --md-sys-color-on-surface-variant: #bfc9be;
+            --md-sys-color-outline-variant: #404941;
 
-            --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --motion-duration-short: 150ms;
+            --motion-duration-medium: 300ms;
+            --motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
         }
 
         body {
-            font-family: var(--font-family);
+            font-family: 'Roboto', system-ui, sans-serif;
             margin: 0;
-            padding: 24px 16px;
-            color: var(--md-sys-color-on-surface);
+            padding: 0;
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-background);
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #050d08, #0a1c11, #0f2b18, #08160c);
-            background-size: 400% 400%;
-            animation: surfaceGradient 14s ease-in-out infinite alternate;
             -webkit-tap-highlight-color: transparent;
         }
 
-        @keyframes surfaceGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 36px;
+        /* Системный Large Top App Bar в стиле Pixel */
+        .top-app-bar {
             width: 100%;
             max-width: 640px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            box-sizing: border-box;
+            padding: 64px 24px 24px 24px;
+            background-color: var(--md-sys-color-background);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            transition: padding var(--motion-duration-medium) var(--motion-easing-standard),
+                        background-color var(--motion-duration-medium) var(--motion-easing-standard);
         }
 
-        h1 {
-            font-size: 2.75rem;
-            margin: 0 0 20px 0;
-            font-weight: 800;
-            letter-spacing: -1.5px;
-            color: var(--md-sys-color-on-surface);
-            text-shadow: 0 4px 24px rgba(85, 214, 121, 0.15);
+        .top-app-bar.scrolling {
+            padding: 20px 24px;
+            background-color: var(--md-sys-color-surface-container-low);
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
         }
 
-        .chips-container {
+        .top-app-bar h1 {
+            font-family: 'Google Sans', sans-serif;
+            font-size: 2.25rem;
+            font-weight: 400;
+            margin: 0 0 24px 0;
+            color: var(--md-sys-color-on-background);
+            transition: font-size var(--motion-duration-medium) var(--motion-easing-standard),
+                        margin var(--motion-duration-medium) var(--motion-easing-standard);
+        }
+
+        .top-app-bar.scrolling h1 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        /* Кнопки-чипсы каналов */
+        .chips-layout {
             display: flex;
-            gap: 12px;
-            justify-content: center;
+            gap: 8px;
             width: 100%;
-            flex-wrap: wrap;
+            transition: opacity var(--motion-duration-short) var(--motion-easing-standard);
         }
 
-        .chip {
+        .top-app-bar.scrolling .chips-layout {
+            display: none;
+        }
+
+        .md-chip {
+            flex: 1;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
-            padding: 10px 20px;
-            background-color: var(--md-sys-color-primary-container);
-            color: var(--md-sys-color-on-primary-container);
-            border-radius: var(--radius-full);
-            font-size: 0.95rem;
-            font-weight: 600;
+            padding: 14px 16px;
+            background-color: var(--md-sys-color-surface-container-high);
+            color: var(--md-sys-color-on-surface);
+            border-radius: 16px;
+            font-family: 'Google Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
             text-decoration: none;
-            border: 1px solid rgba(117, 244, 152, 0.1);
-            transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color var(--motion-duration-short) var(--motion-easing-standard),
+                        transform var(--motion-duration-short) var(--motion-easing-standard);
         }
 
-        .chip:hover, .chip:active {
-            background-color: rgba(0, 82, 33, 0.8);
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 6px 16px rgba(0, 82, 33, 0.4);
+        .md-chip:active {
+            background-color: var(--md-sys-color-outline-variant);
+            transform: scale(0.97);
         }
 
-        .chip .material-symbols-rounded {
+        .md-chip .material-symbols-rounded {
             font-size: 20px;
+            color: var(--md-sys-color-primary);
         }
 
-        .sync-status {
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-            font-size: 0.8rem;
-            color: var(--md-sys-color-on-surface-variant);
-            margin-top: 20px;
-            background: var(--md-sys-color-surface-variant);
-            padding: 6px 14px;
-            border-radius: var(--radius-full);
-            border: 1px solid var(--md-sys-color-outline-variant);
-        }
-
-        .main-container {
+        /* Контейнер настроек */
+        .settings-container {
             width: 100%;
             max-width: 640px;
+            box-sizing: border-box;
+            padding: 0 16px 40px 16px;
             display: flex;
             flex-direction: column;
-            gap: 32px;
+            gap: 24px;
         }
 
-        .md-card {
-            background-color: var(--md-sys-color-surface);
-            border-radius: var(--radius-large);
-            padding: 28px;
-            border: 1px solid var(--md-sys-color-outline-variant);
-            box-shadow: var(--elevation-1);
-            position: relative;
+        /* Категория настроек (Группа элементов) */
+        .settings-category {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .category-title {
+            font-family: 'Google Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--md-sys-color-primary);
+            padding: 0 16px 8px 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        /* Подсказка в стиле описания настроек */
+        .category-summary {
+            font-size: 0.85rem;
+            color: var(--md-sys-color-on-surface-variant);
+            padding: 0 16px 16px 16px;
+            line-height: 1.4;
+        }
+
+        /* Общий блок для списка (с закруглениями как в Android) */
+        .settings-group-list {
+            background-color: var(--md-sys-color-surface-container-low);
+            border-radius: 28px;
             overflow: hidden;
         }
 
-        .md-card::before {
+        /* Интерактивная плитка списка */
+        .settings-tile {
+            display: flex;
+            align-items: center;
+            padding: 20px 16px;
+            position: relative;
+            background-color: transparent;
+            border: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            transition: background-color var(--motion-duration-short) var(--motion-easing-standard);
+        }
+
+        .settings-tile:not(:last-child)::after {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; height: 100%;
-            background: linear-gradient(180deg, rgba(85, 214, 121, 0.03) 0%, transparent 40%);
-            pointer-events: none;
+            bottom: 0;
+            left: 56px;
+            right: 16px;
+            height: 1px;
+            background-color: rgba(64, 73, 65, 0.4);
         }
 
-        .section-header {
+        .settings-tile:active {
+            background-color: var(--md-sys-color-surface-container-high);
+        }
+
+        .tile-icon-container {
             display: flex;
             align-items: center;
-            margin: 0 0 16px 0;
-            padding-left: 4px;
-        }
-
-        .section-header h2 {
-            font-size: 1.1rem;
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
+            justify-content: center;
+            margin-right: 16px;
             color: var(--md-sys-color-on-surface-variant);
-            font-weight: 700;
+        }
+
+        .tile-icon-container .material-symbols-rounded {
+            font-size: 24px;
+        }
+
+        .tile-text {
+            flex: 1;
             display: flex;
-            align-items: center;
-            gap: 10px;
+            flex-direction: column;
+            padding-right: 8px;
         }
 
-        .section-icon {
-            color: var(--md-sys-color-primary);
-            background: var(--md-sys-color-primary-container);
-            padding: 6px;
-            border-radius: var(--radius-small);
-        }
-
-        .guide-box {
-            font-size: 0.875rem;
-            color: var(--md-sys-color-secondary);
-            line-height: 1.6;
-            margin-bottom: 24px;
-            background: rgba(160, 208, 167, 0.08);
-            padding: 16px;
-            border-radius: var(--radius-medium);
-            border: 1px solid rgba(160, 208, 167, 0.15);
-        }
-
-        .list-item {
-            background-color: var(--md-sys-color-surface-variant);
-            border-radius: var(--radius-medium);
-            padding: 20px;
-            margin-bottom: 16px;
-            border: 1px solid var(--md-sys-color-outline-variant);
-            transition: border-color 0.3s;
-        }
-
-        .list-item:hover {
-            border-color: var(--md-sys-color-outline);
-        }
-
-        .list-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .item-title {
+        .tile-title {
+            font-family: 'Google Sans', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 400;
             color: var(--md-sys-color-on-surface);
-            font-weight: 800;
-            font-size: 1.2rem;
-            margin-bottom: 12px;
-            display: block;
+            margin-bottom: 4px;
         }
 
-        .proxy-item .item-title {
-            margin-bottom: 12px;
-        }
-
-        .item-meta {
-            font-size: 0.9rem;
+        .tile-description {
+            font-size: 0.85rem;
             color: var(--md-sys-color-on-surface-variant);
-            line-height: 1.6;
-            margin-bottom: 24px;
+            line-height: 1.4;
             white-space: pre-line;
         }
 
-        .action-group {
+        /* Системные мини-кнопки действий справа */
+        .tile-actions {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
+            gap: 8px;
+            align-items: center;
         }
 
-        .md-btn {
+        .action-button {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            width: 100%;
-            padding: 16px;
-            border-radius: var(--radius-full);
-            font-weight: 700;
-            font-size: 1rem;
-            text-decoration: none;
-            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background-color: var(--md-sys-color-surface-container-high);
+            color: var(--md-sys-color-on-surface);
             border: none;
             cursor: pointer;
-            box-sizing: border-box;
-            position: relative;
-            overflow: hidden;
+            text-decoration: none;
+            transition: background-color var(--motion-duration-short) var(--motion-easing-standard),
+                        transform var(--motion-duration-short) var(--motion-easing-standard);
         }
 
-        .md-btn::after {
-            content: "";
-            position: absolute;
-            top: 50%; left: 50%;
-            width: 100%; height: 100%;
-            background: currentColor;
-            opacity: 0;
-            border-radius: 50%;
-            transform: translate(-50%, -50%) scale(1);
-            transition: opacity 0.3s, transform 0s;
+        .action-button:active {
+            background-color: var(--md-sys-color-outline-variant);
+            transform: scale(0.9);
         }
 
-        .md-btn:active::after {
-            opacity: 0.12;
-            transform: translate(-50%, -50%) scale(0);
-            transition: transform 0.3s;
+        .action-button.primary-action {
+            background-color: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
         }
 
-        .btn-filled {
+        .action-button.success-action {
             background-color: var(--md-sys-color-primary);
             color: var(--md-sys-color-on-primary);
-            box-shadow: 0 4px 12px rgba(85, 214, 121, 0.25);
         }
 
-        .btn-filled:hover {
-            background-color: #6cf08f;
-            box-shadow: 0 6px 16px rgba(85, 214, 121, 0.4);
+        .action-button .material-symbols-rounded {
+            font-size: 20px;
         }
 
-        .btn-tonal {
-            background-color: rgba(255, 255, 255, 0.08);
-            color: var(--md-sys-color-on-surface);
+        .status-footer {
+            width: 100%;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--md-sys-color-on-surface-variant);
+            margin-top: 16px;
+            letter-spacing: 0.3px;
         }
 
-        .btn-tonal:hover {
-            background-color: rgba(255, 255, 255, 0.12);
-        }
-
-        .btn-success {
-            background-color: var(--md-sys-color-primary-container) !important;
-            color: var(--md-sys-color-on-primary-container) !important;
-        }
-
-        .placeholder-text {
+        .state-info {
+            padding: 24px;
             text-align: center;
             color: var(--md-sys-color-on-surface-variant);
-            padding: 20px;
-            font-weight: 500;
+            font-size: 0.9rem;
         }
 
-        @media (max-width: 500px) {
-            h1 { font-size: 2.25rem; }
-            .md-card { padding: 20px; border-radius: var(--radius-medium); }
-            .chips-container { flex-direction: column; gap: 10px; }
-            .chip { width: 100%; justify-content: center; box-sizing: border-box; }
-            body { padding: 16px 12px; }
+        @media (max-width: 400px) {
+            .top-app-bar { padding-left: 16px; padding-right: 16px; }
+            .settings-container { padding-left: 8px; padding-right: 8px; }
+            .tile-icon-container { margin-right: 12px; }
+            .settings-tile:not(:last-child)::after { left: 52px; }
         }
     </style>
 </head>
 <body>
 
-    <header class="header">
+    <div id="app-bar" class="top-app-bar">
         <h1>WLUnlocker</h1>
-        
-        <div class="chips-container">
-            <a href="https://t.me/wlunlocker" class="chip" target="_blank" rel="noopener">
+        <div class="chips-layout">
+            <a href="https://t.me/wlunlocker" class="md-chip" target="_blank" rel="noopener">
                 <span class="material-symbols-rounded">vpn_lock</span>
-                WLUnlocker VPN
+                VPN Канал
             </a>
-            <a href="https://t.me/wlproxy" class="chip" target="_blank" rel="noopener">
+            <a href="https://t.me/wlproxy" class="md-chip" target="_blank" rel="noopener">
                 <span class="material-symbols-rounded">bolt</span>
-                WLUnlocker Прокси
+                Прокси Канал
             </a>
         </div>
+    </div>
 
-        <div id="sync-indicator" class="sync-status">Синхронизация узлов...</div>
-    </header>
-
-    <main class="main-container">
+    <main class="settings-container">
         
-        <section class="md-card">
-            <div class="section-header">
-                <h2>
-                    <span class="material-symbols-rounded section-icon">auto_awesome</span>
-                    Подключить VPN
-                </h2>
-            </div>
-            <div class="guide-box">
-                Чтобы использовать нашу подписку в другом приложении, скопируйте ссылку и вставьте ее в свой VPN-клиент (V2Ray, Hiddify, Happ).
-            </div>
-            <div id="vpn-roster">
-                <div class="placeholder-text">Загрузка конфигураций...</div>
+        <section class="settings-category">
+            <div class="category-title">Конфигурации VPN</div>
+            <div class="category-summary">Чтобы использовать подписку в другом приложении, скопируйте ссылку и вставьте ее в свой VPN-клиент.</div>
+            
+            <div id="vpn-list-group" class="settings-group-list">
+                <div class="state-info">Загрузка параметров сети...</div>
             </div>
         </section>
 
-        <section class="md-card">
-            <div class="section-header">
-                <h2>
-                    <span class="material-symbols-rounded section-icon">speed</span>
-                    MTProto Прокси
-                </h2>
-            </div>
-            <div class="guide-box">
-                Чтобы подключить прокси, нужно подключиться к VPN — перейти по ссылке, отключить VPN и подключить прокси в Telegram.
-            </div>
-            <div id="proxy-roster">
-                <div class="placeholder-text">Обнаружение узлов...</div>
+        <section class="settings-category">
+            <div class="category-title">Прокси-серверы</div>
+            <div class="category-summary">Для подключения необходимо активировать VPN, перейти по ссылке, а после успешного импорта отключить VPN.</div>
+            
+            <div id="proxy-list-group" class="settings-group-list">
+                <div class="state-info">Поиск доступных шлюзов...</div>
             </div>
         </section>
+
+        <footer id="sync-time" class="status-footer">Синхронизация с узлами GitHub...</footer>
 
     </main>
 
     <script>
-        const UI = {
-            vpnRoster: document.getElementById('vpn-roster'),
-            proxyRoster: document.getElementById('proxy-roster'),
-            syncIndicator: document.getElementById('sync-indicator')
+        const DOM = {
+            bar: document.getElementById('app-bar'),
+            vpnGroup: document.getElementById('vpn-list-group'),
+            proxyGroup: document.getElementById('proxy-list-group'),
+            syncText: document.getElementById('sync-time')
         };
 
-        const API = {
-            baseRawUrl: 'https://raw.githubusercontent.com/wlunlocker/anti-rkn/main/',
-            getCacheBuster: () => `?v=${Date.now()}_${Math.random().toString(36).substring(2)}`
-        };
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                DOM.bar.classList.add('scrolling');
+            } else {
+                DOM.bar.classList.remove('scrolling');
+            }
+        });
 
-        async function copyToClipboard(text, buttonElement) {
+        async function copyData(text, btn) {
             try {
                 await navigator.clipboard.writeText(text);
-                const originalHTML = buttonElement.innerHTML;
+                const icon = btn.querySelector('.material-symbols-rounded');
+                const originalIcon = icon.textContent;
                 
-                buttonElement.classList.add('btn-success');
-                buttonElement.innerHTML = `<span class="material-symbols-rounded">check_circle</span>Скопировано`;
+                btn.classList.add('success-action');
+                icon.textContent = 'check';
                 
                 setTimeout(() => {
-                    buttonElement.classList.remove('btn-success');
-                    buttonElement.innerHTML = originalHTML;
-                }, 2500);
-            } catch (err) {
-                console.error('Clipboard access denied', err);
+                    btn.classList.remove('success-action');
+                    icon.textContent = originalIcon;
+                }, 2000);
+            } catch (e) {
+                console.error(e);
             }
         }
 
-        function createVPNCard(title, info, link) {
+        function buildVpnTile(title, desc, link) {
             return `
-                <article class="list-item">
-                    <span class="item-title">${title}</span>
-                    <div class="item-meta">${info}</div>
-                    <div class="action-group">
-                        <a href="happ://add/${link}" class="md-btn btn-filled">
+                <div class="settings-tile">
+                    <div class="tile-icon-container">
+                        <span class="material-symbols-rounded">verified_user</span>
+                    </div>
+                    <div class="tile-text">
+                        <span class="tile-title">${title}</span>
+                        <span class="tile-description">${desc}</span>
+                    </div>
+                    <div class="tile-actions">
+                        <a href="happ://add/${link}" class="action-button primary-action" title="Импорт в Happ">
                             <span class="material-symbols-rounded">download</span>
-                            Автоимпорт в Happ
                         </a>
-                        <button class="md-btn btn-tonal" onclick="copyToClipboard('${link}', this)">
+                        <button class="action-button" onclick="copyData('${link}', this)" title="Копировать линк">
                             <span class="material-symbols-rounded">content_copy</span>
-                            Скопировать ссылку
                         </button>
                     </div>
-                </article>
+                </div>
             `;
         }
 
-        function createProxyCard(name, link) {
-            const protocolInfo = "Протокол: MTProto";
+        function buildProxyTile(name, link) {
             return `
-                <article class="list-item proxy-item">
-                    <span class="item-title">${name}</span>
-                    <div class="item-meta">${protocolInfo}</div>
-                    <div class="action-group">
-                        <a href="${link}" class="md-btn btn-filled">
-                            <span class="material-symbols-rounded">wifi_tethering</span>
-                            Подключить прокси
+                <div class="settings-tile">
+                    <div class="tile-icon-container">
+                        <span class="material-symbols-rounded">lan</span>
+                    </div>
+                    <div class="tile-text">
+                        <span class="tile-title">${name}</span>
+                        <span class="tile-description">Протокол: MTProto</span>
+                    </div>
+                    <div class="tile-actions">
+                        <a href="${link}" class="action-button primary-action" title="Подключить">
+                            <span class="material-symbols-rounded">link</span>
                         </a>
-                        <button class="md-btn btn-tonal" onclick="copyToClipboard('${link}', this)">
+                        <button class="action-button" onclick="copyData('${link}', this)" title="Копировать">
                             <span class="material-symbols-rounded">content_copy</span>
-                            Скопировать ссылку
                         </button>
                     </div>
-                </article>
+                </div>
             `;
         }
 
-        async function initializePlatform() {
+        async function loadContent() {
+            const salt = `?v=${Date.now()}_${Math.random().toString(36).substring(2,7)}`;
+            const rootRepo = 'https://raw.githubusercontent.com/wlunlocker/anti-rkn/main/';
+
             try {
-                const buster = API.getCacheBuster();
-                
-                const metaResponse = await fetch(`${API.baseRawUrl}vpnfull.txt${buster}`);
-                if (metaResponse.ok) {
-                    const metaText = await metaResponse.text();
-                    const targetLine = metaText.split('\n').find(line => line.includes('Last update:'));
-                    if (targetLine) {
-                        UI.syncIndicator.textContent = targetLine.replace('#', '').trim();
-                    }
+                const metaReq = await fetch(`${rootRepo}vpnfull.txt${salt}`);
+                if (metaReq.ok) {
+                    const txt = await metaReq.text();
+                    const line = txt.split('\n').find(l => l.includes('Last update:'));
+                    if (line) DOM.syncText.textContent = line.replace('#', '').trim();
                 }
 
-                const subsResponse = await fetch(`subscribes.txt${buster}`);
-                if (subsResponse.ok) {
-                    const subsRaw = await subsResponse.text();
-                    let vpnHTML = '';
-                    
-                    subsRaw.split('\n').forEach(line => {
-                        const trimmed = line.trim();
-                        if (trimmed && trimmed.includes('|') && !trimmed.startsWith('#')) {
-                            const parts = trimmed.split('|').map(s => s.trim());
-                            const title = parts[0];
-                            const link = parts[parts.length - 1];
-                            const info = parts.slice(1, -1).join('\n');
-                            vpnHTML += createVPNCard(title, info, link);
+                const subsReq = await fetch(`subscribes.txt${salt}`);
+                if (subsReq.ok) {
+                    const raw = await subsReq.text();
+                    let html = '';
+                    raw.split('\n').forEach(l => {
+                        const row = l.trim();
+                        if (row && row.includes('|') && !row.startsWith('#')) {
+                            const seg = row.split('|').map(s => s.trim());
+                            html += buildVpnTile(seg[0], seg.slice(1, -1).join(' • '), seg[seg.length - 1]);
                         }
                     });
-                    
-                    UI.vpnRoster.innerHTML = vpnHTML || '<div class="placeholder-text">Список пуст</div>';
+                    DOM.vpnGroup.innerHTML = html || '<div class="state-info">Конфигурации отсутствуют</div>';
                 }
 
-                const proxiesResponse = await fetch(`proxies.txt${buster}`);
-                if (proxiesResponse.ok) {
-                    const proxiesRaw = await proxiesResponse.text();
-                    let proxyHTML = '';
-                    
-                    proxiesRaw.split('\n').forEach(line => {
-                        const trimmed = line.trim();
-                        if (trimmed && trimmed.includes('|') && !trimmed.startsWith('#')) {
-                            const parts = trimmed.split('|').map(s => s.trim());
-                            const name = parts[0];
-                            const link = parts[parts.length - 1];
-                            proxyHTML += createProxyCard(name, link);
+                const proxyReq = await fetch(`proxies.txt${salt}`);
+                if (proxyReq.ok) {
+                    const raw = await proxyReq.text();
+                    let html = '';
+                    raw.split('\n').forEach(l => {
+                        const row = l.trim();
+                        if (row && row.includes('|') && !row.startsWith('#')) {
+                            const seg = row.split('|').map(s => s.trim());
+                            html += buildProxyTile(seg[0], seg[1]);
                         }
                     });
-                    
-                    UI.proxyRoster.innerHTML = proxyHTML || '<div class="placeholder-text">Список пуст</div>';
+                    DOM.proxyGroup.innerHTML = html || '<div class="state-info">Активные прокси не найдены</div>';
                 }
 
-            } catch (error) {
-                console.error('Core initialization failed:', error);
-                UI.syncIndicator.textContent = 'Сбой синхронизации';
+            } catch (err) {
+                DOM.syncText.textContent = 'Ошибка получения данных сети';
             }
         }
 
-        document.addEventListener('DOMContentLoaded', initializePlatform);
+        document.addEventListener('DOMContentLoaded', loadContent);
     </script>
 </body>
 </html>
