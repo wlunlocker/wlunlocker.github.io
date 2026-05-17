@@ -3,436 +3,508 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#121212">
-    <title>WLUnlocker</title>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#070c08">
+    <title>WLUnlocker — Личные Узлы Сети</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+
     <style>
         :root {
-            /* Monet-цвет (Material Green) */
-            --color-monet-green: #4CAF50;
-            --color-monet-green-dark: #388E3C;
-            --color-monet-green-light: #C8E6C9;
+            /* Живая палитра MD3 (Тёмный глубокий изумруд / Monet Style) */
+            --md-sys-color-background: #060b07;
+            --md-sys-color-surface: rgba(20, 28, 22, 0.7);
+            --md-sys-color-surface-variant: rgba(30, 42, 33, 0.8);
+            
+            --md-sys-color-primary: #3cd070;
+            --md-sys-color-on-primary: #003915;
+            --md-sys-color-primary-container: #005322;
+            --md-sys-color-on-primary-container: #8bfda2;
+            
+            --md-sys-color-on-background: #e1e3df;
+            --md-sys-color-on-surface: #e1e3df;
+            --md-sys-color-on-surface-variant: #b0bec5;
+            --md-sys-color-outline: rgba(255, 255, 255, 0.08);
 
-            --color-background: #121212;
-            --color-surface: #1E1E1E;
-            --color-on-surface: #E0E0E0;
-            --color-on-surface-variant: #B0BEC5;
-            --color-outline: #424242;
-
-            --motion-duration-short: 150ms;
-            --motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+            --font-family-flex: 'Google Sans Flex', system-ui, sans-serif;
         }
 
-        body {
-            font-family: 'Roboto', system-ui, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--color-background);
-            color: var(--color-on-surface);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
+        * {
+            box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Large Top App Bar */
-        .top-app-bar {
-            width: 100%;
-            max-width: 640px;
-            box-sizing: border-box;
-            padding: 64px 24px 24px 24px;
-            background-color: var(--color-background);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        .top-app-bar h1 {
-            font-family: 'Google Sans', sans-serif;
-            font-size: 2.25rem;
-            font-weight: 400;
+        body {
+            font-family: var(--font-family-flex);
             margin: 0;
-            color: var(--color-on-surface);
-        }
-
-        /* Кнопки каналов */
-        .chips-layout {
+            padding: 0;
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-background);
+            min-height: 100vh;
             display: flex;
-            gap: 8px;
-            width: 100%;
-            max-width: 640px;
-            padding: 0 16px 24px 16px;
-            box-sizing: border-box;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        .md-chip {
+        /* --- Эффект живого Material Design бэкграунда --- */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            background: radial-gradient(circle at 50% 50%, #0c1a10 0%, #060b07 100%);
+        }
+
+        .md3-sphere {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.35;
+            mix-blend-mode: screen;
+            animation: fluidMotion 25s infinite ease-in-out;
+        }
+
+        .sphere-1 {
+            width: 450px;
+            height: 450px;
+            background: var(--md-sys-color-primary-container);
+            top: -10%;
+            left: -15%;
+            animation-duration: 22s;
+        }
+
+        .sphere-2 {
+            width: 550px;
+            height: 550px;
+            background: #004d1c;
+            bottom: -15%;
+            right: -15%;
+            animation-delay: -5s;
+            animation-duration: 28s;
+        }
+
+        .sphere-3 {
+            width: 350px;
+            height: 350px;
+            background: #1b5e20;
+            top: 35%;
+            right: -10%;
+            animation-delay: -10s;
+            animation-duration: 18s;
+        }
+
+        @keyframes fluidMotion {
+            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            33% { transform: translate(40px, -60px) scale(1.15) rotate(120deg); }
+            66% { transform: translate(-30px, 30px) scale(0.9) rotate(240deg); }
+        }
+
+        /* --- Контейнер интерфейса --- */
+        .app-layout {
+            width: 100%;
+            max-width: 680px;
+            padding: 56px 20px 40px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin: 0 0 24px 0;
+            background: linear-gradient(135deg, #ffffff 40%, var(--md-sys-color-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Кастомные верхние кнопки-чипсы */
+        .channels-nav {
+            display: flex;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .channel-link {
             flex: 1;
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 14px 16px;
-            background-color: #212121; /* Более темный серый, как на скриншотах */
-            color: var(--color-on-surface);
-            border-radius: 16px;
-            font-family: 'Google Sans', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 500;
+            gap: 10px;
+            padding: 16px;
+            background: var(--md-sys-color-surface);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 20px;
+            color: var(--md-sys-color-on-background);
             text-decoration: none;
-            transition: background-color var(--motion-duration-short) var(--motion-easing-standard),
-                        transform var(--motion-duration-short) var(--motion-easing-standard);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
         }
 
-        .md-chip:hover {
-            background-color: #2C2C2C;
+        .channel-link .material-symbols-rounded {
+            color: var(--md-sys-color-primary);
+            font-size: 22px;
         }
 
-        .md-chip:active {
-            background-color: #383838;
-            transform: scale(0.98);
+        .channel-link:hover {
+            background: var(--md-sys-color-surface-variant);
+            border-color: var(--md-sys-color-primary);
+            transform: translateY(-2px);
         }
 
-        .md-chip .material-symbols-rounded {
-            font-size: 20px;
-            color: var(--color-monet-green);
-        }
-
-        /* Основной контейнер */
-        .settings-container {
-            width: 100%;
-            max-width: 640px;
-            box-sizing: border-box;
-            padding: 0 16px 40px 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        .settings-category {
+        /* --- MD3 Карточки и Категории --- */
+        .category-group {
             display: flex;
             flex-direction: column;
             width: 100%;
         }
 
-        .category-title {
-            font-family: 'Google Sans', sans-serif;
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--color-monet-green);
-            padding: 0 16px 8px 16px;
+        .group-header {
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: var(--md-sys-color-primary);
             text-transform: uppercase;
-            letter-spacing: 0.8px;
+            padding: 0 16px 6px 16px;
         }
 
-        .category-summary {
-            font-size: 0.875rem;
-            color: var(--color-on-surface-variant);
+        .group-subheader {
+            font-size: 0.9rem;
+            color: var(--md-sys-color-on-surface-variant);
             padding: 0 16px 16px 16px;
-            line-height: 1.4;
+            line-height: 1.45;
         }
 
-        /* Список конфигураций */
-        .settings-group-list {
-            background-color: #212121;
-            border-radius: 28px;
+        .tiles-list {
+            background: var(--md-sys-color-surface);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 32px;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
-        .settings-tile {
+        /* --- Элемент Списка (Строгая изоляция) --- */
+        .node-tile {
             display: flex;
             align-items: center;
-            padding: 16px;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 20px 24px;
             position: relative;
-            background-color: transparent;
-            border: none;
-            width: 100%;
-            text-align: left;
-            cursor: pointer;
-            transition: background-color var(--motion-duration-short) var(--motion-easing-standard);
         }
 
-        .settings-tile:not(:last-child)::after {
+        .node-tile:not(:last-child)::after {
             content: '';
             position: absolute;
             bottom: 0;
-            left: 56px;
-            right: 16px;
+            left: 24px;
+            right: 24px;
             height: 1px;
-            background-color: rgba(64, 73, 65, 0.4);
+            background-color: var(--md-sys-color-outline);
         }
 
-        .settings-tile:hover {
-            background-color: rgba(255, 255, 255, 0.04);
-        }
-
-        .settings-tile:active {
-            background-color: rgba(255, 255, 255, 0.08);
-        }
-
-        .tile-icon-container {
+        .node-meta {
             display: flex;
             align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            margin-right: 16px;
-            color: var(--color-on-surface-variant);
-        }
-
-        .tile-icon-container .material-symbols-rounded {
-            font-size: 24px;
-        }
-
-        .tile-text {
+            gap: 18px;
             flex: 1;
-            display: flex;
-            flex-direction: column;
+            min-width: 0; /* Жесткий фикс съезжания строк */
         }
 
-        .tile-title {
-            font-family: 'Google Sans', sans-serif;
-            font-size: 1rem;
-            font-weight: 400;
-            color: var(--color-on-surface);
-            margin-bottom: 2px;
-        }
-
-        .tile-description {
-            font-size: 0.8rem;
-            color: var(--color-on-surface-variant);
-            line-height: 1.4;
-            white-space: pre-line;
-        }
-
-        /* Кнопки действий */
-        .tile-actions {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .action-button {
+        .node-avatar {
             display: flex;
             align-items: center;
             justify-content: center;
             width: 44px;
             height: 44px;
-            border-radius: 22px;
-            background-color: #212121;
-            color: var(--color-on-surface);
-            border: none;
-            cursor: pointer;
+            border-radius: 14px;
+            background: rgba(60, 208, 112, 0.1);
+            color: var(--md-sys-color-primary);
+            flex-shrink: 0;
+        }
+
+        .node-info-text {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .node-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--md-sys-color-on-surface);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .node-desc {
+            font-size: 0.85rem;
+            color: var(--md-sys-color-on-surface-variant);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* --- Новая Двухстрочная Кнопка Скачивания --- */
+        .md3-import-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 20px;
+            background: var(--md-sys-color-surface-variant);
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 18px;
             text-decoration: none;
-            transition: background-color var(--motion-duration-short) var(--motion-easing-standard),
-                        transform var(--motion-duration-short) var(--motion-easing-standard);
+            color: #ffffff;
+            flex-shrink: 0;
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
         }
 
-        .action-button:hover {
-            background-color: #2C2C2C;
+        .btn-label-stack {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
         }
 
-        .action-button:active {
-            background-color: #383838;
+        .btn-label-top {
+            font-size: 0.72rem;
+            color: var(--md-sys-color-on-surface-variant);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-label-platform {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--md-sys-color-primary);
+        }
+
+        .btn-icon {
+            font-size: 24px;
+            color: var(--md-sys-color-primary);
+            transition: transform 0.2s ease;
+        }
+
+        /* Нажатие/Ховер кнопок по гайдлайнам MD3 */
+        .md3-import-btn:hover {
+            background: rgba(60, 208, 112, 0.15);
+            border-color: var(--md-sys-color-primary);
+        }
+
+        .md3-import-btn:hover .btn-icon {
+            transform: translateY(2px);
+        }
+
+        .md3-import-btn:active {
+            background: var(--md-sys-color-primary);
             transform: scale(0.96);
         }
 
-        /* Новая кнопка копирования (слева) */
-        .copy-action-button {
-            background-color: #2C2C2C; /* Чуть светлее для видимости */
+        .md3-import-btn:active .btn-label-top,
+        .md3-import-btn:active .btn-label-platform,
+        .md3-import-btn:active .btn-icon {
+            color: var(--md-sys-color-on-primary);
         }
 
-        .copy-action-button:active {
-            background-color: #383838;
-        }
-
-        .action-button .material-symbols-rounded {
-            font-size: 20px;
-        }
-
-        /* Зеленые иконки Monet для Happ H и Telegram самолетика */
-        .action-button svg,
-        .action-button .material-symbols-rounded.monet-icon {
-            color: var(--color-monet-green);
-        }
-
-        .state-info {
-            padding: 24px;
+        .state-message {
+            padding: 32px;
             text-align: center;
-            color: var(--color-on-surface-variant);
-            font-size: 0.9rem;
+            color: var(--md-sys-color-on-surface-variant);
+            font-size: 0.95rem;
+            font-weight: 500;
         }
 
-        @media (max-width: 480px) {
-            .top-app-bar { padding-left: 16px; padding-right: 16px; }
-            .top-app-bar h1 { font-size: 2rem; }
-            .md-chip { padding: 12px 14px; font-size: 0.85rem; }
-            .settings-category { border-radius: 0; }
-            .tile-description { font-size: 0.75rem; }
-            .action-button { width: 40px; height: 40px; border-radius: 20px; }
+        footer {
+            width: 100%;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--md-sys-color-on-surface-variant);
+            margin-top: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 520px) {
+            .app-layout { padding-top: 32px; }
+            header h1 { font-size: 2rem; }
+            .channels-nav { flex-direction: column; gap: 8px; }
+            .node-tile { padding: 16px; flex-direction: column; align-items: stretch; gap: 14px; }
+            .md3-import-btn { justify-content: space-between; padding: 12px 20px; }
+            .btn-label-stack { text-align: left; }
         }
     </style>
 </head>
 <body>
 
-    <div class="top-app-bar">
-        <h1>WLUnlocker</h1>
+    <div class="ambient-bg"></div>
+    <div class="md3-sphere sphere-1"></div>
+    <div class="md3-sphere sphere-2"></div>
+    <div class="md3-sphere sphere-3"></div>
+
+    <div class="app-layout">
+        <header>
+            <h1>WLUnlocker</h1>
+            <nav class="channels-nav">
+                <a href="https://t.me/wlunlocker" class="channel-link" target="_blank" rel="noopener">
+                    <span class="material-symbols-rounded">shield_with_heart</span>
+                    VPN Канал
+                </a>
+                <a href="https://t.me/wlproxy" class="channel-link" target="_blank" rel="noopener">
+                    <span class="material-symbols-rounded">bolt</span>
+                    Прокси Канал
+                </a>
+            </nav>
+        </header>
+
+        <main style="display: flex; flex-direction: column; gap: 32px;">
+            <section class="category-group">
+                <div class="group-header">Конфигурации VPN</div>
+                <div class="group-subheader">Все доступные узлы подписок из репозитория. Нажмите кнопку справа для мгновенного импорта.</div>
+                <div id="vpn-list" class="tiles-list">
+                    <div class="state-message">Синхронизация списков шифрования...</div>
+                </div>
+            </section>
+
+            <section class="category-group">
+                <div class="group-header">Прокси-серверы</div>
+                <div class="group-subheader">Сгенерированные прокси шлюзы. Работают напрямую внутри мессенджера Telegram.</div>
+                <div id="proxy-list" class="tiles-list">
+                    <div class="state-message">Сканирование активных прокси-узлов...</div>
+                </div>
+            </section>
+        </main>
+
+        <footer id="sync-timestamp">Инициализация защищенного соединения...</footer>
     </div>
 
-    <nav class="chips-layout">
-        <a href="https://t.me/wlunlocker" class="md-chip" target="_blank" rel="noopener">
-            <span class="material-symbols-rounded">verified_user</span>
-            VPN Канал
-        </a>
-        <a href="https://t.me/wlproxy" class="md-chip" target="_blank" rel="noopener">
-            <span class="material-symbols-rounded">bolt</span>
-            Прокси Канал
-        </a>
-    </nav>
-
-    <main class="settings-container">
-        
-        <section class="settings-category">
-            <div class="category-title">Конфигурации VPN</div>
-            <div class="category-summary">Чтобы использовать подписку в другом приложении, скопируйте ссылку и вставьте ее в свой VPN-клиент.</div>
-            
-            <div id="vpn-list-group" class="settings-group-list">
-                <div class="state-info">Загрузка конфигураций...</div>
-            </div>
-        </section>
-
-        <section class="settings-category">
-            <div class="category-title">Прокси-серверы</div>
-            <div class="category-summary">Для подключения необходимо активировать VPN, перейти по ссылке, а после успешного импорта отключить VPN.</div>
-            
-            <div id="proxy-list-group" class="settings-group-list">
-                <div class="state-info">Поиск доступных прокси...</div>
-            </div>
-        </section>
-
-    </main>
-
     <script>
-        const DOM = {
-            vpnGroup: document.getElementById('vpn-list-group'),
-            proxyGroup: document.getElementById('proxy-list-group')
+        const UI = {
+            vpnBox: document.getElementById('vpn-list'),
+            proxyBox: document.getElementById('proxy-list'),
+            footerStamp: document.getElementById('sync-timestamp')
         };
 
-        const API = {
-            baseRawUrl: 'https://raw.githubusercontent.com/wlunlocker/anti-rkn/main/',
-            getCacheBuster: () => `?v=${Date.now()}_${Math.random().toString(36).substring(2)}`
-        };
+        const coreRepo = 'https://raw.githubusercontent.com/wlunlocker/anti-rkn/main/';
+        // Полный обход кэширования провайдеров
+        const antiCache = `?nocache=${Date.now()}_${Math.random().toString(36).substring(2,9)}`;
 
-        // Функциональность копирования
-        async function copyData(text, buttonElement) {
+        function buildVpnComponent(name, info, endpoint) {
+            return `
+                <article class="node-tile">
+                    <div class="node-meta">
+                        <div class="node-avatar">
+                            <span class="material-symbols-rounded">verified_user</span>
+                        </div>
+                        <div class="node-info-text">
+                            <span class="node-title" title="${name}">${name}</span>
+                            <span class="node-desc">${info}</span>
+                        </div>
+                    </div>
+                    <a href="happ://add/${endpoint}" class="md3-import-btn" title="Импортировать в клиент Happ">
+                        <div class="btn-label-stack">
+                            <span class="btn-label-top">Автоимпорт в</span>
+                            <span class="btn-label-platform">Happ</span>
+                        </div>
+                        <span class="material-symbols-rounded btn-icon">download</span>
+                    </a>
+                </article>
+            `;
+        }
+
+        function buildProxyComponent(name, endpoint) {
+            return `
+                <article class="node-tile">
+                    <div class="node-meta">
+                        <div class="node-avatar">
+                            <span class="material-symbols-rounded">dns</span>
+                        </div>
+                        <div class="node-info-text">
+                            <span class="node-title" title="${name}">${name}</span>
+                            <span class="node-desc">Протокол подключения: MTProto</span>
+                        </div>
+                    </div>
+                    <a href="${endpoint}" class="md3-import-btn" title="Подключить прямо в Telegram">
+                        <div class="btn-label-stack">
+                            <span class="btn-label-top">Автоимпорт в</span>
+                            <span class="btn-label-platform">Telegram</span>
+                        </div>
+                        <span class="material-symbols-rounded btn-icon">download</span>
+                    </a>
+                </article>
+            `;
+        }
+
+        async function fetchPayloads() {
             try {
-                await navigator.clipboard.writeText(text);
-                const originalIcon = buttonElement.innerHTML;
-                buttonElement.innerHTML = `<span class="material-symbols-rounded monet-icon">check_circle</span>`;
-                setTimeout(() => {
-                    buttonElement.innerHTML = originalIcon;
-                }, 2000);
+                // Синхронизируем временную метку обновления
+                const metaFetch = await fetch(`${coreRepo}vpnfull.txt${antiCache}`);
+                if (metaFetch.ok) {
+                    const content = await metaFetch.text();
+                    const updateLine = content.split('\n').find(str => str.includes('Last update:'));
+                    if (updateLine) UI.footerStamp.textContent = updateLine.replace('#', '').trim();
+                }
+
+                // ПАРСИНГ ВСЕХ СТРОК ИЗ subscribes.txt (Без обрезания данных)
+                const vpnFetch = await fetch(`subscribes.txt${antiCache}`);
+                if (vpnFetch.ok) {
+                    const rawText = await vpnFetch.text();
+                    let generatedHtml = '';
+                    
+                    rawText.split('\n').forEach(line => {
+                        const clearedLine = line.trim();
+                        if (clearedLine && clearedLine.includes('|') && !clearedLine.startsWith('#')) {
+                            const tokens = clearedLine.split('|').map(t => t.trim());
+                            const link = tokens[tokens.length - 1];
+                            const title = tokens[0];
+                            const description = tokens.slice(1, -1).join(' • ') || 'Конфигурация шифрования';
+                            
+                            generatedHtml += buildVpnComponent(title, description, link);
+                        }
+                    });
+                    UI.vpnBox.innerHTML = generatedHtml || '<div class="state-message">Конфигурации отсутствуют в subscribes.txt</div>';
+                } else {
+                    UI.vpnBox.innerHTML = '<div class="state-message">Ошибка чтения файла подписок</div>';
+                }
+
+                // ПАРСИНГ ВСЕХ СТРОК ИЗ proxies.txt (Без обрезания данных)
+                const proxyFetch = await fetch(`proxies.txt${antiCache}`);
+                if (proxyFetch.ok) {
+                    const rawText = await proxyFetch.text();
+                    let generatedHtml = '';
+                    
+                    rawText.split('\n').forEach(line => {
+                        const clearedLine = line.trim();
+                        if (clearedLine && clearedLine.includes('|') && !clearedLine.startsWith('#')) {
+                            const tokens = clearedLine.split('|').map(t => t.trim());
+                            // Первая часть имя, вторая — tg:// ссылка
+                            generatedHtml += buildProxyComponent(tokens[0], tokens[1]);
+                        }
+                    });
+                    UI.proxyBox.innerHTML = generatedHtml || '<div class="state-message">Активные прокси-серверы не найдены</div>';
+                } else {
+                    UI.proxyBox.innerHTML = '<div class="state-message">Ошибка чтения файла прокси-серверов</div>';
+                }
+
             } catch (err) {
-                console.error('Не удалось скопировать:', err);
+                console.error('Сегментация данных нарушена:', err);
+                UI.footerStamp.textContent = 'Ошибка обмена данными с GitHub репозиторием';
             }
         }
 
-        function createVPNCard(title, info, link) {
-            // Точный SVG Happ H из 5 сегментов (зеленый Monet)
-            const happIconSvg = `
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="color: var(--color-monet-green);">
-                    <path d="M6.2 3h3.5l-2.2 5H4z"/>
-                    <path d="M5.3 9h5.4l-2.2 5H3.1z"/>
-                    <path d="M4.4 15h5.4l-2.6 6H1.8z"/>
-                    <path d="M15.4 3h3.5l-2.2 5h-3.5z"/>
-                    <path d="M14.5 9h5.4l-2.2 5H12.3z"/>
-                    <path d="M13.6 15h5.4l-2.6 6H11z"/>
-                    <path d="M8.5 11h6.2l-1.3 2H7.2z"/>
-                </svg>
-            `;
-
-            return `
-                <article class="settings-tile">
-                    <div class="tile-icon-container">
-                        <span class="material-symbols-rounded">verified_user</span>
-                    </div>
-                    <div class="tile-text">
-                        <span class="tile-title">${title}</span>
-                        <div class="tile-description">${info}</div>
-                    </div>
-                    <div class="tile-actions">
-                        <button class="action-button copy-action-button" onclick="copyData('${link}', this)" title="Скопировать ссылку">
-                            <span class="material-symbols-rounded">content_copy</span>
-                        </button>
-                        <a href="happ://add/${link}" class="action-button" title="Автоимпорт в Happ">
-                            ${happIconSvg}
-                        </a>
-                    </div>
-                </article>
-            `;
-        }
-
-        function createProxyCard(name, link) {
-            // Зеленый Monet самолетик
-            return `
-                <article class="settings-tile">
-                    <div class="tile-icon-container">
-                        <span class="material-symbols-rounded">lan</span>
-                    </div>
-                    <div class="tile-text">
-                        <span class="tile-title">${name}</span>
-                        <div class="tile-description">Протокол: MTProto</div>
-                    </div>
-                    <div class="tile-actions">
-                        <button class="action-button copy-action-button" onclick="copyData('${link}', this)" title="Скопировать ссылку">
-                            <span class="material-symbols-rounded">content_copy</span>
-                        </button>
-                        <a href="${link}" class="action-button" title="Подключить">
-                            <span class="material-symbols-rounded monet-icon">send</span>
-                        </a>
-                    </div>
-                </article>
-            `;
-        }
-
-        async function initializePlatform() {
-            try {
-                // Имитация загрузки конфигураций, как на скриншотах
-                const mockSubs = [
-                    "ЧЕРНЫЕ СПИСКИ №1 | 150+ СЕРВЕРОВ | https://t.me/wlunlocker/vpn1",
-                    "ЧЕРНЫЕ СПИСКИ №2 | 100+ СЕРВЕРОВ | https://t.me/wlunlocker/vpn2",
-                    "БЕЛЫЕ СПИСКИ №1 | 200+ СЕРВЕРОВ | https://t.me/wlunlocker/vpn3",
-                    "БЕЛЫЕ СПИСКИ №2 | 100+ СЕРВЕРОВ | https://t.me/wlunlocker/vpn4"
-                ];
-                let vpnHTML = '';
-                mockSubs.forEach(line => {
-                    const parts = line.split('|').map(s => s.trim());
-                    vpnHTML += createVPNCard(parts[0], parts[1], parts[parts.length - 1]);
-                });
-                DOM.vpnGroup.innerHTML = vpnHTML;
-
-                // Имитация загрузки прокси, как на скриншотах
-                const mockProxies = [
-                    "Myrka Privat | tg://proxy?server=vpn-gnomes.mynetname.net&port=443&secret=dd00112233445566778899aabbccddeeff",
-                    "TGGarden | tg://proxy?server=tg.garden-gnomes.mynetname.net&port=443&secret=ee6311...757a6c2e74756e64756b2e6b67",
-                    "MyNetName | tg://proxy?server=...&port=8243&secret=ee6311...",
-                    "HEA Priv | tg://proxy?server=...&port=8243&secret=ee6311..."
-                ];
-                let proxyHTML = '';
-                mockProxies.forEach(line => {
-                    const parts = line.split('|').map(s => s.trim());
-                    proxyHTML += createProxyCard(parts[0], parts[parts.length - 1]);
-                });
-                DOM.proxyGroup.innerHTML = proxyHTML;
-
-            } catch (error) {
-                console.error('Core initialization failed:', error);
-                DOM.syncText.textContent = 'Сбой синхронизации';
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', initializePlatform);
+        document.addEventListener('DOMContentLoaded', fetchPayloads);
     </script>
 </body>
 </html>
