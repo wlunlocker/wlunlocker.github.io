@@ -12,16 +12,12 @@
             --md-sys-color-background: #0f1511;
             --md-sys-color-on-background: #e0e3e0;
             --md-sys-color-surface: #171d18;
-            --md-sys-color-surface-dim: #0f1511;
             --md-sys-color-surface-container-low: #1b211c;
-            --md-sys-color-surface-container: #1f2520;
             --md-sys-color-surface-container-high: #29302a;
             --md-sys-color-primary: #52d777;
             --md-sys-color-on-primary: #003913;
             --md-sys-color-primary-container: #005220;
             --md-sys-color-on-primary-container: #72f492;
-            --md-sys-color-secondary-container: #324b37;
-            --md-sys-color-on-secondary-container: #cfebd2;
             --md-sys-color-on-surface: #e0e3e0;
             --md-sys-color-on-surface-variant: #bfc9be;
             --md-sys-color-outline-variant: #404941;
@@ -125,7 +121,7 @@
             color: var(--md-sys-color-on-primary);
         }
 
-        /* Основной контейнер */
+        /* Контейнер контента */
         .settings-container {
             width: 100%;
             max-width: 640px;
@@ -165,7 +161,7 @@
             overflow: hidden;
         }
 
-        /* Элемент списка (плитка) */
+        /* Плитка списка */
         .settings-tile {
             display: flex;
             align-items: center;
@@ -177,7 +173,6 @@
             width: 100%;
             box-sizing: border-box;
             text-align: left;
-            transition: background-color var(--motion-duration-short) var(--motion-easing-standard);
         }
 
         .settings-tile:not(:last-child)::after {
@@ -190,7 +185,7 @@
             background-color: rgba(64, 73, 65, 0.3);
         }
 
-        /* Информационная часть слева */
+        /* Левая инфо-часть */
         .tile-content-container {
             display: flex;
             align-items: center;
@@ -238,12 +233,12 @@
             text-overflow: ellipsis;
         }
 
-        /* Одиночная кнопка действия справа */
+        /* Правая кнопка действия */
         .tile-actions-group {
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            margin-left: 12px;
+            margin-left: 16px;
             flex-shrink: 0; 
         }
 
@@ -311,7 +306,7 @@
         
         <section class="settings-category">
             <div class="category-title">Конфигурации VPN</div>
-            <div class="category-summary">Чтобы использовать подписку в другом приложении, скопируйте ссылку и вставьте ее в свой VPN-клиент.</div>
+            <div class="category-summary">Чтобы использовать подписку в другом приложении, нажмите кнопку импорта справа от конфигурации.</div>
             
             <div id="vpn-list-group" class="settings-group-list">
                 <div class="state-info">Загрузка параметров сети...</div>
@@ -348,10 +343,13 @@
         });
 
         function buildVpnTile(title, desc, link) {
-            // Кастомный точный SVG логотипа Happ (разрезанная H из параллелограммов)
+            // Кастомный чистый SVG разделенной буквы H (Happ)
             const happLogoSvg = `
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color: var(--md-sys-color-primary);">
-                    <path d="M6.2 3h3.5l-2.2 5H4zM5.3 9h5.4l-2.2 5H3.1zM4.4 15h5.4l-2.6 6H1.8zM15.4 3h3.5l-2.2 5h-3.5zM14.5 9h5.4l-2.2 5H12.3zM13.6 15h5.4l-2.6 6H11zM8.5 11h6.2l-1.3 2H7.2z"/>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--md-sys-color-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="6" y1="4" x2="6" y2="20"></line>
+                    <line x1="18" y1="4" x2="18" y2="20"></line>
+                    <line x1="6" y1="12" x2="10" y2="12"></line>
+                    <line x1="14" y1="12" x2="18" y2="12"></line>
                 </svg>
             `;
 
@@ -378,7 +376,7 @@
         function buildProxyTile(name, link) {
             // Кастомный точный SVG бумажного самолётика Telegram
             const telegramPlaneSvg = `
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="color: var(--md-sys-color-primary); transform: translate(-1px, 0px);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--md-sys-color-primary)" style="transform: translate(-1px, 1px);">
                     <path d="M1.101 21.757L23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817z"/>
                 </svg>
             `;
