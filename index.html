@@ -239,18 +239,18 @@
             flex-shrink: 0;
         }
 
-        /* --- Суженная Кнопка Скачивания --- */
+        /* --- Суженная Кнопка Импорта --- */
         .md3-import-btn {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 10px 14px;
+            gap: 8px;
+            padding: 10px 12px;
             background: var(--md-sys-color-surface-variant);
             border: 1px solid var(--md-sys-color-outline);
             border-radius: 18px;
             text-decoration: none;
             color: #ffffff;
-            max-width: 170px;
+            max-width: 175px;
             transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
         }
 
@@ -258,8 +258,8 @@
         .md3-copy-btn {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 10px 14px;
+            gap: 8px;
+            padding: 10px 12px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--md-sys-color-outline);
             border-radius: 18px;
@@ -276,7 +276,7 @@
         }
 
         .btn-label-top {
-            font-size: 0.68rem;
+            font-size: 0.65rem;
             color: var(--md-sys-color-on-surface-variant);
             font-weight: 500;
             text-transform: uppercase;
@@ -284,13 +284,13 @@
         }
 
         .btn-label-platform {
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             font-weight: 700;
             color: var(--md-sys-color-primary);
         }
 
         .btn-icon {
-            font-size: 20px;
+            font-size: 18px;
             color: var(--md-sys-color-primary);
             transition: transform 0.2s ease;
         }
@@ -356,7 +356,7 @@
         <main style="display: flex; flex-direction: column; gap: 32px;">
             <section class="category-group">
                 <div class="group-header">Конфигурации VPN</div>
-                <div class="group-subheader">Подписки для обхода блокировок РКН и белых списков. Для использования в HAPP просто нажмите на кнопку автоиморта, а для других приложений скопируйте ссылку и вставьте ее из буфера обмена</div>
+                <div class="group-subheader">Все доступные узлы подписок из репозитория. Скопируйте или используйте автоимпорт.</div>
                 <div id="vpn-list" class="tiles-list">
                     <div class="state-message">Синхронизация списков шифрования...</div>
                 </div>
@@ -364,7 +364,7 @@
 
             <section class="category-group">
                 <div class="group-header">Прокси-серверы</div>
-                <div class="group-subheader">Сгенерированные проксы для работы Telegram в РФ. Для активации включите VPN, импортируйте прокси, отключите VPN и нажмите "Подключить прокси"</div>
+                <div class="group-subheader">Сгенерированные прокси шлюзы для работы внутри мессенджера Telegram.</div>
                 <div id="proxy-list" class="tiles-list">
                     <div class="state-message">Сканирование активных прокси-узлов...</div>
                 </div>
@@ -425,7 +425,7 @@
                     <div class="node-actions">
                         <a href="happ://add/${endpoint}" class="md3-import-btn" title="Импортировать в Happ">
                             <div class="btn-label-stack">
-                                <span class="btn-label-top">Импорт в</span>
+                                <span class="btn-label-top">Автоимпорт в</span>
                                 <span class="btn-label-platform">Happ</span>
                             </div>
                             <span class="material-symbols-rounded btn-icon">download</span>
@@ -433,7 +433,7 @@
                         <button class="md3-copy-btn" onclick="copyToClipboard('${endpoint}', this)" title="Скопировать ссылку подписки">
                             <div class="btn-label-stack">
                                 <span class="btn-label-top">Ссылка</span>
-                                <span class="btn-label-platform">Копия</span>
+                                <span class="btn-label-platform">Копировать</span>
                             </div>
                             <span class="material-symbols-rounded btn-icon">content_copy</span>
                         </button>
@@ -457,15 +457,15 @@
                     <div class="node-actions">
                         <a href="${endpoint}" class="md3-import-btn" title="Подключить в Telegram">
                             <div class="btn-label-stack">
-                                <span class="btn-label-top">Импорт в</span>
-                                <span class="btn-label-platform">TG</span>
+                                <span class="btn-label-top">Автоимпорт в</span>
+                                <span class="btn-label-platform">Telegram</span>
                             </div>
                             <span class="material-symbols-rounded btn-icon">download</span>
                         </a>
                         <button class="md3-copy-btn" onclick="copyToClipboard('${endpoint}', this)" title="Скопировать прокси-ссылку">
                             <div class="btn-label-stack">
                                 <span class="btn-label-top">Ссылка</span>
-                                <span class="btn-label-platform">Копия</span>
+                                <span class="btn-label-platform">Копировать</span>
                             </div>
                             <span class="material-symbols-rounded btn-icon">content_copy</span>
                         </button>
