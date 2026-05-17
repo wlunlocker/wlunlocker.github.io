@@ -18,7 +18,7 @@
             --md-sys-color-surface-container-high: #29302a;
             --md-sys-color-primary: #52d777;
             --md-sys-color-on-primary: #003913;
-            --md-sys-color-primary-container: #005220;
+            --md-sys-color-primary-container: #005220; /* Изменено с синего на зеленый */
             --md-sys-color-on-primary-container: #72f492;
             --md-sys-color-secondary-container: #324b37;
             --md-sys-color-on-secondary-container: #cfebd2;
@@ -115,7 +115,7 @@
 
         .md-chip .material-symbols-rounded {
             font-size: 20px;
-            color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-primary); /* Иконки в меню всегда зеленые */
         }
 
         .settings-container {
@@ -184,6 +184,14 @@
             background-color: var(--md-sys-color-surface-container-high);
         }
 
+        /* Контейнер для выравнивания контента плитки слева */
+        .tile-content-container {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            min-width: 0; /* Фикс для предотвращения выезда кнопок за пределы экрана */
+        }
+
         .tile-icon-container {
             display: flex;
             align-items: center;
@@ -197,12 +205,12 @@
             font-size: 24px;
         }
 
-        .tile-text {
+        .tile-text-container {
             flex: 1;
             display: flex;
             flex-direction: column;
             padding-right: 8px;
-            min-width: 0; /* Фикс для предотвращения выезда кнопок за пределы экрана */
+            min-width: 0;
         }
 
         .tile-title {
@@ -226,10 +234,12 @@
             overflow: hidden;
         }
 
-        .tile-actions {
+        /* Контейнер для выравнивания действий плитки справа */
+        .tile-actions-group {
             display: flex;
-            gap: 8px;
             align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
             flex-shrink: 0; /* Запрещает кнопкам сжиматься */
         }
 
@@ -241,7 +251,7 @@
             height: 40px;
             border-radius: 20px;
             background-color: var(--md-sys-color-surface-container-high);
-            color: var(--md-sys-color-on-surface);
+            color: var(--md-sys-color-primary); /* Иконки действий зеленые */
             border: none;
             cursor: pointer;
             text-decoration: none;
@@ -254,11 +264,25 @@
             transform: scale(0.9);
         }
 
-        .action-button.primary-action {
-            background-color: var(--md-sys-color-primary-container);
+        /* Кнопка с синим фоном в меню стала зеленой */
+        .md-chip:active .material-symbols-rounded {
+            color: var(--md-sys-color-on-primary-container) !important;
+        }
+
+        .md-chip.blue-button {
+            background-color: var(--md-sys-color-primary-container); /* Синий фон стал зеленым */
             color: var(--md-sys-color-on-primary-container);
         }
 
+        .md-chip.blue-button:active {
+            background-color: var(--md-sys-color-outline-variant);
+        }
+
+        .md-chip.blue-button .material-symbols-rounded {
+            color: var(--md-sys-color-on-primary-container);
+        }
+
+        /* Синяя иконка буфера обмена стала зеленой */
         .action-button.success-action {
             background-color: var(--md-sys-color-primary);
             color: var(--md-sys-color-on-primary);
@@ -297,7 +321,7 @@
     <div id="app-bar" class="top-app-bar">
         <h1>WLUnlocker</h1>
         <div class="chips-layout">
-            <a href="https://t.me/wlunlocker" class="md-chip" target="_blank" rel="noopener">
+            <a href="https://t.me/wlunlocker" class="md-chip blue-button" target="_blank" rel="noopener">
                 <span class="material-symbols-rounded">vpn_lock</span>
                 VPN Канал
             </a>
@@ -351,14 +375,15 @@
         async function copyData(text, btn) {
             try {
                 await navigator.clipboard.writeText(text);
-                const originalHTML = btn.innerHTML;
+                const icon = btn.querySelector('.material-symbols-rounded');
+                const originalIcon = icon.textContent;
                 
                 btn.classList.add('success-action');
-                btn.innerHTML = '<span class="material-symbols-rounded">check</span>';
+                icon.textContent = 'check';
                 
                 setTimeout(() => {
                     btn.classList.remove('success-action');
-                    btn.innerHTML = originalHTML;
+                    icon.textContent = originalIcon;
                 }, 2000);
             } catch (e) {
                 console.error(e);
@@ -366,9 +391,9 @@
         }
 
         function buildVpnTile(title, desc, link) {
-            // Кастомная иконка HAPP (разрезанная H)
-            const happIcon = `
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            // Кастомная иконка HAPP (разрезанная H) зеленого цвета
+            const HappIcon = `
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--md-sys-color-primary);">
                     <line x1="6" y1="4" x2="6" y2="20"></line>
                     <line x1="18" y1="4" x2="18" y2="20"></line>
                     <line x1="6" y1="12" x2="10" y2="12"></line>
@@ -378,16 +403,18 @@
 
             return `
                 <div class="settings-tile">
-                    <div class="tile-icon-container">
-                        <span class="material-symbols-rounded">verified_user</span>
+                    <div class="tile-content-container">
+                        <div class="tile-icon-container">
+                            <span class="material-symbols-rounded">verified_user</span>
+                        </div>
+                        <div class="tile-text-container">
+                            <span class="tile-title" title="${title}">${title}</span>
+                            <span class="tile-description">${desc}</span>
+                        </div>
                     </div>
-                    <div class="tile-text">
-                        <span class="tile-title" title="${title}">${title}</span>
-                        <span class="tile-description">${desc}</span>
-                    </div>
-                    <div class="tile-actions">
-                        <a href="happ://add/${link}" class="action-button primary-action" title="Импорт в Happ">
-                            ${happIcon}
+                    <div class="tile-actions-group">
+                        <a href="happ://add/${link}" class="action-button" title="Импорт в Happ">
+                            ${HappIcon}
                         </a>
                         <button class="action-button" onclick="copyData('${link}', this)" title="Копировать линк">
                             <span class="material-symbols-rounded">content_copy</span>
@@ -398,19 +425,25 @@
         }
 
         function buildProxyTile(name, link) {
-            // Иконка Telegram (бумажный самолетик)
+            // Иконка Telegram (бумажный самолетик) зеленого цвета
+            const sendIcon = `
+                <span class="material-symbols-rounded" style="transform: rotate(-35deg); color: var(--md-sys-color-primary); margin-left: 2px;">send</span>
+            `;
+
             return `
                 <div class="settings-tile">
-                    <div class="tile-icon-container">
-                        <span class="material-symbols-rounded">lan</span>
+                    <div class="tile-content-container">
+                        <div class="tile-icon-container">
+                            <span class="material-symbols-rounded">lan</span>
+                        </div>
+                        <div class="tile-text-container">
+                            <span class="tile-title" title="${name}">${name}</span>
+                            <span class="tile-description">Протокол: MTProto</span>
+                        </div>
                     </div>
-                    <div class="tile-text">
-                        <span class="tile-title" title="${name}">${name}</span>
-                        <span class="tile-description">Протокол: MTProto</span>
-                    </div>
-                    <div class="tile-actions">
-                        <a href="${link}" class="action-button primary-action" title="Подключить">
-                            <span class="material-symbols-rounded" style="transform: rotate(-35deg); margin-left: 2px;">send</span>
+                    <div class="tile-actions-group">
+                        <a href="${link}" class="action-button" title="Подключить">
+                            ${sendIcon}
                         </a>
                         <button class="action-button" onclick="copyData('${link}', this)" title="Копировать">
                             <span class="material-symbols-rounded">content_copy</span>
