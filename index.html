@@ -11,7 +11,6 @@
 
     <style>
         :root {
-            /* Живая палитра MD3 (Тёмный глубокий изумруд / Monet Style) */
             --md-sys-color-background: #060b07;
             --md-sys-color-surface: rgba(20, 28, 22, 0.7);
             --md-sys-color-surface-variant: rgba(30, 42, 33, 0.8);
@@ -69,34 +68,9 @@
             animation: fluidMotion 25s infinite ease-in-out;
         }
 
-        .sphere-1 {
-            width: 450px;
-            height: 450px;
-            background: var(--md-sys-color-primary-container);
-            top: -10%;
-            left: -15%;
-            animation-duration: 22s;
-        }
-
-        .sphere-2 {
-            width: 550px;
-            height: 550px;
-            background: #004d1c;
-            bottom: -15%;
-            right: -15%;
-            animation-delay: -5s;
-            animation-duration: 28s;
-        }
-
-        .sphere-3 {
-            width: 350px;
-            height: 350px;
-            background: #1b5e20;
-            top: 35%;
-            right: -10%;
-            animation-delay: -10s;
-            animation-duration: 18s;
-        }
+        .sphere-1 { width: 450px; height: 450px; background: var(--md-sys-color-primary-container); top: -10%; left: -15%; animation-duration: 22s; }
+        .sphere-2 { width: 550px; height: 550px; background: #004d1c; bottom: -15%; right: -15%; animation-delay: -5s; animation-duration: 28s; }
+        .sphere-3 { width: 350px; height: 350px; background: #1b5e20; top: 35%; right: -10%; animation-delay: -10s; animation-duration: 18s; }
 
         @keyframes fluidMotion {
             0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
@@ -124,7 +98,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Кастомные верхние кнопки-чипсы */
         .channels-nav {
             display: flex;
             gap: 12px;
@@ -193,7 +166,7 @@
             flex-direction: column;
         }
 
-        /* --- Элемент Списка (Строгая изоляция) --- */
+        /* --- Элемент Списка --- */
         .node-tile {
             display: flex;
             align-items: center;
@@ -218,7 +191,7 @@
             align-items: center;
             gap: 18px;
             flex: 1;
-            min-width: 0; /* Жесткий фикс съезжания строк */
+            min-width: 0;
         }
 
         .node-avatar {
@@ -258,18 +231,41 @@
             text-overflow: ellipsis;
         }
 
-        /* --- Новая Двухстрочная Кнопка Скачивания --- */
+        /* Блок с кнопками действий */
+        .node-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        /* --- Суженная Кнопка Скачивания --- */
         .md3-import-btn {
             display: inline-flex;
             align-items: center;
-            gap: 14px;
-            padding: 10px 20px;
+            gap: 10px;
+            padding: 10px 14px;
             background: var(--md-sys-color-surface-variant);
             border: 1px solid var(--md-sys-color-outline);
             border-radius: 18px;
             text-decoration: none;
             color: #ffffff;
-            flex-shrink: 0;
+            max-width: 170px;
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        /* --- Кнопка Копирования (MD3) --- */
+        .md3-copy-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 18px;
+            color: var(--md-sys-color-on-surface);
+            cursor: pointer;
+            font-family: var(--font-family-flex);
             transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
         }
 
@@ -280,7 +276,7 @@
         }
 
         .btn-label-top {
-            font-size: 0.72rem;
+            font-size: 0.68rem;
             color: var(--md-sys-color-on-surface-variant);
             font-weight: 500;
             text-transform: uppercase;
@@ -288,37 +284,25 @@
         }
 
         .btn-label-platform {
-            font-size: 0.95rem;
+            font-size: 0.88rem;
             font-weight: 700;
             color: var(--md-sys-color-primary);
         }
 
         .btn-icon {
-            font-size: 24px;
+            font-size: 20px;
             color: var(--md-sys-color-primary);
             transition: transform 0.2s ease;
         }
 
-        /* Нажатие/Ховер кнопок по гайдлайнам MD3 */
-        .md3-import-btn:hover {
-            background: rgba(60, 208, 112, 0.15);
-            border-color: var(--md-sys-color-primary);
-        }
+        /* Ховеры и Активные состояния */
+        .md3-import-btn:hover { background: rgba(60, 208, 112, 0.12); border-color: var(--md-sys-color-primary); }
+        .md3-import-btn:hover .btn-icon { transform: translateY(2px); }
+        .md3-import-btn:active { background: var(--md-sys-color-primary); transform: scale(0.96); }
+        .md3-import-btn:active .btn-label-top, .md3-import-btn:active .btn-label-platform, .md3-import-btn:active .btn-icon { color: var(--md-sys-color-on-primary); }
 
-        .md3-import-btn:hover .btn-icon {
-            transform: translateY(2px);
-        }
-
-        .md3-import-btn:active {
-            background: var(--md-sys-color-primary);
-            transform: scale(0.96);
-        }
-
-        .md3-import-btn:active .btn-label-top,
-        .md3-import-btn:active .btn-label-platform,
-        .md3-import-btn:active .btn-icon {
-            color: var(--md-sys-color-on-primary);
-        }
+        .md3-copy-btn:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.3); }
+        .md3-copy-btn:active { transform: scale(0.96); background: rgba(255, 255, 255, 0.15); }
 
         .state-message {
             padding: 32px;
@@ -337,13 +321,13 @@
             letter-spacing: 0.5px;
         }
 
-        @media (max-width: 520px) {
+        @media (max-width: 580px) {
             .app-layout { padding-top: 32px; }
             header h1 { font-size: 2rem; }
             .channels-nav { flex-direction: column; gap: 8px; }
-            .node-tile { padding: 16px; flex-direction: column; align-items: stretch; gap: 14px; }
-            .md3-import-btn { justify-content: space-between; padding: 12px 20px; }
-            .btn-label-stack { text-align: left; }
+            .node-tile { padding: 18px; flex-direction: column; align-items: stretch; gap: 14px; }
+            .node-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+            .md3-import-btn, .md3-copy-btn { max-width: none; justify-content: space-between; padding: 12px 16px; }
         }
     </style>
 </head>
@@ -372,7 +356,7 @@
         <main style="display: flex; flex-direction: column; gap: 32px;">
             <section class="category-group">
                 <div class="group-header">Конфигурации VPN</div>
-                <div class="group-subheader">Все доступные узлы подписок из репозитория. Нажмите кнопку справа для мгновенного импорта.</div>
+                <div class="group-subheader">Подписки для обхода блокировок РКН и белых списков. Для использования в HAPP просто нажмите на кнопку автоиморта, а для других приложений скопируйте ссылку и вставьте ее из буфера обмена</div>
                 <div id="vpn-list" class="tiles-list">
                     <div class="state-message">Синхронизация списков шифрования...</div>
                 </div>
@@ -380,7 +364,7 @@
 
             <section class="category-group">
                 <div class="group-header">Прокси-серверы</div>
-                <div class="group-subheader">Сгенерированные прокси шлюзы. Работают напрямую внутри мессенджера Telegram.</div>
+                <div class="group-subheader">Сгенерированные проксы для работы Telegram в РФ. Для активации включите VPN, импортируйте прокси, отключите VPN и нажмите "Подключить прокси"</div>
                 <div id="proxy-list" class="tiles-list">
                     <div class="state-message">Сканирование активных прокси-узлов...</div>
                 </div>
@@ -398,8 +382,33 @@
         };
 
         const coreRepo = 'https://raw.githubusercontent.com/wlunlocker/anti-rkn/main/';
-        // Полный обход кэширования провайдеров
         const antiCache = `?nocache=${Date.now()}_${Math.random().toString(36).substring(2,9)}`;
+
+        // Функция копирования
+        async function copyToClipboard(text, element) {
+            try {
+                await navigator.clipboard.writeText(text);
+                const textNode = element.querySelector('.btn-label-platform');
+                const iconNode = element.querySelector('.btn-icon');
+                
+                const oldText = textNode.textContent;
+                const oldIcon = iconNode.textContent;
+
+                textNode.textContent = 'Готово!';
+                textNode.style.color = '#3cd070';
+                iconNode.textContent = 'check_circle';
+                iconNode.style.color = '#3cd070';
+
+                setTimeout(() => {
+                    textNode.textContent = oldText;
+                    textNode.style.color = '';
+                    iconNode.textContent = oldIcon;
+                    iconNode.style.color = '';
+                }, 1800);
+            } catch (err) {
+                console.error('Не удалось скопировать ссылку:', err);
+            }
+        }
 
         function buildVpnComponent(name, info, endpoint) {
             return `
@@ -413,13 +422,22 @@
                             <span class="node-desc">${info}</span>
                         </div>
                     </div>
-                    <a href="happ://add/${endpoint}" class="md3-import-btn" title="Импортировать в клиент Happ">
-                        <div class="btn-label-stack">
-                            <span class="btn-label-top">Автоимпорт в</span>
-                            <span class="btn-label-platform">Happ</span>
-                        </div>
-                        <span class="material-symbols-rounded btn-icon">download</span>
-                    </a>
+                    <div class="node-actions">
+                        <a href="happ://add/${endpoint}" class="md3-import-btn" title="Импортировать в Happ">
+                            <div class="btn-label-stack">
+                                <span class="btn-label-top">Импорт в</span>
+                                <span class="btn-label-platform">Happ</span>
+                            </div>
+                            <span class="material-symbols-rounded btn-icon">download</span>
+                        </a>
+                        <button class="md3-copy-btn" onclick="copyToClipboard('${endpoint}', this)" title="Скопировать ссылку подписки">
+                            <div class="btn-label-stack">
+                                <span class="btn-label-top">Ссылка</span>
+                                <span class="btn-label-platform">Копия</span>
+                            </div>
+                            <span class="material-symbols-rounded btn-icon">content_copy</span>
+                        </button>
+                    </div>
                 </article>
             `;
         }
@@ -436,20 +454,28 @@
                             <span class="node-desc">Протокол подключения: MTProto</span>
                         </div>
                     </div>
-                    <a href="${endpoint}" class="md3-import-btn" title="Подключить прямо в Telegram">
-                        <div class="btn-label-stack">
-                            <span class="btn-label-top">Автоимпорт в</span>
-                            <span class="btn-label-platform">Telegram</span>
-                        </div>
-                        <span class="material-symbols-rounded btn-icon">download</span>
-                    </a>
+                    <div class="node-actions">
+                        <a href="${endpoint}" class="md3-import-btn" title="Подключить в Telegram">
+                            <div class="btn-label-stack">
+                                <span class="btn-label-top">Импорт в</span>
+                                <span class="btn-label-platform">TG</span>
+                            </div>
+                            <span class="material-symbols-rounded btn-icon">download</span>
+                        </a>
+                        <button class="md3-copy-btn" onclick="copyToClipboard('${endpoint}', this)" title="Скопировать прокси-ссылку">
+                            <div class="btn-label-stack">
+                                <span class="btn-label-top">Ссылка</span>
+                                <span class="btn-label-platform">Копия</span>
+                            </div>
+                            <span class="material-symbols-rounded btn-icon">content_copy</span>
+                        </button>
+                    </div>
                 </article>
             `;
         }
 
         async function fetchPayloads() {
             try {
-                // Синхронизируем временную метку обновления
                 const metaFetch = await fetch(`${coreRepo}vpnfull.txt${antiCache}`);
                 if (metaFetch.ok) {
                     const content = await metaFetch.text();
@@ -457,7 +483,7 @@
                     if (updateLine) UI.footerStamp.textContent = updateLine.replace('#', '').trim();
                 }
 
-                // ПАРСИНГ ВСЕХ СТРОК ИЗ subscribes.txt (Без обрезания данных)
+                // Парсинг subscribes.txt целиком
                 const vpnFetch = await fetch(`subscribes.txt${antiCache}`);
                 if (vpnFetch.ok) {
                     const rawText = await vpnFetch.text();
@@ -474,12 +500,12 @@
                             generatedHtml += buildVpnComponent(title, description, link);
                         }
                     });
-                    UI.vpnBox.innerHTML = generatedHtml || '<div class="state-message">Конфигурации отсутствуют в subscribes.txt</div>';
+                    UI.vpnBox.innerHTML = generatedHtml || '<div class="state-message">Конфигурации отсутствуют</div>';
                 } else {
                     UI.vpnBox.innerHTML = '<div class="state-message">Ошибка чтения файла подписок</div>';
                 }
 
-                // ПАРСИНГ ВСЕХ СТРОК ИЗ proxies.txt (Без обрезания данных)
+                // Парсинг proxies.txt целиком
                 const proxyFetch = await fetch(`proxies.txt${antiCache}`);
                 if (proxyFetch.ok) {
                     const rawText = await proxyFetch.text();
@@ -489,7 +515,6 @@
                         const clearedLine = line.trim();
                         if (clearedLine && clearedLine.includes('|') && !clearedLine.startsWith('#')) {
                             const tokens = clearedLine.split('|').map(t => t.trim());
-                            // Первая часть имя, вторая — tg:// ссылка
                             generatedHtml += buildProxyComponent(tokens[0], tokens[1]);
                         }
                     });
@@ -500,7 +525,7 @@
 
             } catch (err) {
                 console.error('Сегментация данных нарушена:', err);
-                UI.footerStamp.textContent = 'Ошибка обмена данными с GitHub репозиторием';
+                UI.footerStamp.textContent = 'Ошибка обмена данными с репозиторием';
             }
         }
 
