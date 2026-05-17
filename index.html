@@ -2,36 +2,51 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#061208">
     <title>WLUnlocker</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,600,0,0" rel="stylesheet" />
     <style>
         :root {
-            --bg-start: #060912;
-            --bg-end: #0f172a;
-            --card: #161a22;
-            --accent: #007aff;
-            --text-main: #f0f0f0;
-            --text-sub: #b0b0b0;
-            --green-pill: rgba(0, 255, 65, 0.1);
-            --green-text: #00ff41;
+            --md-sys-color-primary: #55d679;
+            --md-sys-color-on-primary: #003914;
+            --md-sys-color-primary-container: #005221;
+            --md-sys-color-on-primary-container: #75f498;
+            --md-sys-color-secondary: #a0d0a7;
+            --md-sys-color-surface: #0f1611;
+            --md-sys-color-surface-variant: #1a271d;
+            --md-sys-color-on-surface: #e0e4e0;
+            --md-sys-color-on-surface-variant: #bfc9c0;
+            --md-sys-color-outline: #2c4232;
+            --md-sys-color-outline-variant: #1c2b20;
+            
+            --elevation-1: 0px 4px 8px rgba(0, 0, 0, 0.4);
+            --elevation-2: 0px 8px 16px rgba(0, 0, 0, 0.5);
+            
+            --radius-small: 12px;
+            --radius-medium: 24px;
+            --radius-large: 32px;
+            --radius-full: 9999px;
+
+            --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         body {
-            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: var(--font-family);
             margin: 0;
-            padding: 20px;
-            color: var(--text-main);
+            padding: 24px 16px;
+            color: var(--md-sys-color-on-surface);
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(-45deg, #050811, #0a1322, #0f172a, #050811);
+            background: linear-gradient(135deg, #050d08, #0a1c11, #0f2b18, #08160c);
             background-size: 400% 400%;
-            animation: gradientBG 10s ease infinite;
+            animation: surfaceGradient 14s ease-in-out infinite alternate;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        @keyframes gradientBG {
+        @keyframes surfaceGradient {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
@@ -39,304 +54,430 @@
 
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 36px;
             width: 100%;
-            max-width: 600px;
+            max-width: 640px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         h1 {
-            font-size: 2.5em;
-            margin: 0 0 15px 0;
+            font-size: 2.75rem;
+            margin: 0 0 20px 0;
             font-weight: 800;
-            letter-spacing: -1px;
+            letter-spacing: -1.5px;
+            color: var(--md-sys-color-on-surface);
+            text-shadow: 0 4px 24px rgba(85, 214, 121, 0.15);
         }
 
-        /* Блок кнопок Telegram */
-        .tg-channels-group {
+        .chips-container {
             display: flex;
             gap: 12px;
             justify-content: center;
             width: 100%;
-            margin-bottom: 5px;
+            flex-wrap: wrap;
         }
 
-        .tg-btn {
-            flex: 1;
+        .chip {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
             gap: 8px;
-            padding: 12px 16px;
-            background-color: var(--green-pill);
-            border-radius: 14px;
-            color: var(--green-text);
-            font-size: 0.9em;
+            padding: 10px 20px;
+            background-color: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+            border-radius: var(--radius-full);
+            font-size: 0.95rem;
             font-weight: 600;
             text-decoration: none;
-            transition: all 0.3s;
-            border: 1px solid rgba(0, 255, 65, 0.2);
-            box-sizing: border-box;
+            border: 1px solid rgba(117, 244, 152, 0.1);
+            transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
-        .tg-btn:hover {
-            background-color: rgba(0, 255, 65, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 255, 65, 0.1);
+        .chip:hover, .chip:active {
+            background-color: rgba(0, 82, 33, 0.8);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 16px rgba(0, 82, 33, 0.4);
         }
 
-        .last-upd-box {
-            font-family: monospace;
-            font-size: 0.85em;
-            color: #888;
-            margin-top: 15px;
+        .chip .material-symbols-rounded {
+            font-size: 20px;
         }
 
-        .container {
+        .sync-status {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.8rem;
+            color: var(--md-sys-color-on-surface-variant);
+            margin-top: 20px;
+            background: var(--md-sys-color-surface-variant);
+            padding: 6px 14px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--md-sys-color-outline-variant);
+        }
+
+        .main-container {
             width: 100%;
-            max-width: 600px;
+            max-width: 640px;
             display: flex;
             flex-direction: column;
-            gap: 25px;
+            gap: 32px;
         }
 
-        .section {
-            background-color: var(--card);
-            border-radius: 20px;
-            padding: 24px;
-            border: 1px solid #2a2f3a;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        .md-card {
+            background-color: var(--md-sys-color-surface);
+            border-radius: var(--radius-large);
+            padding: 28px;
+            border: 1px solid var(--md-sys-color-outline-variant);
+            box-shadow: var(--elevation-1);
+            position: relative;
+            overflow: hidden;
         }
 
-        h2 {
-            border-left: 4px solid var(--accent);
-            padding-left: 12px;
-            font-size: 0.95em;
-            margin: 0 0 12px 0;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
+        .md-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 100%;
+            background: linear-gradient(180deg, rgba(85, 214, 121, 0.03) 0%, transparent 40%);
+            pointer-events: none;
+        }
+
+        .section-header {
             display: flex;
             align-items: center;
-            color: var(--text-sub);
+            margin: 0 0 16px 0;
+            padding-left: 4px;
         }
 
-        .section-hint {
-            font-size: 0.85em;
-            color: #8fa0dd;
-            line-height: 1.5;
-            margin-bottom: 20px;
-            background: rgba(0, 122, 255, 0.05);
-            padding: 12px 16px;
-            border-radius: 10px;
-            border-left: 2px solid rgba(0, 122, 255, 0.3);
+        .section-header h2 {
+            font-size: 1.1rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--md-sys-color-on-surface-variant);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .item-card {
-            background-color: #1c212b;
-            border-radius: 14px;
-            padding: 18px;
-            margin-bottom: 18px;
-            border: 1px solid #2a2f3a;
+        .section-icon {
+            color: var(--md-sys-color-primary);
+            background: var(--md-sys-color-primary-container);
+            padding: 6px;
+            border-radius: var(--radius-small);
         }
 
-        .item-card:last-child { margin-bottom: 0; }
+        .guide-box {
+            font-size: 0.875rem;
+            color: var(--md-sys-color-secondary);
+            line-height: 1.6;
+            margin-bottom: 24px;
+            background: rgba(160, 208, 167, 0.08);
+            padding: 16px;
+            border-radius: var(--radius-medium);
+            border: 1px solid rgba(160, 208, 167, 0.15);
+        }
 
-        .sub-item .item-title {
-            color: var(--accent);
+        .list-item {
+            background-color: var(--md-sys-color-surface-variant);
+            border-radius: var(--radius-medium);
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid var(--md-sys-color-outline-variant);
+            transition: border-color 0.3s;
+        }
+
+        .list-item:hover {
+            border-color: var(--md-sys-color-outline);
+        }
+
+        .list-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .item-title {
+            color: var(--md-sys-color-on-surface);
             font-weight: 800;
-            font-size: 1.1em;
-            margin-bottom: 8px;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
             display: block;
         }
 
         .proxy-item .item-title {
-            color: #ffffff;
-            font-weight: 700;
-            font-size: 1.1em;
-            margin-bottom: 8px;
-            display: block;
+            margin-bottom: 12px;
         }
 
-        .item-info {
-            font-size: 0.85em;
-            color: var(--text-sub);
+        .item-meta {
+            font-size: 0.9rem;
+            color: var(--md-sys-color-on-surface-variant);
             line-height: 1.6;
-            margin-bottom: 18px;
+            margin-bottom: 24px;
             white-space: pre-line;
         }
 
-        .btn-group {
+        .action-group {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
-        .btn {
+        .md-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 12px;
             width: 100%;
-            padding: 14px;
-            border-radius: 10px;
+            padding: 16px;
+            border-radius: var(--radius-full);
             font-weight: 700;
-            font-size: 0.95em;
+            font-size: 1rem;
             text-decoration: none;
-            transition: all 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
             border: none;
             cursor: pointer;
             box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
         }
 
-        .btn-accent {
-            background-color: var(--accent);
-            color: white;
+        .md-btn::after {
+            content: "";
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 100%; height: 100%;
+            background: currentColor;
+            opacity: 0;
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            transition: opacity 0.3s, transform 0s;
         }
 
-        .btn-accent:hover {
-            background-color: #0063d1;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 122, 255, 0.3);
-        }
-        
-        .btn-secondary {
-            background-color: #2a2f3a;
-            color: var(--text-main);
-        }
-        
-        .btn-secondary:hover {
-            background-color: #3a4150;
+        .md-btn:active::after {
+            opacity: 0.12;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.3s;
         }
 
-        .material-icons-outlined {
-            font-size: 20px;
+        .btn-filled {
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            box-shadow: 0 4px 12px rgba(85, 214, 121, 0.25);
         }
 
-        @media (max-width: 480px) {
-            h1 { font-size: 2em; }
-            .section { padding: 18px; }
-            .tg-channels-group {
-                flex-direction: column;
-                gap: 10px;
-            }
+        .btn-filled:hover {
+            background-color: #6cf08f;
+            box-shadow: 0 6px 16px rgba(85, 214, 121, 0.4);
+        }
+
+        .btn-tonal {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .btn-tonal:hover {
+            background-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .btn-success {
+            background-color: var(--md-sys-color-primary-container) !important;
+            color: var(--md-sys-color-on-primary-container) !important;
+        }
+
+        .placeholder-text {
+            text-align: center;
+            color: var(--md-sys-color-on-surface-variant);
+            padding: 20px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 500px) {
+            h1 { font-size: 2.25rem; }
+            .md-card { padding: 20px; border-radius: var(--radius-medium); }
+            .chips-container { flex-direction: column; gap: 10px; }
+            .chip { width: 100%; justify-content: center; box-sizing: border-box; }
+            body { padding: 16px 12px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
+    <header class="header">
         <h1>WLUnlocker</h1>
         
-        <div class="tg-channels-group">
-            <a href="https://t.me/wlunlocker" class="tg-btn" target="_blank">
-                <span class="material-icons-outlined" style="font-size: 18px;">vpn_lock</span>
-                WLUnlocker | VPN
+        <div class="chips-container">
+            <a href="https://t.me/wlunlocker" class="chip" target="_blank" rel="noopener">
+                <span class="material-symbols-rounded">vpn_lock</span>
+                WLUnlocker VPN
             </a>
-            <a href="https://t.me/wlproxy" class="tg-btn" target="_blank">
-                <span class="material-icons-outlined" style="font-size: 18px;">bolt</span>
-                WLUnlocker | Прокси
+            <a href="https://t.me/wlproxy" class="chip" target="_blank" rel="noopener">
+                <span class="material-symbols-rounded">bolt</span>
+                WLUnlocker Прокси
             </a>
         </div>
 
-        <div id="update-info" class="last-upd-box">Синхронизация...</div>
-    </div>
+        <div id="sync-indicator" class="sync-status">Синхронизация узлов...</div>
+    </header>
 
-    <div class="container">
-        <div class="section">
-            <h2>
-                <span class="material-icons-outlined" style="margin-right:8px;color:var(--accent);">auto_awesome</span>
-                ПОДКЛЮЧИТЬ (V2RAY/HIDDIFY/HAPP)
-            </h2>
-            <div class="section-hint">
-                Чтобы использовать нашу подписку в другом приложении, скопируйте ссылку и вставьте ее в свой VPN-клиент.
+    <main class="main-container">
+        
+        <section class="md-card">
+            <div class="section-header">
+                <h2>
+                    <span class="material-symbols-rounded section-icon">auto_awesome</span>
+                    Подключить VPN
+                </h2>
             </div>
-            <div id="sub-list"></div>
-        </div>
+            <div class="guide-box">
+                Чтобы использовать нашу подписку в другом приложении, скопируйте ссылку и вставьте ее в свой VPN-клиент (V2Ray, Hiddify, Happ).
+            </div>
+            <div id="vpn-roster">
+                <div class="placeholder-text">Загрузка конфигураций...</div>
+            </div>
+        </section>
 
-        <div class="section">
-            <h2>
-                <span class="material-icons-outlined" style="margin-right:8px;color:var(--accent);">bolt</span>
-                MTProto Прокси (Telegram)
-            </h2>
-            <div class="section-hint">
-                Чтобы подключить прокси, нужно подключиться к VPN - перейти по ссылке, отключить VPN и подключить прокси в Telegram.
+        <section class="md-card">
+            <div class="section-header">
+                <h2>
+                    <span class="material-symbols-rounded section-icon">speed</span>
+                    MTProto Прокси
+                </h2>
             </div>
-            <div id="proxy-list"></div>
-        </div>
-    </div>
+            <div class="guide-box">
+                Чтобы подключить прокси, нужно подключиться к VPN — перейти по ссылке, отключить VPN и подключить прокси в Telegram.
+            </div>
+            <div id="proxy-roster">
+                <div class="placeholder-text">Обнаружение узлов...</div>
+            </div>
+        </section>
+
+    </main>
 
     <script>
-        function copyToClipboard(text, btnElement) {
-            navigator.clipboard.writeText(text).then(() => {
-                const original = btnElement.innerHTML;
-                btnElement.innerHTML = '<span class="material-icons-outlined">check_circle</span> Скопировано!';
-                btnElement.style.backgroundColor = '#28a745';
-                setTimeout(() => {
-                    btnElement.innerHTML = original;
-                    btnElement.style.backgroundColor = '';
-                }, 2000);
-            });
-        }
+        const UI = {
+            vpnRoster: document.getElementById('vpn-roster'),
+            proxyRoster: document.getElementById('proxy-roster'),
+            syncIndicator: document.getElementById('sync-indicator')
+        };
 
-        async function fetchData() {
-            const cacheBuster = '?v=' + Math.random();
+        const API = {
+            baseRawUrl: 'https://raw.githubusercontent.com/wlunlocker/anti-rkn/main/',
+            getCacheBuster: () => `?v=${Date.now()}_${Math.random().toString(36).substring(2)}`
+        };
+
+        async function copyToClipboard(text, buttonElement) {
             try {
-                // 1. Считываем дату обновления
-                const vpnResp = await fetch('https://raw.githubusercontent.com/wlunlocker/anti-rkn/main/vpnfull.txt' + cacheBuster);
-                const vpnText = await vpnResp.text();
-                const dateLine = vpnText.split('\n').find(l => l.includes('Last update:'));
-                if (dateLine) document.getElementById('update-info').innerText = dateLine.replace('#', '').trim();
-
-                // 2. Подписки
-                const subResp = await fetch('subscribes.txt' + cacheBuster);
-                const subData = await subResp.text();
-                const subList = document.getElementById('sub-list');
-                subList.innerHTML = '';
+                await navigator.clipboard.writeText(text);
+                const originalHTML = buttonElement.innerHTML;
                 
-                subData.split('\n').forEach(line => {
-                    if (line.includes('|')) {
-                        const p = line.split('|').map(s => s.trim());
-                        const title = p[0], link = p[p.length - 1], fileInfo = p.slice(1, -1).join('\n');
-
-                        subList.innerHTML += `
-                            <div class="item-card sub-item">
-                                <span class="item-title">${title}</span>
-                                <div class="item-info">${fileInfo}</div>
-                                <div class="btn-group">
-                                    <a href="happ://add/${link}" class="btn btn-accent"><span class="material-icons-outlined">install_mobile</span>Автоимпорт в Happ</a>
-                                    <button class="btn btn-secondary" onclick="copyToClipboard('${link}', this)"><span class="material-icons-outlined">content_copy</span>Копировать ссылку</button>
-                                </div>
-                            </div>`;
-                    }
-                });
-
-                // 3. Прокси
-                const proxyResp = await fetch('proxies.txt' + cacheBuster);
-                const proxyData = await proxyResp.text();
-                const proxyList = document.getElementById('proxy-list');
-                proxyList.innerHTML = '';
-
-                proxyData.split('\n').forEach(line => {
-                    if (line.includes('|')) {
-                        const [name, link] = line.split('|').map(s => s.trim());
-                        const autoProxyInfo = "Протокол: MTProto"; 
-                        
-                        proxyList.innerHTML += `
-                            <div class="item-card proxy-item">
-                                <span class="item-title">${name}</span>
-                                <div class="item-info">${autoProxyInfo}</div>
-                                <div class="btn-group">
-                                    <a href="${link}" class="btn btn-accent"><span class="material-icons-outlined">wifi_tethering</span>Подключить прокси</a>
-                                    <button class="btn btn-secondary" onclick="copyToClipboard('${link}', this)"><span class="material-icons-outlined">content_copy</span>Копировать ссылку</button>
-                                </div>
-                            </div>`;
-                    }
-                });
-
-            } catch (e) {
-                console.log(e);
+                buttonElement.classList.add('btn-success');
+                buttonElement.innerHTML = `<span class="material-symbols-rounded">check_circle</span>Скопировано`;
+                
+                setTimeout(() => {
+                    buttonElement.classList.remove('btn-success');
+                    buttonElement.innerHTML = originalHTML;
+                }, 2500);
+            } catch (err) {
+                console.error('Clipboard access denied', err);
             }
         }
-        fetchData();
+
+        function createVPNCard(title, info, link) {
+            return `
+                <article class="list-item">
+                    <span class="item-title">${title}</span>
+                    <div class="item-meta">${info}</div>
+                    <div class="action-group">
+                        <a href="happ://add/${link}" class="md-btn btn-filled">
+                            <span class="material-symbols-rounded">download</span>
+                            Автоимпорт в Happ
+                        </a>
+                        <button class="md-btn btn-tonal" onclick="copyToClipboard('${link}', this)">
+                            <span class="material-symbols-rounded">content_copy</span>
+                            Скопировать ссылку
+                        </button>
+                    </div>
+                </article>
+            `;
+        }
+
+        function createProxyCard(name, link) {
+            const protocolInfo = "Протокол: MTProto";
+            return `
+                <article class="list-item proxy-item">
+                    <span class="item-title">${name}</span>
+                    <div class="item-meta">${protocolInfo}</div>
+                    <div class="action-group">
+                        <a href="${link}" class="md-btn btn-filled">
+                            <span class="material-symbols-rounded">wifi_tethering</span>
+                            Подключить прокси
+                        </a>
+                        <button class="md-btn btn-tonal" onclick="copyToClipboard('${link}', this)">
+                            <span class="material-symbols-rounded">content_copy</span>
+                            Скопировать ссылку
+                        </button>
+                    </div>
+                </article>
+            `;
+        }
+
+        async function initializePlatform() {
+            try {
+                const buster = API.getCacheBuster();
+                
+                const metaResponse = await fetch(`${API.baseRawUrl}vpnfull.txt${buster}`);
+                if (metaResponse.ok) {
+                    const metaText = await metaResponse.text();
+                    const targetLine = metaText.split('\n').find(line => line.includes('Last update:'));
+                    if (targetLine) {
+                        UI.syncIndicator.textContent = targetLine.replace('#', '').trim();
+                    }
+                }
+
+                const subsResponse = await fetch(`subscribes.txt${buster}`);
+                if (subsResponse.ok) {
+                    const subsRaw = await subsResponse.text();
+                    let vpnHTML = '';
+                    
+                    subsRaw.split('\n').forEach(line => {
+                        const trimmed = line.trim();
+                        if (trimmed && trimmed.includes('|') && !trimmed.startsWith('#')) {
+                            const parts = trimmed.split('|').map(s => s.trim());
+                            const title = parts[0];
+                            const link = parts[parts.length - 1];
+                            const info = parts.slice(1, -1).join('\n');
+                            vpnHTML += createVPNCard(title, info, link);
+                        }
+                    });
+                    
+                    UI.vpnRoster.innerHTML = vpnHTML || '<div class="placeholder-text">Список пуст</div>';
+                }
+
+                const proxiesResponse = await fetch(`proxies.txt${buster}`);
+                if (proxiesResponse.ok) {
+                    const proxiesRaw = await proxiesResponse.text();
+                    let proxyHTML = '';
+                    
+                    proxiesRaw.split('\n').forEach(line => {
+                        const trimmed = line.trim();
+                        if (trimmed && trimmed.includes('|') && !trimmed.startsWith('#')) {
+                            const parts = trimmed.split('|').map(s => s.trim());
+                            const name = parts[0];
+                            const link = parts[parts.length - 1];
+                            proxyHTML += createProxyCard(name, link);
+                        }
+                    });
+                    
+                    UI.proxyRoster.innerHTML = proxyHTML || '<div class="placeholder-text">Список пуст</div>';
+                }
+
+            } catch (error) {
+                console.error('Core initialization failed:', error);
+                UI.syncIndicator.textContent = 'Сбой синхронизации';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initializePlatform);
     </script>
 </body>
 </html>
