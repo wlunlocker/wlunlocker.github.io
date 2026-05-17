@@ -18,7 +18,7 @@
             --md-sys-color-surface-container-high: #29302a;
             --md-sys-color-primary: #52d777;
             --md-sys-color-on-primary: #003913;
-            --md-sys-color-primary-container: #005220; /* Изменено с синего на зеленый */
+            --md-sys-color-primary-container: #005220;
             --md-sys-color-on-primary-container: #72f492;
             --md-sys-color-secondary-container: #324b37;
             --md-sys-color-on-secondary-container: #cfebd2;
@@ -44,6 +44,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* Large Top App Bar */
         .top-app-bar {
             width: 100%;
             max-width: 640px;
@@ -79,6 +80,7 @@
             margin: 0;
         }
 
+        /* Зеленые кнопки каналов сверху */
         .chips-layout {
             display: flex;
             gap: 8px;
@@ -97,8 +99,8 @@
             justify-content: center;
             gap: 8px;
             padding: 14px 16px;
-            background-color: var(--md-sys-color-surface-container-high);
-            color: var(--md-sys-color-on-surface);
+            background-color: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
             border-radius: 16px;
             font-family: 'Google Sans', sans-serif;
             font-size: 0.9rem;
@@ -109,15 +111,21 @@
         }
 
         .md-chip:active {
-            background-color: var(--md-sys-color-outline-variant);
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
             transform: scale(0.97);
         }
 
         .md-chip .material-symbols-rounded {
             font-size: 20px;
-            color: var(--md-sys-color-primary); /* Иконки в меню всегда зеленые */
+            color: var(--md-sys-color-on-primary-container);
+        }
+        
+        .md-chip:active .material-symbols-rounded {
+            color: var(--md-sys-color-on-primary);
         }
 
+        /* Основной контейнер */
         .settings-container {
             width: 100%;
             max-width: 640px;
@@ -157,16 +165,18 @@
             overflow: hidden;
         }
 
+        /* Элемент списка (плитка) */
         .settings-tile {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             padding: 20px 16px;
             position: relative;
             background-color: transparent;
             border: none;
             width: 100%;
+            box-sizing: border-box;
             text-align: left;
-            cursor: pointer;
             transition: background-color var(--motion-duration-short) var(--motion-easing-standard);
         }
 
@@ -177,19 +187,15 @@
             left: 56px;
             right: 16px;
             height: 1px;
-            background-color: rgba(64, 73, 65, 0.4);
+            background-color: rgba(64, 73, 65, 0.3);
         }
 
-        .settings-tile:active {
-            background-color: var(--md-sys-color-surface-container-high);
-        }
-
-        /* Контейнер для выравнивания контента плитки слева */
+        /* Информационная часть слева */
         .tile-content-container {
             display: flex;
             align-items: center;
             flex: 1;
-            min-width: 0; /* Фикс для предотвращения выезда кнопок за пределы экрана */
+            min-width: 0; 
         }
 
         .tile-icon-container {
@@ -209,7 +215,6 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            padding-right: 8px;
             min-width: 0;
         }
 
@@ -221,37 +226,35 @@
             margin-bottom: 4px;
             white-space: nowrap;
             overflow: hidden;
-            text-overflow: ellipsis; /* Длинные названия обрезаются точками */
+            text-overflow: ellipsis;
         }
 
         .tile-description {
             font-size: 0.85rem;
             color: var(--md-sys-color-on-surface-variant);
             line-height: 1.4;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
+            white-space: nowrap;
             overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        /* Контейнер для выравнивания действий плитки справа */
+        /* Одиночная кнопка действия справа */
         .tile-actions-group {
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            gap: 8px;
-            flex-shrink: 0; /* Запрещает кнопкам сжиматься */
+            margin-left: 12px;
+            flex-shrink: 0; 
         }
 
         .action-button {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 22px;
             background-color: var(--md-sys-color-surface-container-high);
-            color: var(--md-sys-color-primary); /* Иконки действий зеленые */
             border: none;
             cursor: pointer;
             text-decoration: none;
@@ -261,35 +264,7 @@
 
         .action-button:active {
             background-color: var(--md-sys-color-outline-variant);
-            transform: scale(0.9);
-        }
-
-        /* Кнопка с синим фоном в меню стала зеленой */
-        .md-chip:active .material-symbols-rounded {
-            color: var(--md-sys-color-on-primary-container) !important;
-        }
-
-        .md-chip.blue-button {
-            background-color: var(--md-sys-color-primary-container); /* Синий фон стал зеленым */
-            color: var(--md-sys-color-on-primary-container);
-        }
-
-        .md-chip.blue-button:active {
-            background-color: var(--md-sys-color-outline-variant);
-        }
-
-        .md-chip.blue-button .material-symbols-rounded {
-            color: var(--md-sys-color-on-primary-container);
-        }
-
-        /* Синяя иконка буфера обмена стала зеленой */
-        .action-button.success-action {
-            background-color: var(--md-sys-color-primary);
-            color: var(--md-sys-color-on-primary);
-        }
-
-        .action-button .material-symbols-rounded {
-            font-size: 20px;
+            transform: scale(0.92);
         }
 
         .status-footer {
@@ -321,7 +296,7 @@
     <div id="app-bar" class="top-app-bar">
         <h1>WLUnlocker</h1>
         <div class="chips-layout">
-            <a href="https://t.me/wlunlocker" class="md-chip blue-button" target="_blank" rel="noopener">
+            <a href="https://t.me/wlunlocker" class="md-chip" target="_blank" rel="noopener">
                 <span class="material-symbols-rounded">vpn_lock</span>
                 VPN Канал
             </a>
@@ -372,32 +347,11 @@
             }
         });
 
-        async function copyData(text, btn) {
-            try {
-                await navigator.clipboard.writeText(text);
-                const icon = btn.querySelector('.material-symbols-rounded');
-                const originalIcon = icon.textContent;
-                
-                btn.classList.add('success-action');
-                icon.textContent = 'check';
-                
-                setTimeout(() => {
-                    btn.classList.remove('success-action');
-                    icon.textContent = originalIcon;
-                }, 2000);
-            } catch (e) {
-                console.error(e);
-            }
-        }
-
         function buildVpnTile(title, desc, link) {
-            // Кастомная иконка HAPP (разрезанная H) зеленого цвета
-            const HappIcon = `
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--md-sys-color-primary);">
-                    <line x1="6" y1="4" x2="6" y2="20"></line>
-                    <line x1="18" y1="4" x2="18" y2="20"></line>
-                    <line x1="6" y1="12" x2="10" y2="12"></line>
-                    <line x1="14" y1="12" x2="18" y2="12"></line>
+            // Кастомный точный SVG логотипа Happ (разрезанная H из параллелограммов)
+            const happLogoSvg = `
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color: var(--md-sys-color-primary);">
+                    <path d="M6.2 3h3.5l-2.2 5H4zM5.3 9h5.4l-2.2 5H3.1zM4.4 15h5.4l-2.6 6H1.8zM15.4 3h3.5l-2.2 5h-3.5zM14.5 9h5.4l-2.2 5H12.3zM13.6 15h5.4l-2.6 6H11zM8.5 11h6.2l-1.3 2H7.2z"/>
                 </svg>
             `;
 
@@ -414,20 +368,19 @@
                     </div>
                     <div class="tile-actions-group">
                         <a href="happ://add/${link}" class="action-button" title="Импорт в Happ">
-                            ${HappIcon}
+                            ${happLogoSvg}
                         </a>
-                        <button class="action-button" onclick="copyData('${link}', this)" title="Копировать линк">
-                            <span class="material-symbols-rounded">content_copy</span>
-                        </button>
                     </div>
                 </div>
             `;
         }
 
         function buildProxyTile(name, link) {
-            // Иконка Telegram (бумажный самолетик) зеленого цвета
-            const sendIcon = `
-                <span class="material-symbols-rounded" style="transform: rotate(-35deg); color: var(--md-sys-color-primary); margin-left: 2px;">send</span>
+            // Кастомный точный SVG бумажного самолётика Telegram
+            const telegramPlaneSvg = `
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="color: var(--md-sys-color-primary); transform: translate(-1px, 0px);">
+                    <path d="M1.101 21.757L23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817z"/>
+                </svg>
             `;
 
             return `
@@ -442,12 +395,9 @@
                         </div>
                     </div>
                     <div class="tile-actions-group">
-                        <a href="${link}" class="action-button" title="Подключить">
-                            ${sendIcon}
+                        <a href="${link}" class="action-button" title="Подключить в Telegram">
+                            ${telegramPlaneSvg}
                         </a>
-                        <button class="action-button" onclick="copyData('${link}', this)" title="Копировать">
-                            <span class="material-symbols-rounded">content_copy</span>
-                        </button>
                     </div>
                 </div>
             `;
