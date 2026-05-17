@@ -1,6 +1,6 @@
 # Last update: 17.05.2026 09:53 MSK
 proxies:
-Myrka Privat | tg://proxy?server=nsk.catpaws.ru&port=443&secret=ee596508ed6955ac590f78bd8ab9478d9879612e7275
+Myrka Privat | https://t.me/proxy?server=nsk.catpaws.ru&port=443&secret=ee596508ed6955ac590f78bd8ab9478d9879612e7275
 TGGarden | https://t.me/proxy?server=tg.garden-gnomes.lol&port=443&secret=ee46b0971d5de93f825bc66f23a304c9367a61796d65722e7275
 Olimpos №1 | https://t.me/proxy?server=papin.olympos.lol&port=443&secret=ee470cb2b8b29aeadfbdf8a2f7bee5ca3b62726f777365722e79616e6465782e636f6d
 CatPaws | https://t.me/proxy?server=nsk.catpaws.ru&port=443&secret=ee6288b4d5d9526c8d60cf8052e7eb0d3473742e6f6b63646e2e7275
