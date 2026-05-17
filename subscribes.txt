@@ -1,5 +1,8 @@
 # subscribes:
-🏴ЧЕРНЫЕ СПИСКИ №1🏴 | 150+ СЕРВЕРОВ | LTE - 4G, WiFi https://raw.githubusercontent.com/wlunlocker/anti-rkn/main/vpnstable.txt
-🏴ЧЕРНЫЕ СПИСКИ №2🏴 | 100+ СЕРВЕРОВ | LTE - 4G, WiFi https://raw.githubusercontent.com/wlunlocker/anti-rkn/main/vpnfull.txt
+🏴ЧЕРНЫЕ СПИСКИ №1🏴 | 150+ СЕРВЕРОВ | LTE - 4G, WiFi
+https://raw.githubusercontent.com/wlunlocker/anti-rkn/main/vpnstable.txt
+🏴ЧЕРНЫЕ СПИСКИ №2🏴 | 100+ СЕРВЕРОВ | LTE - 4G, WiFi
+https://raw.githubusercontent.com/wlunlocker/anti-rkn/main/vpnfull.txt
 🏳БЕЛЫЕ СПИСКИ №1🏳 | 200+ СЕРВЕРОВ | ТОЛЬКО LTE, 4G https://raw.githubusercontent.com/wlunlocker/anti-rkn/main/awlone.txt
-🏳БЕЛЫЕ СПИСКИ №2🏳 | 100+ СЕРВЕРОВ | ТОЛЬКО LTE, 4G https://raw.githubusercontent.com/wlunlocker/anti-rkn/main/awltwo.txt
+🏳БЕЛЫЕ СПИСКИ №2🏳 | 100+ СЕРВЕРОВ | ТОЛЬКО LTE, 4G
+https://raw.githubusercontent.com/wlunlocker/anti-rkn/main/awltwo.txt
