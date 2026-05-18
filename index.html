@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#050608">
+    <meta name="theme-color" content="#000000">
     <title>WLUnlocker</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -11,15 +11,14 @@
 
     <style>
         :root {
-            /* Угольно-черный бэкграунд шапки и карточек для максимального контраста */
-            --bg-header: rgba(5, 6, 8, 0.5); 
-            --bg-card: rgba(13, 15, 18, 0.75);          
+            --bg-header: rgba(0, 0, 0, 0.35); 
+            --bg-card: rgba(15, 17, 23, 0.7);          
             --bg-btn-dark: rgba(255, 255, 255, 0.08);      
             --bg-btn-light: #e2e4e9;     
             --text-main: #ffffff;
             --text-silver: #e2e4e9;      
             --text-muted: #8e969f;       
-            --border-inline: rgba(255, 255, 255, 0.08);
+            --border-inline: rgba(255, 255, 255, 0.07);
             --font-flex: 'Google Sans Flex', system-ui, sans-serif;
             --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
             --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -40,41 +39,41 @@
             flex-direction: column;
             overflow: hidden;
             position: relative;
-            background-color: #050608;
+            background-color: #000000;
         }
 
-        /* --- КОНТРАСТНЫЙ ЖИВОЙ ФОН: ГЛУБОКИЙ ЧЕРНЫЙ И ЯРКИЕ СЕРЕБРЯНЫЕ ПЯТНА --- */
+        /* --- ОБНОВЛЕННЫЙ КОНТРАСТНЫЙ МЕТАЛЛИЧЕСКИЙ ФОН С ЯРКИМИ ПЯТНАМИ --- */
         body::before {
             content: '';
             position: absolute;
-            top: -40%; left: -40%; right: -40%; bottom: -40%;
+            top: -50%; left: -50%; right: -50%; bottom: -50%;
             z-index: -2;
-            /* Пятна стали ярче (0.45 opacity) и они теперь локальные, не размазанные по всему экрану */
+            /* Пятна стали очень яркими, сфокусированными и на чистом черном фоне */
             background: 
-                radial-gradient(circle at 15% 20%, rgba(226, 232, 240, 0.45) 0%, rgba(200, 210, 225, 0.1) 15%, transparent 35%),
-                radial-gradient(circle at 85%  stump%, rgba(241, 245, 249, 0.4) 0%, rgba(210, 220, 235, 0.08) 12%, transparent 30%),
-                radial-gradient(circle at 25% 85%, rgba(195, 205, 220, 0.35) 0%, rgba(170, 185, 205, 0.05) 18%, transparent 40%),
-                radial-gradient(circle at 80% 75%, rgba(255, 255, 255, 0.42) 0%, rgba(220, 225, 235, 0.1) 15%, transparent 35%),
-                #050608;
-            background-size: 150% 150%;
-            animation: silverSpots 22s ease-in-out infinite alternate;
+                radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.85) 0%, rgba(200, 215, 235, 0.15) 12%, transparent 28%),
+                radial-gradient(circle at 85% 20%, rgba(220, 230, 245, 0.70) 0%, rgba(160, 180, 210, 0.10) 10%, transparent 25%),
+                radial-gradient(circle at 20% 80%, rgba(190, 205, 225, 0.65) 0%, rgba(140, 160, 190, 0.05) 15%, transparent 35%),
+                radial-gradient(circle at 80% 85%, rgba(255, 255, 255, 0.80) 0%, rgba(210, 220, 240, 0.12) 12%, transparent 30%),
+                #000000;
+            background-size: 140% 140%;
+            animation: silverSpots Movement 25s ease-in-out infinite alternate;
         }
 
+        /* Текстура шума поверх градиента, как на рендерах */
         body::after {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
-            opacity: 0.05;
+            opacity: 0.07;
             pointer-events: none;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* Медленное, явное и несинхронное движение контрастных металлических пятен */
-        @keyframes silverSpots {
-            0% { background-position: 5% 15%; transform: scale(1) rotate(0deg); }
-            50% { background-position: 85% 75%; transform: scale(1.08) rotate(2deg); }
-            100% { background-position: 40% 35%; transform: scale(1) rotate(-1deg); }
+        @keyframes silverSpotsMovement {
+            0% { background-position: 0% 0%; transform: scale(1) rotate(0deg); }
+            50% { background-position: 50% 50%; transform: scale(1.06) rotate(1.5deg); }
+            100% { background-position: 100% 100%; transform: scale(1) rotate(-0.5deg); }
         }
 
         header {
@@ -84,8 +83,8 @@
             padding: 45px 20px 20px 20px;
             text-align: center;
             background: var(--bg-header);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
             border-bottom: 1px solid var(--border-inline);
             display: flex;
             flex-direction: column;
@@ -95,8 +94,8 @@
         .meta-pill {
             display: inline-block;
             padding: 4px 14px;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 100px;
             font-size: 0.7rem;
             font-weight: 800;
@@ -226,12 +225,12 @@
         .item-icon {
             width: 44px; height: 44px;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.05);
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--text-silver);
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.03);
         }
 
         .item-info {
@@ -277,16 +276,16 @@
 
         .btn-main {
             background: var(--bg-btn-light);
-            color: #050608;
+            color: #000000;
         }
 
         .btn-secondary {
             background: var(--bg-btn-dark);
             color: var(--text-silver);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
         .btn-secondary:active {
-            background: rgba(255, 255, 255, 0.14);
+            background: rgba(255, 255, 255, 0.12);
         }
 
         .btn-icon { font-size: 18px; }
@@ -294,7 +293,7 @@
         .info-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(5, 6, 8, 0.8);
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             z-index: 200;
@@ -311,7 +310,7 @@
             pointer-events: auto;
         }
         .info-modal-card {
-            background: #111317;
+            background: #0f1116;
             border: 1px solid var(--border-inline);
             border-radius: 28px;
             padding: 24px;
@@ -347,9 +346,9 @@
             position: fixed;
             bottom: 0; left: 0; width: 100%;
             height: 75px;
-            background: rgba(5, 6, 8, 0.9);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             border-top: 1px solid var(--border-inline);
             display: flex;
             justify-content: space-around;
