@@ -39,22 +39,24 @@
             flex-direction: column;
             overflow: hidden;
             position: relative;
-            background-color: #0d0f12;
+            background-color: #0b0d10;
         }
 
+        /* --- ЖИВОЙ ПЯТНИСТЫЙ МЕТАЛЛИЧЕСКИЙ ФОН (КОНТРАСТНЫЙ) --- */
         body::before {
             content: '';
             position: absolute;
-            top: -50%; left: -50%; right: -50%; bottom: -50%;
+            top: -30%; left: -30%; right: -30%; bottom: -30%;
             z-index: -2;
+            /* Выраженные, очерченные серебряные пятна за счет уменьшения радиуса прозрачности */
             background: 
-                radial-gradient(circle at 30% 20%, rgba(160, 174, 192, 0.18) 0%, transparent 45%),
-                radial-gradient(circle at 80% 40%, rgba(226, 228, 233, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 25% 75%, rgba(113, 128, 150, 0.12) 0%, transparent 50%),
-                radial-gradient(circle at 75% 85%, rgba(200, 205, 215, 0.14) 0%, transparent 45%),
-                #0d0f12;
-            background-size: 200% 200%;
-            animation: auroraFlow 25s ease infinite;
+                radial-gradient(circle at 20% 25%, rgba(180, 195, 210, 0.28) 0%, rgba(180, 195, 210, 0.05) 25%, transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(235, 240, 245, 0.25) 0%, rgba(235, 240, 245, 0.03) 20%, transparent 35%),
+                radial-gradient(circle at 35% 80%, rgba(140, 155, 175, 0.22) 0%, rgba(140, 155, 175, 0.02) 25%, transparent 45%),
+                radial-gradient(circle at 75% 75%, rgba(215, 225, 235, 0.26) 0%, rgba(215, 225, 235, 0.04) 20%, transparent 40%),
+                #0b0d10;
+            background-size: 140% 140%;
+            animation: spotMovement 18s ease-in-out infinite alternate;
         }
 
         body::after {
@@ -62,15 +64,16 @@
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
-            opacity: 0.035;
+            opacity: 0.04;
             pointer-events: none;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        @keyframes auroraFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* Более динамичное смещение для эффекта "живых" двигающихся пятен */
+        @keyframes spotMovement {
+            0% { background-position: 0% 10%; transform: scale(1); }
+            50% { background-position: 50% 80%; transform: scale(1.05) rotate(1deg); }
+            100% { background-position: 100% 30%; transform: scale(1); }
         }
 
         header {
