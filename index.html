@@ -3,30 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#0b0d12">
-    <title>WLUnlocker BETA</title>
+    <meta name="theme-color" content="#0d0f12">
+    <title>WLUnlocker</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
 
     <style>
         :root {
-            /* СЕРЕБРЯНАЯ ПАЛИТРА ДЛЯ BETA */
-            --bg-main: #0b0d12;          
-            --bg-header: rgba(11, 13, 18, 0.5); 
-            --bg-card: #151821;          
-            
-            --bg-btn-dark: #21252e;      
+            --bg-header: rgba(13, 15, 18, 0.4); 
+            --bg-card: rgba(26, 29, 36, 0.65);          
+            --bg-btn-dark: rgba(255, 255, 255, 0.07);      
             --bg-btn-light: #e2e4e9;     
-            
             --text-main: #ffffff;
             --text-silver: #e2e4e9;      
-            --text-muted: #889098;       
+            --text-muted: #8e969f;       
             --border-inline: rgba(255, 255, 255, 0.06);
-            
             --font-flex: 'Google Sans Flex', system-ui, sans-serif;
-            
-            /* Физические кривые для анимаций */
             --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
             --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
@@ -40,15 +33,46 @@
 
         body {
             font-family: var(--font-flex);
-            background-color: var(--bg-main);
             color: var(--text-main);
             height: 100vh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            position: relative;
+            background-color: #0d0f12;
         }
 
-        /* --- ФИКСИРОВАННАЯ ШАПКА С ЭФФЕКТОМ РАЗМЫТИЯ --- */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; right: -50%; bottom: -50%;
+            z-index: -2;
+            background: 
+                radial-gradient(circle at 30% 20%, rgba(160, 174, 192, 0.18) 0%, transparent 45%),
+                radial-gradient(circle at 80% 40%, rgba(226, 228, 233, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 25% 75%, rgba(113, 128, 150, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 75% 85%, rgba(200, 205, 215, 0.14) 0%, transparent 45%),
+                #0d0f12;
+            background-size: 200% 200%;
+            animation: auroraFlow 25s ease infinite;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            opacity: 0.035;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        @keyframes auroraFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         header {
             position: fixed;
             top: 0; left: 0; right: 0;
@@ -56,8 +80,8 @@
             padding: 45px 20px 20px 20px;
             text-align: center;
             background: var(--bg-header);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
             border-bottom: 1px solid var(--border-inline);
             display: flex;
             flex-direction: column;
@@ -67,8 +91,8 @@
         .meta-pill {
             display: inline-block;
             padding: 4px 14px;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 100px;
             font-size: 0.7rem;
             font-weight: 800;
@@ -76,10 +100,8 @@
             color: var(--text-silver);
             text-transform: uppercase;
             margin-bottom: 12px;
-            box-shadow: 0 0 12px rgba(255, 255, 255, 0.05);
         }
 
-        /* Контейнер для центровки заголовка и кнопки инфо */
         .title-wrapper {
             display: flex;
             align-items: center;
@@ -94,13 +116,12 @@
             font-size: 2.2rem;
             font-weight: 700;
             letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #ffffff 40%, #889098 100%);
+            background: linear-gradient(135deg, #ffffff 30%, #9ca3af 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             transition: opacity 0.25s var(--ease-spring), transform 0.25s var(--ease-spring);
         }
 
-        /* Кнопка информации (i) */
         .info-trigger {
             font-size: 24px;
             color: var(--text-muted);
@@ -127,7 +148,7 @@
             justify-content: center;
             gap: 8px;
             padding: 12px;
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border-inline);
             border-radius: 14px;
             color: var(--text-silver);
@@ -138,11 +159,10 @@
         }
         .channel-btn:active { 
             transform: scale(0.94); 
-            background: rgba(255, 255, 255, 0.08); 
+            background: rgba(255, 255, 255, 0.07); 
         }
         .channel-btn .material-symbols-rounded { font-size: 20px; color: var(--text-silver); }
 
-        /* --- ПРОКРУЧИВАЕМЫЙ КОНТЕНТ --- */
         .main-scroll {
             flex: 1;
             overflow-y: auto;
@@ -159,9 +179,10 @@
         }
         .tab-content.active { display: flex; }
 
-        /* --- ФИРМЕННАЯ КАРТОЧКА --- */
         .list-card {
             background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-radius: 24px;
             padding: 4px 16px;
             display: flex;
@@ -170,6 +191,7 @@
             max-width: 500px;
             margin: 0 auto;
             border: 1px solid var(--border-inline);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .card-item {
@@ -186,7 +208,7 @@
         }
 
         @keyframes springUp {
-            0% { opacity: 0; transform: translateY(32px) scale(0.97); }
+            0% { opacity: 0; transform: translateY(24px) scale(0.98); }
             100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
@@ -199,11 +221,12 @@
         .item-icon {
             width: 44px; height: 44px;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.05);
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--text-silver);
+            border: 1px solid rgba(255, 255, 255, 0.03);
         }
 
         .item-info {
@@ -249,23 +272,26 @@
 
         .btn-main {
             background: var(--bg-btn-light);
-            color: #0b0d12;
+            color: #0d0f12;
         }
 
         .btn-secondary {
             background: var(--bg-btn-dark);
             color: var(--text-silver);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .btn-secondary:active {
+            background: rgba(255, 255, 255, 0.12);
         }
 
         .btn-icon { font-size: 18px; }
 
-        /* --- КАСТOМНОЕ ОКНО ИНФОРМАЦИИ (MODAL) --- */
         .info-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(11, 13, 18, 0.7);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background: rgba(11, 13, 18, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             z-index: 200;
             display: flex;
             align-items: center;
@@ -280,7 +306,7 @@
             pointer-events: auto;
         }
         .info-modal-card {
-            background: var(--bg-card);
+            background: #161920;
             border: 1px solid var(--border-inline);
             border-radius: 28px;
             padding: 24px;
@@ -291,7 +317,7 @@
             display: flex;
             flex-direction: column;
             gap: 16px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
         }
         .info-overlay.active .info-modal-card {
             transform: scale(1) translateY(0);
@@ -312,14 +338,13 @@
             font-weight: 500;
         }
 
-        /* --- НИЖНИЙ НАВИГАТОР --- */
         .bottom-nav {
             position: fixed;
             bottom: 0; left: 0; width: 100%;
             height: 75px;
-            background: rgba(11, 13, 18, 0.95);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(13, 15, 18, 0.85);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             border-top: 1px solid var(--border-inline);
             display: flex;
             justify-content: space-around;
@@ -402,7 +427,7 @@
         <div class="info-modal-card" onclick="event.stopPropagation()">
             <div class="modal-top">
                 <span class="material-symbols-rounded">info</span>
-                <h3 id="modal-title">Важная информация</h3>
+                <h3>Важная информация</h3>
             </div>
             <p id="info-modal-text">Текст справки</p>
             <button class="action-btn btn-main" style="width:100%; margin-top:8px;" onclick="closeInfoModal()">Понятно</button>
@@ -423,17 +448,13 @@
     <script>
         let currentTab = 'vpn';
 
-        // База текстов для инфо-кнопок верхушки
         const tips = {
-            vpn: 'Для использования в HAPP используйте автомипорт, для других приложений скопируйте ссылку и вставьте ее из буфера обмена.',
-            proxy: 'Для импорта прокси в Telegram включите VPN, импортируйте прокси в Telegram и отключите VPN. При использовании прокси Telegram перестает работать со включенным VPN'
+            vpn: 'Для использования в HAPP используйте автоимпорт, для других приложений скопируйте ссылку и вставьте ее из буфера обмена.',
+            proxy: 'Для импорта прокси в Telegram включите VPN, импортируйте прокси в Telegram и отключите VPN. При использовании прокси Telegram перестает работать со включенным VPN.'
         };
 
-        // Логика кастомного модального окна
         function openInfoModal() {
             document.getElementById('info-modal-text').textContent = tips[currentTab];
-            // Теперь здесь всегда фиксированный чистый заголовок
-            document.getElementById('modal-title').textContent = 'Важная информация';
             document.getElementById('info-overlay').classList.add('active');
         }
 
@@ -441,7 +462,6 @@
             document.getElementById('info-overlay').classList.remove('active');
         }
 
-        // Динамическое переключение табов
         function switchTab(tabId, element) {
             const targetTab = document.getElementById(`tab-${tabId}`);
             if (targetTab.classList.contains('active')) return;
@@ -470,7 +490,6 @@
             
             document.querySelector('.main-scroll').scrollTop = 0;
 
-            // Каскадный перезапуск анимации карточек
             targetTab.querySelectorAll('.card-item').forEach((item, i) => {
                 item.style.animation = 'none';
                 item.offsetHeight; 
@@ -479,7 +498,6 @@
             });
         }
 
-        // Логика буфера обмена
         async function copyToClipboard(text, btnElement) {
             try {
                 await navigator.clipboard.writeText(text);
@@ -505,7 +523,6 @@
 
         const antiCache = `?nocache=${Date.now()}_${Math.random().toString(36).substring(2,9)}`;
 
-        // Карточка VPN
         renderVpnItem = (title, desc, link, index) => `
             <div class="card-item" style="animation-delay: ${index * 0.05}s">
                 <div class="item-meta">
@@ -526,7 +543,6 @@
             </div>
         `;
 
-        // Карточка Прокси 
         renderProxyItem = (title, link, index) => `
             <div class="card-item" style="animation-delay: ${index * 0.05}s">
                 <div class="item-meta">
@@ -538,7 +554,7 @@
                 </div>
                 <div class="item-actions">
                     <a href="${link}" class="action-btn btn-main">
-                        <span class="material-symbols-rounded btn-icon">send</span> Импорт в Telegram
+                        <span class="material-symbols-rounded btn-icon">send</span> В Telegram
                     </a>
                     <button class="action-btn btn-secondary" onclick="copyToClipboard('${link}', this)">
                         <span class="material-symbols-rounded btn-icon">content_copy</span> Копировать
@@ -548,7 +564,6 @@
         `;
 
         async function initData() {
-            // Загрузка списков VPN
             try {
                 const resVpn = await fetch(`subscribes.txt${antiCache}`);
                 if (resVpn.ok) {
@@ -572,7 +587,6 @@
                 document.getElementById('vpn-list').innerHTML = '<div class="status-msg">Ошибка данных</div>';
             }
 
-            // Загрузка списков Прокси
             try {
                 const resProxy = await fetch(`proxies.txt${antiCache}`);
                 if (resProxy.ok) {
