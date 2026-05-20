@@ -1,5 +1,13 @@
 # Last update: 17.05.2026 09:53 MSK
 proxies:
+KyraProxy №1 | https://t.me/proxy?server=smile.myrka.digital&port=1448&secret=ee14481448144814481448144814481448736d696c652e6d79726b612e6469676974616c
+KyraProxy №2 | https://t.me/proxy?server=kotenok-vera.myrka.digital&port=8443&secret=ee11165043ffff145f42aefdddd17bbb1b6b6f74656e6f6b2d766572612e6d79726b612e6469676974616c
+KyraProxy №3 | https://t.me/proxy?server=dobri-kot.myrka.digital&port=1448&secret=ee14481448144814481448144814481448736d696c652e6d79726b612e6469676974616c
+KyraProxy №4 | https://t.me/proxy?server=murochka.myrka.digital&port=2053&secret=ee63a8ac5afe47eb41cb8d2d2e8d54ab7c6d75726f63686b612e6d79726b612e6469676974616c
+KyraProxy №5 | https://t.me/proxy?server=barsik.myrka.digital&port=444&secret=ee1111f7e81a11fa78811ffecfb68bfc7462617273696b2e6d79726b612e6469676974616c
+KyraProxy №6 | https://t.me/proxy?server=vero.myrka.digital&port=4443&secret=ee35a1a91f16f78dfd57013006ed2f12bf7665726f2e6d79726b612e6469676974616c
+KyraProxy №7 | https://t.me/proxy?server=nelox.myrka.digital&port=36829&secret=ee408a31221fc47ac9a7096b828eec1b786e656c6f782e6d79726b612e6469676974616c
+KyraProxy №8 | https://t.me/proxy?server=rknpidor.myrka.digital&port=2053&secret=ee63a8ac5afe47eb41cb8d2d2e8d54ab7c6d75726f63686b612e6d79726b612e6469676974616c
 CatPaws №2 | https://t.me/proxy?server=nsk.catpaws.ru&port=443&secret=ee1f460f3afac0e815fac861a7ef42d60579612e7275
 Myrka №8 | https://t.me/proxy?server=rtx.myrka.digital&port=8443&secret=eee7084fde01cfbce4b201b0c92e176c51697269736b612e6d79726b612e6469676974616c
 CatPaws Privat | https://t.me/proxy?server=nsk.catpaws.ru&port=443&secret=ee596508ed6955ac590f78bd8ab9478d9879612e7275
