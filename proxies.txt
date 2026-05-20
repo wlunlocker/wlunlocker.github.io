@@ -1,5 +1,8 @@
 # Last update: 17.05.2026 09:53 MSK
 proxies:
+Utkapay🔥 | tg://proxy?server=utkapay.life&port=443&secret=eec0ab2dc91cd75da14bf8bde752ca8222766473696e612e7275
+QuackTon🔥 | tg://proxy?server=quackton.life&port=443&secret=ee65fc7553a1f5ca8b50b71c015b38722479616e6465782e7275
+Aether Proxy🔥 | tg://proxy?server=89.169.52.38&port=443&secret=ee9be2e9a4ed69389a32656cc14320d4ca79612e7275
 KyraProxy №1 | https://t.me/proxy?server=smile.myrka.digital&port=1448&secret=ee14481448144814481448144814481448736d696c652e6d79726b612e6469676974616c
 KyraProxy №2 | https://t.me/proxy?server=kotenok-vera.myrka.digital&port=8443&secret=ee11165043ffff145f42aefdddd17bbb1b6b6f74656e6f6b2d766572612e6d79726b612e6469676974616c
 KyraProxy №3 | https://t.me/proxy?server=dobri-kot.myrka.digital&port=1448&secret=ee14481448144814481448144814481448736d696c652e6d79726b612e6469676974616c
