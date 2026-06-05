@@ -42,13 +42,11 @@
             background-color: #000000;
         }
 
-        /* --- ОБНОВЛЕННЫЙ КОНТРАСТНЫЙ МЕТАЛЛИЧЕСКИЙ ФОН С ЯРКИМИ ПЯТНАМИ --- */
         body::before {
             content: '';
             position: absolute;
             top: -50%; left: -50%; right: -50%; bottom: -50%;
             z-index: -2;
-            /* Пятна стали очень яркими, сфокусированными и на чистом черном фоне */
             background: 
                 radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.85) 0%, rgba(200, 215, 235, 0.15) 12%, transparent 28%),
                 radial-gradient(circle at 85% 20%, rgba(220, 230, 245, 0.70) 0%, rgba(160, 180, 210, 0.10) 10%, transparent 25%),
@@ -56,10 +54,9 @@
                 radial-gradient(circle at 80% 85%, rgba(255, 255, 255, 0.80) 0%, rgba(210, 220, 240, 0.12) 12%, transparent 30%),
                 #000000;
             background-size: 140% 140%;
-            animation: silverSpots Movement 25s ease-in-out infinite alternate;
+            animation: silverSpotsMovement 25s ease-in-out infinite alternate;
         }
 
-        /* Текстура шума поверх градиента, как на рендерах */
         body::after {
             content: '';
             position: absolute;
@@ -122,7 +119,6 @@
             background: linear-gradient(135deg, #ffffff 40%, #a1a1aa 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            transition: opacity 0.25s var(--ease-spring), transform 0.25s var(--ease-spring);
         }
 
         .info-trigger {
@@ -169,19 +165,25 @@
         .main-scroll {
             flex: 1;
             overflow-y: auto;
-            padding: 210px 16px 110px 16px; 
+            padding: 210px 16px 40px 16px; 
             -webkit-overflow-scrolling: touch;
         }
 
         .main-scroll::-webkit-scrollbar { display: none; }
         .main-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 
-        .tab-content {
-            display: none;
-            flex-direction: column;
-            width: 100%;
+        .section-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-silver);
+            max-width: 500px;
+            margin: 0 auto 14px auto;
+            padding-left: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .tab-content.active { display: flex; }
+        .section-title .material-symbols-rounded { font-size: 20px; color: var(--text-muted); }
 
         .list-card {
             background: var(--bg-card);
@@ -337,49 +339,11 @@
         
         .info-modal-card p {
             font-size: 0.95rem;
-            line-height: 1.55;
+            line-height: 1.6;
             color: #e2e8f0;
             font-weight: 500;
+            white-space: pre-line;
         }
-
-        .bottom-nav {
-            position: fixed;
-            bottom: 0; left: 0; width: 100%;
-            height: 75px;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-top: 1px solid var(--border-inline);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding-bottom: env(safe-area-inset-bottom, 0px);
-            z-index: 110;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.75rem;
-            font-weight: 600;
-            width: 45%; height: 100%;
-            justify-content: center;
-            cursor: pointer;
-            transition: transform 0.25s var(--ease-bounce), color 0.2s;
-        }
-        .nav-item:active { transform: scale(0.9); }
-        .nav-item.active { color: var(--text-main); }
-
-        .nav-item .material-symbols-rounded {
-            font-size: 24px;
-            font-variation-settings: 'FILL' 0;
-            transition: font-variation-settings 0.2s var(--ease-spring);
-        }
-        .nav-item.active .material-symbols-rounded { font-variation-settings: 'FILL' 1; }
 
         .status-msg {
             text-align: center;
@@ -390,8 +354,7 @@
 
         @media (min-width: 768px) {
             body { align-items: center; }
-            header, .main-scroll, .bottom-nav, .info-overlay { width: 100%; max-width: 550px; }
-            .bottom-nav { border-radius: 24px 24px 0 0; border-left: 1px solid var(--border-inline); border-right: 1px solid var(--border-inline); }
+            header, .main-scroll, .info-overlay { width: 100%; max-width: 550px; }
         }
     </style>
 </head>
@@ -400,7 +363,7 @@
     <header>
         <div class="meta-pill">WLUnlocker</div>
         <div class="title-wrapper">
-            <h1 id="header-title">Подписки VPN</h1>
+            <h1 id="header-title">WLUnlocker</h1>
             <span class="material-symbols-rounded info-trigger" onclick="openInfoModal()">info</span>
         </div>
         <div class="channels-row">
@@ -414,16 +377,18 @@
     </header>
 
     <div class="main-scroll">
-        <div id="tab-vpn" class="tab-content active">
-            <div id="vpn-list">
-                <div class="status-msg">Загрузка конфигураций...</div>
-            </div>
+        <div class="section-title">
+            <span class="material-symbols-rounded">layers</span> Подписки
+        </div>
+        <div id="vpn-list" style="margin-bottom: 32px;">
+            <div class="status-msg">Загрузка конфигураций...</div>
         </div>
 
-        <div id="tab-proxy" class="tab-content">
-            <div id="proxy-list">
-                <div class="status-msg">Поиск прокси-шлюзов...</div>
-            </div>
+        <div class="section-title">
+            <span class="material-symbols-rounded">dns</span> Прокси
+        </div>
+        <div id="proxy-list">
+            <div class="status-msg">Поиск прокси-шлюзов...</div>
         </div>
     </div>
 
@@ -433,73 +398,25 @@
                 <span class="material-symbols-rounded">info</span>
                 <h3>Важная информация</h3>
             </div>
-            <p id="info-modal-text">Текст справки</p>
+            <p id="info-modal-text"></p>
             <button class="action-btn btn-main" style="width:100%; margin-top:8px;" onclick="closeInfoModal()">Понятно</button>
         </div>
     </div>
 
-    <nav class="bottom-nav">
-        <div class="nav-item active" onclick="switchTab('vpn', this)">
-            <span class="material-symbols-rounded">security</span>
-            <span>Подписки</span>
-        </div>
-        <div class="nav-item" onclick="switchTab('proxy', this)">
-            <span class="material-symbols-rounded">router</span>
-            <span>Прокси</span>
-        </div>
-    </nav>
-
     <script>
-        let currentTab = 'vpn';
-
         const tips = {
-            vpn: 'Для использования в HAPP используйте автоимпорт, для других приложений скопируйте ссылку и вставьте ее из буфера обмена.',
-            proxy: 'Для импорта прокси в Telegram включите VPN, импортируйте прокси в Telegram и отключите VPN; при использовании прокси Telegram перестает работать со включенным VPN. Лучшие прокси помечены значком "🔥"'
+            vpn: '• Подписки:\nДля использования в HAPP используйте автоимпорт, для других приложений скопируйте ссылку и вставьте ее из буфера обмена.',
+            proxy: '• Прокси:\nДля импорта прокси в Telegram включите VPN, импортируйте прокси в Telegram и отключите VPN; при использовании прокси Telegram перестает работать со включенным VPN. Лучшие прокси помечены значком "🔥"'
         };
 
         function openInfoModal() {
-            document.getElementById('info-modal-text').textContent = tips[currentTab];
+            // Объединяем обе подсказки в одно модальное окно
+            document.getElementById('info-modal-text').textContent = `${tips.vpn}\n\n${tips.proxy}`;
             document.getElementById('info-overlay').classList.add('active');
         }
 
         function closeInfoModal() {
             document.getElementById('info-overlay').classList.remove('active');
-        }
-
-        function switchTab(tabId, element) {
-            const targetTab = document.getElementById(`tab-${tabId}`);
-            if (targetTab.classList.contains('active')) return;
-
-            currentTab = tabId;
-
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            
-            targetTab.classList.add('active');
-            element.classList.add('active');
-
-            const titleEl = document.getElementById('header-title');
-            titleEl.style.opacity = '0';
-            titleEl.style.transform = 'translateY(-5px)';
-            
-            setTimeout(() => {
-                if (tabId === 'vpn') {
-                    titleEl.textContent = 'Подписки VPN';
-                } else if (tabId === 'proxy') {
-                    titleEl.textContent = 'Telegram Прокси';
-                }
-                titleEl.style.opacity = '1';
-                titleEl.style.transform = 'translateY(0)';
-            }, 150);
-            
-            document.querySelector('.main-scroll').scrollTop = 0;
-
-            targetTab.querySelectorAll('.card-item').forEach((item, i) => {
-                item.style.animation = 'none';
-                item.offsetHeight; 
-                item.style.animation = `springUp 0.65s var(--ease-spring) forwards`;
-                item.style.animationDelay = `${i * 0.05}s`;
-            });
         }
 
         async function copyToClipboard(text, btnElement) {
@@ -527,7 +444,7 @@
 
         const antiCache = `?nocache=${Date.now()}_${Math.random().toString(36).substring(2,9)}`;
 
-        renderVpnItem = (title, desc, link, index) => `
+        const renderVpnItem = (title, desc, link, index) => `
             <div class="card-item" style="animation-delay: ${index * 0.05}s">
                 <div class="item-meta">
                     <div class="item-icon"><span class="material-symbols-rounded">security</span></div>
@@ -547,7 +464,7 @@
             </div>
         `;
 
-        renderProxyItem = (title, link, index) => `
+        const renderProxyItem = (title, link, index) => `
             <div class="card-item" style="animation-delay: ${index * 0.05}s">
                 <div class="item-meta">
                     <div class="item-icon"><span class="material-symbols-rounded">dns</span></div>
@@ -588,7 +505,7 @@
                     document.getElementById('vpn-list').innerHTML = index > 0 ? html : '<div class="status-msg">Нет подписок</div>';
                 }
             } catch (e) {
-                document.getElementById('vpn-list').innerHTML = '<div class="status-msg">Ошибка данных</div>';
+                document.getElementById('vpn-list').innerHTML = '<div class="status-msg">Ошибка данных подписок</div>';
             }
 
             try {
@@ -608,7 +525,7 @@
                     document.getElementById('proxy-list').innerHTML = index > 0 ? html : '<div class="status-msg">Нет прокси</div>';
                 }
             } catch (e) {
-                document.getElementById('proxy-list').innerHTML = '<div class="status-msg">Ошибка данных</div>';
+                document.getElementById('proxy-list').innerHTML = '<div class="status-msg">Ошибка данных прокси</div>';
             }
         }
 
