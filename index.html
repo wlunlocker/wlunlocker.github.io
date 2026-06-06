@@ -21,56 +21,46 @@
             --border-inline: rgba(255, 255, 255, 0.07);
             --font-flex: 'Google Sans Flex', system-ui, sans-serif;
             --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
-            --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-        body { font-family: var(--font-flex); color: var(--text-main); height: 100vh; display: flex; flex-direction: column; overflow: hidden; position: relative; background-color: #000000; }
-        body::before { content: ''; position: absolute; top: -50%; left: -50%; right: -50%; bottom: -50%; z-index: -2; background: radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.85) 0%, rgba(200, 215, 235, 0.15) 12%, transparent 28%), radial-gradient(circle at 85% 20%, rgba(220, 230, 245, 0.70) 0%, rgba(160, 180, 210, 0.10) 10%, transparent 25%), radial-gradient(circle at 20% 80%, rgba(190, 205, 225, 0.65) 0%, rgba(140, 160, 190, 0.05) 15%, transparent 35%), radial-gradient(circle at 80% 85%, rgba(255, 255, 255, 0.80) 0%, rgba(210, 220, 240, 0.12) 12%, transparent 30%), #000000; background-size: 140% 140%; animation: silverSpotsMovement 25s ease-in-out infinite alternate; }
-        body::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.07; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
-        @keyframes silverSpotsMovement { 0% { background-position: 0% 0%; transform: scale(1) rotate(0deg); } 50% { background-position: 50% 50%; transform: scale(1.06) rotate(1.5deg); } 100% { background-position: 100% 100%; transform: scale(1) rotate(-0.5deg); } }
-
-        header { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; z-index: 100; padding: calc(14px + env(safe-area-inset-top, 0px)) 20px 20px 20px; text-align: center; background: var(--bg-header); backdrop-filter: blur(30px); border-bottom: 1px solid var(--border-inline); display: flex; flex-direction: column; align-items: center; }
-        .meta-pill { display: inline-block; padding: 4px 14px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 100px; font-size: 0.7rem; font-weight: 800; letter-spacing: 2px; color: var(--text-silver); text-transform: uppercase; margin-bottom: 12px; }
-        .title-wrapper { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 18px; width: 100%; max-width: 450px; }
-        h1 { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.5px; background: linear-gradient(135deg, #ffffff 40%, #a1a1aa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .info-trigger { font-size: 24px; color: var(--text-muted); cursor: pointer; transition: transform 0.25s var(--ease-bounce), color 0.2s; }
+        body { font-family: var(--font-flex); color: var(--text-main); height: 100vh; display: flex; flex-direction: column; background-color: #000000; overflow: hidden; }
         
-        .tab-panel { display: flex; gap: 8px; width: 100%; max-width: 450px; margin-top: 10px; }
+        header { position: fixed; top: 0; width: 100%; z-index: 100; padding: 20px; text-align: center; background: var(--bg-header); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-inline); display: flex; flex-direction: column; align-items: center; }
+        .title-wrapper { width: 100%; max-width: 450px; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 15px; }
+        h1 { font-size: 1.8rem; font-weight: 700; color: #fff; }
+        
+        .tab-panel { display: flex; gap: 10px; width: 100%; max-width: 450px; }
         .tab-btn { flex: 1; padding: 12px; border-radius: 14px; border: 1px solid var(--border-inline); background: rgba(255, 255, 255, 0.05); color: var(--text-muted); font-weight: 600; cursor: pointer; transition: 0.3s; }
         .tab-btn.active { background: var(--bg-btn-light); color: #000; }
 
-        .main-scroll { flex: 1; overflow-y: auto; width: 100%; padding: 220px 16px 40px 16px; }
-        .tab-content { display: none; opacity: 0; transition: opacity 0.3s ease; }
+        .main-scroll { flex: 1; overflow-y: auto; width: 100%; padding: 140px 20px 40px 20px; display: flex; flex-direction: column; align-items: center; }
+        .tab-content { display: none; width: 100%; max-width: 450px; opacity: 0; transition: opacity 0.3s ease; }
         .tab-content.active { display: block; opacity: 1; }
 
-        .list-card { background: var(--bg-card); backdrop-filter: blur(15px); border-radius: 24px; padding: 4px 16px; display: flex; flex-direction: column; width: 100%; max-width: 500px; margin: 0 auto; border: 1px solid var(--border-inline); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); }
-        .card-item { display: flex; flex-direction: column; gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--border-inline); animation: springUp 0.65s var(--ease-spring) forwards; }
-        @keyframes springUp { 0% { opacity: 0; transform: translateY(24px) scale(0.98); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
-        .item-meta { display: flex; align-items: center; gap: 14px; }
-        .item-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(255, 255, 255, 0.05); display: flex; align-items: center; justify-content: center; color: var(--text-silver); }
-        .item-title { font-size: 1.05rem; font-weight: 700; }
+        .list-card { background: var(--bg-card); backdrop-filter: blur(15px); border-radius: 24px; padding: 20px; width: 100%; border: 1px solid var(--border-inline); }
+        .card-item { display: flex; flex-direction: column; gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--border-inline); }
+        .card-item:last-child { border-bottom: none; }
+        
+        .item-meta { display: flex; align-items: center; gap: 16px; }
+        .item-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(255, 255, 255, 0.05); display: flex; align-items: center; justify-content: center; }
+        .item-info { display: flex; flex-direction: column; gap: 4px; overflow: hidden; }
+        .item-title { font-size: 1rem; font-weight: 700; }
         .item-desc { font-size: 0.85rem; color: var(--text-muted); }
-        .item-actions { display: grid; grid-template-columns: 1.3fr 1fr; gap: 10px; }
-        .action-btn { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 12px; border-radius: 14px; font-size: 0.9rem; font-weight: 600; border: none; cursor: pointer; transition: 0.2s; }
+        
+        .item-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .action-btn { padding: 14px; border-radius: 14px; border: none; font-weight: 600; cursor: pointer; text-decoration: none; text-align: center; font-family: var(--font-flex); }
         .btn-main { background: var(--bg-btn-light); color: #000; }
         .btn-secondary { background: var(--bg-btn-dark); color: var(--text-silver); }
-        
-        .info-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(20px); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 24px; opacity: 0; pointer-events: none; transition: 0.3s; }
-        .info-overlay.active { opacity: 1; pointer-events: auto; }
-        .info-modal-card { background: #0f1116; border: 1px solid var(--border-inline); border-radius: 28px; padding: 24px; width: 100%; max-width: 400px; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6); }
-        .status-msg { text-align: center; padding: 30px; color: var(--text-muted); }
 
-        @media (min-width: 768px) { body { align-items: center; } header { max-width: 500px; } .main-scroll, .info-overlay { max-width: 500px; } }
+        .status-msg { text-align: center; padding: 40px; color: var(--text-muted); }
     </style>
 </head>
 <body>
 
     <header id="main-header">
-        <div class="meta-pill">WLUnlocker</div>
         <div class="title-wrapper">
             <h1>WLUnlocker</h1>
-            <span class="material-symbols-rounded info-trigger" onclick="openInfoModal()">info</span>
         </div>
         <div class="tab-panel">
             <button class="tab-btn active" onclick="switchTab(this, 'vpn-section')">Подписки</button>
@@ -87,68 +77,45 @@
         </div>
     </div>
 
-    <div id="info-overlay" class="info-overlay" onclick="closeInfoModal()">
-        <div class="info-modal-card" onclick="event.stopPropagation()">
-            <h3>Важная информация</h3>
-            <p id="info-modal-text" style="margin: 15px 0;"></p>
-            <button class="action-btn btn-main" style="width:100%" onclick="closeInfoModal()">Понятно</button>
-        </div>
-    </div>
-
     <script>
         function switchTab(btn, id) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             btn.classList.add('active');
             document.getElementById(id).classList.add('active');
-            resizeHeaderPadding();
         }
 
-        function resizeHeaderPadding() {
-            document.getElementById('content-scroll').style.paddingTop = (document.getElementById('main-header').offsetHeight + 20) + 'px';
-        }
-
-        function openInfoModal() {
-            document.getElementById('info-modal-text').innerText = 'Подписки: используйте автоимпорт для HAPP.\n\nПрокси: импортируйте в Telegram при включенном VPN.';
-            document.getElementById('info-overlay').classList.add('active');
-        }
-        function closeInfoModal() { document.getElementById('info-overlay').classList.remove('active'); }
-
-        async function copyToClipboard(text, btn) {
+        async function copy(text, btn) {
             await navigator.clipboard.writeText(text);
-            const original = btn.innerHTML;
-            btn.innerHTML = 'Скопировано';
-            setTimeout(() => btn.innerHTML = original, 1500);
+            const orig = btn.innerText;
+            btn.innerText = 'Скопировано';
+            setTimeout(() => btn.innerText = orig, 1500);
         }
 
-        async function initData() {
-            const cache = `?nocache=${Date.now()}`;
+        async function init() {
+            const t = Date.now();
             
-            // Загрузка VPN
+            // VPN
             try {
-                const res = await fetch('subscribes.txt' + cache);
-                const text = await res.text();
-                document.getElementById('vpn-list').innerHTML = text.split('\n').filter(l => l.includes('|')).map((l, i) => {
-                    const [t, d] = l.split('|').map(x => x.trim());
-                    return `<div class="card-item" style="animation-delay:${i*0.05}s"><div class="item-meta"><div class="item-icon"><span class="material-symbols-rounded">security</span></div><div class="item-info"><span class="item-title">${t}</span><span class="item-desc">${d}</span></div></div><div class="item-actions"><a href="happ://add/${d}" class="action-btn btn-main">Импорт</a><button class="action-btn btn-secondary" onclick="copyToClipboard('${d}', this)">Копировать</button></div></div>`;
+                const res = await fetch('subscribes.txt?t=' + t);
+                const data = await res.text();
+                document.getElementById('vpn-list').innerHTML = data.split('\n').filter(l => l.includes('|')).map(l => {
+                    const [title, link] = l.split('|').map(x => x.trim());
+                    return `<div class="card-item"><div class="item-meta"><div class="item-icon"><span class="material-symbols-rounded">security</span></div><div class="item-info"><span class="item-title">${title}</span></div></div><div class="item-actions"><a href="happ://add/${link}" class="action-btn btn-main">Импорт</a><button class="action-btn btn-secondary" onclick="copy('${link}', this)">Копировать</button></div></div>`;
                 }).join('');
             } catch(e) { document.getElementById('vpn-list').innerHTML = '<div class="status-msg">Ошибка VPN</div>'; }
 
-            // Загрузка Прокси
+            // Proxy
             try {
-                const res = await fetch('proxies.txt' + cache);
-                const text = await res.text();
-                document.getElementById('proxy-list').innerHTML = text.split('\n').filter(l => l.includes('|')).map((l, i) => {
-                    const [t, d] = l.split('|').map(x => x.trim());
-                    return `<div class="card-item" style="animation-delay:${i*0.05}s"><div class="item-meta"><div class="item-icon"><span class="material-symbols-rounded">dns</span></div><div class="item-info"><span class="item-title">${t}</span><span class="item-desc">Протокол: MTProto</span></div></div><div class="item-actions"><a href="${d}" class="action-btn btn-main">В Telegram</a><button class="action-btn btn-secondary" onclick="copyToClipboard('${d}', this)">Копировать</button></div></div>`;
+                const res = await fetch('proxies.txt?t=' + t);
+                const data = await res.text();
+                document.getElementById('proxy-list').innerHTML = data.split('\n').filter(l => l.includes('|')).map(l => {
+                    const [title, link] = l.split('|').map(x => x.trim());
+                    return `<div class="card-item"><div class="item-meta"><div class="item-icon"><span class="material-symbols-rounded">dns</span></div><div class="item-info"><span class="item-title">${title}</span></div></div><div class="item-actions"><a href="${link}" class="action-btn btn-main">Telegram</a><button class="action-btn btn-secondary" onclick="copy('${link}', this)">Копировать</button></div></div>`;
                 }).join('');
             } catch(e) { document.getElementById('proxy-list').innerHTML = '<div class="status-msg">Ошибка Прокси</div>'; }
-            
-            resizeHeaderPadding();
         }
-
-        window.onload = initData;
-        window.onresize = resizeHeaderPadding;
+        init();
     </script>
 </body>
 </html>
