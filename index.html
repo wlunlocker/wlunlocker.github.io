@@ -21,101 +21,548 @@
             --border-inline: rgba(255, 255, 255, 0.07);
             --font-flex: 'Google Sans Flex', system-ui, sans-serif;
             --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-        body { font-family: var(--font-flex); color: var(--text-main); height: 100vh; display: flex; flex-direction: column; background-color: #000000; overflow: hidden; }
-        
-        header { position: fixed; top: 0; width: 100%; z-index: 100; padding: 20px; text-align: center; background: var(--bg-header); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-inline); display: flex; flex-direction: column; align-items: center; }
-        .title-wrapper { width: 100%; max-width: 450px; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 15px; }
-        h1 { font-size: 1.8rem; font-weight: 700; color: #fff; }
-        
-        .tab-panel { display: flex; gap: 10px; width: 100%; max-width: 450px; }
-        .tab-btn { flex: 1; padding: 12px; border-radius: 14px; border: 1px solid var(--border-inline); background: rgba(255, 255, 255, 0.05); color: var(--text-muted); font-weight: 600; cursor: pointer; transition: 0.3s; }
-        .tab-btn.active { background: var(--bg-btn-light); color: #000; }
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            margin: 0;
+            padding: 0;
+        }
 
-        .main-scroll { flex: 1; overflow-y: auto; width: 100%; padding: 140px 20px 40px 20px; display: flex; flex-direction: column; align-items: center; }
-        .tab-content { display: none; width: 100%; max-width: 450px; opacity: 0; transition: opacity 0.3s ease; }
-        .tab-content.active { display: block; opacity: 1; }
+        body {
+            font-family: var(--font-flex);
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            background-color: #000000;
+        }
 
-        .list-card { background: var(--bg-card); backdrop-filter: blur(15px); border-radius: 24px; padding: 20px; width: 100%; border: 1px solid var(--border-inline); }
-        .card-item { display: flex; flex-direction: column; gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--border-inline); }
-        .card-item:last-child { border-bottom: none; }
-        
-        .item-meta { display: flex; align-items: center; gap: 16px; }
-        .item-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(255, 255, 255, 0.05); display: flex; align-items: center; justify-content: center; }
-        .item-info { display: flex; flex-direction: column; gap: 4px; overflow: hidden; }
-        .item-title { font-size: 1rem; font-weight: 700; }
-        .item-desc { font-size: 0.85rem; color: var(--text-muted); }
-        
-        .item-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .action-btn { padding: 14px; border-radius: 14px; border: none; font-weight: 600; cursor: pointer; text-decoration: none; text-align: center; font-family: var(--font-flex); }
-        .btn-main { background: var(--bg-btn-light); color: #000; }
-        .btn-secondary { background: var(--bg-btn-dark); color: var(--text-silver); }
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; right: -50%; bottom: -50%;
+            z-index: -2;
+            background: 
+                radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.85) 0%, rgba(200, 215, 235, 0.15) 12%, transparent 28%),
+                radial-gradient(circle at 85% 20%, rgba(220, 230, 245, 0.70) 0%, rgba(160, 180, 210, 0.10) 10%, transparent 25%),
+                radial-gradient(circle at 20% 80%, rgba(190, 205, 225, 0.65) 0%, rgba(140, 160, 190, 0.05) 15%, transparent 35%),
+                radial-gradient(circle at 80% 85%, rgba(255, 255, 255, 0.80) 0%, rgba(210, 220, 240, 0.12) 12%, transparent 30%),
+                #000000;
+            background-size: 140% 140%;
+            animation: silverSpotsMovement 25s ease-in-out infinite alternate;
+        }
 
-        .status-msg { text-align: center; padding: 40px; color: var(--text-muted); }
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            opacity: 0.07;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        @keyframes silverSpotsMovement {
+            0% { background-position: 0% 0%; transform: scale(1) rotate(0deg); }
+            50% { background-position: 50% 50%; transform: scale(1.06) rotate(1.5deg); }
+            100% { background-position: 100% 100%; transform: scale(1) rotate(-0.5deg); }
+        }
+
+        header {
+            position: fixed;
+            top: 0; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 100%;
+            z-index: 100;
+            padding: calc(14px + env(safe-area-inset-top, 0px)) 20px 20px 20px;
+            text-align: center;
+            background: var(--bg-header);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-bottom: 1px solid var(--border-inline);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+.meta-pill {
+            display: inline-block;
+            padding: 4px 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--text-silver);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .title-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 18px;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #ffffff 40%, #a1a1aa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .info-trigger {
+            font-size: 24px;
+            color: var(--text-muted);
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.25s var(--ease-bounce), color 0.2s;
+        }
+        .info-trigger:active {
+            transform: scale(0.85);
+            color: var(--text-main);
+        }
+
+        .channels-row {
+            display: flex;
+            gap: 12px;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .channel-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-inline);
+            border-radius: 14px;
+            color: var(--text-silver);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: transform 0.3s var(--ease-bounce), background-color 0.2s;
+        }
+        .channel-btn:active { 
+            transform: scale(0.94); 
+            background: rgba(255, 255, 255, 0.08); 
+        }
+        .channel-btn .material-symbols-rounded { font-size: 20px; color: var(--text-silver); }
+
+        .main-scroll {
+            flex: 1;
+            overflow-y: auto;
+            width: 100%;
+            padding: 220px 16px 40px 16px; /* Базовый отступ, перепишется скриптом */
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .main-scroll::-webkit-scrollbar { display: none; }
+        .main-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .section-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-silver);
+            max-width: 500px;
+            margin: 0 auto 14px auto;
+            padding-left: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-title .material-symbols-rounded { font-size: 20px; color: var(--text-muted); }
+
+        .list-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 24px;
+            padding: 4px 16px;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            border: 1px solid var(--border-inline);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-item {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            padding: 18px 0;
+            border-bottom: 1px solid var(--border-inline);
+            opacity: 0;
+            animation: springUp 0.65s var(--ease-spring) forwards;
+        }
+        .card-item:last-child {
+            border-bottom: none;
+        }
+
+        @keyframes springUp {
+            0% { opacity: 0; transform: translateY(24px) scale(0.98); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+.item-meta {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .item-icon {
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-silver);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .item-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .item-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .item-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .item-actions {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 10px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 12px;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-flex);
+            transition: transform 0.25s var(--ease-bounce), background-color 0.2s;
+        }
+        .action-btn:active { transform: scale(0.94); }
+
+        .btn-main {
+            background: var(--bg-btn-light);
+            color: #000000;
+        }
+
+        .btn-secondary {
+            background: var(--bg-btn-dark);
+            color: var(--text-silver);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .btn-secondary:active {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .btn-icon { font-size: 18px; }
+
+        .info-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s var(--ease-spring);
+        }
+        .info-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .info-modal-card {
+            background: #0f1116;
+            border: 1px solid var(--border-inline);
+            border-radius: 28px;
+            padding: 24px;
+            width: 100%;
+            max-width: 400px;
+            transform: scale(0.85) translateY(30px);
+            transition: transform 0.4s var(--ease-bounce);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+        }
+        .info-overlay.active .info-modal-card {
+            transform: scale(1) translateY(0);
+        }
+        .modal-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-silver);
+        }
+        .modal-top .material-symbols-rounded { font-size: 26px; }
+        .modal-top h3 { font-size: 1.25rem; font-weight: 700; }
+        
+        .info-modal-card p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #e2e8f0;
+            font-weight: 500;
+            white-space: pre-line;
+        }
+
+        .status-msg {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Медиа-запрос для ПК */
+
+@media (min-width: 768px) {
+            body { align-items: center; }
+            header {
+                max-width: 500px;
+                border-left: 1px solid var(--border-inline);
+                border-right: 1px solid var(--border-inline);
+                border-bottom-left-radius: 24px;
+                border-bottom-right-radius: 24px;
+            }
+            .main-scroll, .info-overlay { width: 100%; max-width: 500px; }
+        }
     </style>
 </head>
 <body>
 
     <header id="main-header">
+        <div class="meta-pill">WLUnlocker</div>
         <div class="title-wrapper">
-            <h1>WLUnlocker</h1>
+            <h1 id="header-title">WLUnlocker</h1>
+            <span class="material-symbols-rounded info-trigger" onclick="openInfoModal()">info</span>
         </div>
-        <div class="tab-panel">
-            <button class="tab-btn active" onclick="switchTab(this, 'vpn-section')">Подписки</button>
-            <button class="tab-btn" onclick="switchTab(this, 'proxy-section')">Прокси</button>
+        <div class="channels-row">
+            <a href="https://t.me/wlunlocker" class="channel-btn" target="_blank" rel="noopener">
+                <span class="material-symbols-rounded">security</span> Канал с VPN
+            </a>
+            <a href="https://t.me/wlproxy" class="channel-btn" target="_blank" rel="noopener">
+                <span class="material-symbols-rounded">router</span> Канал с Прокси
+            </a>
         </div>
     </header>
 
     <div class="main-scroll" id="content-scroll">
-        <div id="vpn-section" class="tab-content active">
-            <div id="vpn-list" class="list-card"><div class="status-msg">Загрузка...</div></div>
+        <!-- СЕКЦИЯ ПОДПИСОК -->
+        <div class="section-title">
+            <span class="material-symbols-rounded">layers</span> Подписки
         </div>
-        <div id="proxy-section" class="tab-content">
-            <div id="proxy-list" class="list-card"><div class="status-msg">Загрузка...</div></div>
+        <div id="vpn-list" style="margin-bottom: 32px;">
+            <div class="status-msg">Загрузка конфигураций...</div>
+        </div>
+
+        <!-- СЕКЦИЯ ПРОКСИ -->
+        <div class="section-title">
+            <span class="material-symbols-rounded">dns</span> Прокси
+        </div>
+        <div id="proxy-list">
+            <div class="status-msg">Поиск прокси-шлюзов...</div>
+        </div>
+    </div>
+
+    <div id="info-overlay" class="info-overlay" onclick="closeInfoModal()">
+        <div class="info-modal-card" onclick="event.stopPropagation()">
+            <div class="modal-top">
+                <span class="material-symbols-rounded">info</span>
+                <h3>Важная информация</h3>
+            </div>
+            <p id="info-modal-text"></p>
+            <button class="action-btn btn-main" style="width:100%; margin-top:8px;" onclick="closeInfoModal()">Понятно</button>
         </div>
     </div>
 
     <script>
-        function switchTab(btn, id) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            btn.classList.add('active');
-            document.getElementById(id).classList.add('active');
+        const tips = {
+            vpn: '• Подписки:\nДля использования в HAPP используйте автоимпорт, для других приложений скопируйте ссылку и вставьте ее из буфера обмена.',
+            proxy: '• Прокси:\nДля импорта прокси в Telegram включите VPN, импортируйте прокси в Telegram и отключите VPN; при использовании прокси Telegram перестает работать со включенным VPN. Лучшие прокси помечены значком "🔥"'
+        };
+
+        // Умная подгонка отступа сверху под реальный размер шапки
+        function resizeHeaderPadding() {
+            const header = document.getElementById('main-header');
+            const scrollContainer = document.getElementById('content-scroll');
+            if (header && scrollContainer) {
+                const headerHeight = header.offsetHeight;
+                scrollContainer.style.paddingTop = ${headerHeight + 20}px;
+            }
         }
 
-        async function copy(text, btn) {
-            await navigator.clipboard.writeText(text);
-            const orig = btn.innerText;
-            btn.innerText = 'Скопировано';
-            setTimeout(() => btn.innerText = orig, 1500);
+        function openInfoModal() {
+            document.getElementById('info-modal-text').textContent = ${tips.vpn}\n\n${tips.proxy};
+            document.getElementById('info-overlay').classList.add('active');
         }
 
-        async function init() {
-            const t = Date.now();
+        function closeInfoModal() {
+            document.getElementById('info-overlay').classList.remove('active');
+        }
+
+        async function copyToClipboard(text, btnElement) {
+            try {
+                await navigator.clipboard.writeText(text);
+                const originalText = btnElement.innerHTML;
+
+btnElement.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    btnElement.innerHTML = <span class="material-symbols-rounded btn-icon" style="font-variation-settings: 'FILL' 1;">check_circle</span> Скопировано;
+                    btnElement.style.transform = 'scale(1)';
+                }, 100);
+
+                setTimeout(() => {
+                    btnElement.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        btnElement.innerHTML = originalText;
+                        btnElement.style.transform = 'scale(1)';
+                    }, 100);
+                }, 1600);
+            } catch (err) {
+                console.error('Ошибка копирования', err);
+            }
+        }
+
+        const antiCache = ?nocache=${Date.now()}_${Math.random().toString(36).substring(2,9)};
+
+        const renderVpnItem = (title, desc, link, index) => 
+            <div class="card-item" style="animation-delay: ${index * 0.05}s">
+                <div class="item-meta">
+                    <div class="item-icon"><span class="material-symbols-rounded">security</span></div>
+                    <div class="item-info">
+                        <span class="item-title">${title}</span>
+                        <span class="item-desc">${desc}</span>
+                    </div>
+                </div>
+                <div class="item-actions">
+                    <a href="happ://add/${link}" class="action-btn btn-main">
+                        <span class="material-symbols-rounded btn-icon">download</span> Импорт в Happ
+                    </a>
+                    <button class="action-btn btn-secondary" onclick="copyToClipboard('${link}', this)">
+                        <span class="material-symbols-rounded btn-icon">content_copy</span> Копировать
+                    </button>
+                </div>
+            </div>
+        ;
+
+        const renderProxyItem = (title, link, index) => 
+            <div class="card-item" style="animation-delay: ${index * 0.05}s">
+                <div class="item-meta">
+                    <div class="item-icon"><span class="material-symbols-rounded">dns</span></div>
+                    <div class="item-info">
+                        <span class="item-title">${title}</span>
+                        <span class="item-desc">Протокол подключения: MTProto</span>
+                    </div>
+                </div>
+                <div class="item-actions">
+                    <a href="${link}" class="action-btn btn-main">
+                        <span class="material-symbols-rounded btn-icon">send</span> В Telegram
+                    </a>
+                    <button class="action-btn btn-secondary" onclick="copyToClipboard('${link}', this)">
+                        <span class="material-symbols-rounded btn-icon">content_copy</span> Копировать
+                    </button>
+                </div>
+            </div>
+        ;
+
+        async function initData() {
+            // Запускаем расчет отступа сразу
+            resizeHeaderPadding();
+
+            try {
+                const resVpn = await fetch(subscribes.txt${antiCache});
+                if (resVpn.ok) {
+                    const text = await resVpn.text();
+                    let html = '<div class="list-card">';
+                    let index = 0;
+                    text.split('\n').forEach(line => {
+                        const cl = line.trim();
+                        if (cl && cl.includes('|') && !cl.startsWith('#')) {
+                            const p = cl.split('|').map(x => x.trim());
+                            const link = p.pop();
+                            const title = p.shift();
+                            const desc = p.join(' • ') || 'Шифрование данных';
+                            html += renderVpnItem(title, desc, link, index++);
+
+}
+                    });
+                    html += '</div>';
+                    document.getElementById('vpn-list').innerHTML = index > 0 ? html : '<div class="status-msg">Нет подписок</div>';
+                }
+            } catch (e) {
+                document.getElementById('vpn-list').innerHTML = '<div class="status-msg">Ошибка данных подписок</div>';
+            }
+
+            try {
+                const resProxy = await fetch(proxies.txt${antiCache});
+                if (resProxy.ok) {
+                    const text = await resProxy.text();
+                    let html = '<div class="list-card">';
+                    let index = 0;
+                    text.split('\n').forEach(line => {
+                        const cl = line.trim();
+                        if (cl && cl.includes('|') && !cl.startsWith('#')) {
+                            const p = cl.split('|').map(x => x.trim());
+                            html += renderProxyItem(p[0], p[1], index++);
+                        }
+                    });
+                    html += '</div>';
+                    document.getElementById('proxy-list').innerHTML = index > 0 ? html : '<div class="status-msg">Нет прокси</div>';
+                }
+            } catch (e) {
+                document.getElementById('proxy-list').innerHTML = '<div class="status-msg">Ошибка данных прокси</div>';
+            }
             
-            // VPN
-            try {
-                const res = await fetch('subscribes.txt?t=' + t);
-                const data = await res.text();
-                document.getElementById('vpn-list').innerHTML = data.split('\n').filter(l => l.includes('|')).map(l => {
-                    const [title, link] = l.split('|').map(x => x.trim());
-                    return `<div class="card-item"><div class="item-meta"><div class="item-icon"><span class="material-symbols-rounded">security</span></div><div class="item-info"><span class="item-title">${title}</span></div></div><div class="item-actions"><a href="happ://add/${link}" class="action-btn btn-main">Импорт</a><button class="action-btn btn-secondary" onclick="copy('${link}', this)">Копировать</button></div></div>`;
-                }).join('');
-            } catch(e) { document.getElementById('vpn-list').innerHTML = '<div class="status-msg">Ошибка VPN</div>'; }
-
-            // Proxy
-            try {
-                const res = await fetch('proxies.txt?t=' + t);
-                const data = await res.text();
-                document.getElementById('proxy-list').innerHTML = data.split('\n').filter(l => l.includes('|')).map(l => {
-                    const [title, link] = l.split('|').map(x => x.trim());
-                    return `<div class="card-item"><div class="item-meta"><div class="item-icon"><span class="material-symbols-rounded">dns</span></div><div class="item-info"><span class="item-title">${title}</span></div></div><div class="item-actions"><a href="${link}" class="action-btn btn-main">Telegram</a><button class="action-btn btn-secondary" onclick="copy('${link}', this)">Копировать</button></div></div>`;
-                }).join('');
-            } catch(e) { document.getElementById('proxy-list').innerHTML = '<div class="status-msg">Ошибка Прокси</div>'; }
+            // На случай, если шрифты/элементы догрузились позже
+            setTimeout(resizeHeaderPadding, 100);
         }
-        init();
+
+        document.addEventListener('DOMContentLoaded', initData);
+        window.addEventListener('resize', resizeHeaderPadding);
     </script>
 </body>
 </html>
